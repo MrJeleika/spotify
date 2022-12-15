@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAppSelector } from 'redux/app/hooks'
 
 interface Props {}
@@ -8,7 +7,7 @@ export const Profile = ({}: Props) => {
 
   return (
     <div>
-      <div className="bg-gradient-to-b pt-[100px] from-[#555555] to-[#2b2b2b] w-full">
+      <div className="bg-gradient-to-b pt-[80px] from-[#555555] to-[#2b2b2b] w-full">
         <div className="flex p-7 text-white">
           <div className="rounded-full mr-7  w-[225px] h-[225px] overflow-hidden">
             <img

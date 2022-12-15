@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+// Redux
 import { useFetchMyPlaylistQuery } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { setMyPlaylists } from 'redux/slices/spotifySlice'
-
+//Hooks
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { useEffect } from 'react'
 interface Props {}
 
 export const Playlists = ({}: Props) => {
@@ -19,10 +20,7 @@ export const Playlists = ({}: Props) => {
       {playlists &&
         playlists.items.map((playlist: any) => {
           return (
-            <div
-              key={playlist.id}
-              className="text-stone-50/70 my-5 text-[14px]"
-            >
+            <div key={playlist.id} className="text-zinc-50/80 my-5 text-[14px]">
               {playlist.name}
             </div>
           )

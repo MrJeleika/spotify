@@ -1,11 +1,14 @@
-import { Navbar } from 'components/Navbar/Navbar'
-import { NavbarTop } from 'components/Navbar/NavbarTop'
-import { Profile } from 'components/Profile/Profile'
 import { useEffect } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
+// Components
+import { Navbar } from 'components/Navbar/Navbar'
+import { NavbarTop } from 'components/Navbar/NavbarTop/NavbarTop'
+import { Profile } from 'components/Profile/Profile'
+// Redux
 import { useFetchProfileQuery } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { setProfile } from 'redux/slices/spotifySlice'
+// Hooks
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 
 interface Props {}
 

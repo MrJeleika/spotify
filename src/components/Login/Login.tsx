@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
 // Hooks
 import { useAppDispatch } from 'redux/app/hooks'
+import { useEffect } from 'react'
 // Redux
 import { setToken } from 'redux/slices/authSlice'
+// Misc
 
 const CLIENT_ID = '9ee3f2540a7f4c24936f361bebf63668'
 const REDIRECT_URI = 'http://localhost:3000'
@@ -13,10 +14,14 @@ let token = urlParams.get('access_token')
 
 export const Login = () => {
   const dispatch = useAppDispatch()
+  // Set token for login
   useEffect(() => {
     window.location.hash = ''
-    if (token) window.localStorage.setItem('token', token)
-    dispatch(setToken(token))
+    if (token) {
+      window.localStorage.setItem('token', token)
+      dispatch(setToken(token))
+    }
+    token = null
   }, [])
 
   return (
