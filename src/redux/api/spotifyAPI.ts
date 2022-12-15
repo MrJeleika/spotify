@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery}  from '@reduxjs/toolkit/query/react'
+import { Playlists, Profile } from '../../types/spotifySlice';
 import { RootState } from '../app/store'
 
 export const apiSlice = createApi({
@@ -11,15 +12,23 @@ export const apiSlice = createApi({
       return headers
     },
   }),
-  endpoints: (builder) => {
-    return{
-      fetchProfile: builder.query<any, any>({
+  endpoints: (builder) => ({
+      fetchProfile: builder.query<Profile, void>({
         query: () => {
           return `/me`
-      }
-    })
-    }
-  }
+      },
+      }),
+      fetchMyPlaylist: builder.query<Playlists, void>({
+        query: () =>{
+          return `/me/playlists`
+        }
+      }),
+      fetchUserPlaylists: builder.query<Playlists, string>({
+        query: (userId) => {
+          return `users/${userId}/playlists`
+        }
+      }),
+  })
 })
 
-export const {useFetchProfileQuery} = apiSlice
+export const {useFetchProfileQuery, useFetchMyPlaylistQuery, useFetchUserPlaylistsQuery} = apiSlice
