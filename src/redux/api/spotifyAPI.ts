@@ -1,6 +1,9 @@
 import {createApi, fetchBaseQuery}  from '@reduxjs/toolkit/query/react'
-import { Playlists, Profile } from '../../types/spotifySlice';
+import { PlaybackState, Playlists, Profile, UserTopItems } from '../../types/spotifySlice';
 import { RootState } from '../app/store'
+
+
+
 
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
@@ -13,7 +16,7 @@ export const apiSlice = createApi({
     },
   }),
   endpoints: (builder) => ({
-      fetchProfile: builder.query<Profile, void>({
+      fetchProfile: builder.query<Profile, void | null>({
         query: () => {
           return `/me`
       },
@@ -28,7 +31,23 @@ export const apiSlice = createApi({
           return `users/${userId}/playlists`
         }
       }),
+      fetchMyTopItems: builder.query<UserTopItems, number>({
+        query: (limit = 4) => {
+          return `/me/top/tracks?limit=${limit}&time_range=short_term`
+        }
+      }),
+      fetchPlaybackState: builder.query<PlaybackState, void>({
+        query: () => {
+            return `/me/player`
+          }
+      }),
+      fetchPlaylistTracks: builder.query<any, string>({
+        query: (id) => {
+            return `/playlists/${id}/tracks`
+        }
+      })
   })
 })
 
-export const {useFetchProfileQuery, useFetchMyPlaylistQuery, useFetchUserPlaylistsQuery} = apiSlice
+export const {useFetchProfileQuery, useFetchMyPlaylistQuery, useFetchUserPlaylistsQuery,
+useFetchMyTopItemsQuery, useFetchPlaybackStateQuery, useFetchPlaylistTracksQuery} = apiSlice

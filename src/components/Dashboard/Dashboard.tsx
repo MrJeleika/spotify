@@ -13,14 +13,17 @@ import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 interface Props {}
 
 export const Dashboard = (props: Props) => {
-  const { data, isFetching } = useFetchProfileQuery()
+  const { data, isFetching, isSuccess } = useFetchProfileQuery()
   const dispatch = useAppDispatch()
   const profile = useAppSelector((state) => state.spotify.profile)
+  const token = useAppSelector((state) => state.auth.token)
+
   useEffect(() => {
-    if (data && !isFetching) {
+    if (isSuccess) {
       dispatch(setProfile(data))
     }
-  }, [isFetching])
+  }, [isSuccess])
+
   return (
     <div className="flex h-full">
       <div className="w-[20%]">

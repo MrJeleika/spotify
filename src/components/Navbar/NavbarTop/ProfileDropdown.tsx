@@ -33,6 +33,7 @@ export const ProfileDropdown = ({ isOpen, setIsOpen, profileRef }: Props) => {
   })
 
   const logout = () => {
+    window.location.hash = ''
     window.localStorage.removeItem('token')
     dispatch(setToken(null))
   }
@@ -48,19 +49,20 @@ export const ProfileDropdown = ({ isOpen, setIsOpen, profileRef }: Props) => {
       variants={variants}
       transition={{ duration: 0.3 }}
       ref={dropdownRef}
-      className={`absolute hidden rounded top-10 right-0 w-[200px] text-zinc-50/80 p-1 bg-zinc-800`}
+      className={`absolute shadow-xl hidden rounded top-10 right-0 w-[200px] text-zinc-50/80 p-1 bg-zinc-800`}
     >
       <ul>
         <NavLink to={`user/${profile.id}`}>
           <li className="w-full p-3 hover:bg-zinc-500 ">Profile </li>
         </NavLink>
-
-        <li
-          onClick={logout}
-          className="w-full p-3 hover:bg-zinc-500 border-t-[1px] border-zinc-50/30"
-        >
-          Logout
-        </li>
+        <NavLink to={`/`}>
+          <li
+            onClick={logout}
+            className="w-full p-3 hover:bg-zinc-500 border-t-[1px] border-zinc-50/30"
+          >
+            Logout
+          </li>
+        </NavLink>
       </ul>
     </motion.div>
   )

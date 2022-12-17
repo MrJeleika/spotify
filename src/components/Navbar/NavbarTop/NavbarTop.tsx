@@ -2,17 +2,26 @@
 import { ProfileList } from 'components/svg/ProfileList'
 import { ProfileDropdown } from './ProfileDropdown'
 // Hooks
-import { useRef, useState } from 'react'
-import { useAppSelector } from 'redux/app/hooks'
+import { useEffect, useRef, useState } from 'react'
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
+import { useFetchPlaybackStateQuery } from 'redux/api/spotifyAPI'
+import { setPlaybackState } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const NavbarTop = ({}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const profileRef = useRef<HTMLDivElement>(null)
-  const profile = useAppSelector((state) => state.spotify.profile)
+  const { profile, playbackState } = useAppSelector((state) => state.spotify)
+  const dispatch = useAppDispatch()
+  const { data, isFetching } = useFetchPlaybackStateQuery()
+  useEffect(() => {
+    if (data && !isFetching) {
+      dispatch(setPlaybackState(data))
+    }
+  }, [isFetching])
 
   return (
     <div className="w-full relative">

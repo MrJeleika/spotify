@@ -15,6 +15,7 @@ export const Playlists = ({}: Props) => {
       dispatch(setMyPlaylists(data))
     }
   }, [isFetching])
+  console.log(data)
   return (
     <div>
       {playlists &&

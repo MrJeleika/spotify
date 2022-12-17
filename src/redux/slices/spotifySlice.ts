@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Playlists, Profile, SpotifyState } from "../../types/spotifySlice";
+import { PlaybackState, Playlists, Profile, SpotifyState, UserTopItems } from "../../types/spotifySlice";
 
 const initialState: SpotifyState = {
   profile: {
@@ -76,6 +76,36 @@ const initialState: SpotifyState = {
     offset: 0,
     previous: "",
     total: 0
+  },
+  myTopItems: {
+    href: '',
+    items: [],
+    limit: 20,
+    next: "",
+    offset: 0,
+    previous: "",
+    total: 0,
+  },
+  playbackState:{
+  device: {},
+  repeatState: '',
+  shuffleState: '',
+  context: {},
+  timestamp: 0,
+  progress: 0,
+  is_playing: true,
+  item: {},
+  current_playing_type: '',
+  actions: {},
+  },
+  playlistTracks:{
+    href: '',
+    items: [],
+    limit: 20,
+    next: "",
+    offset: 0,
+    previous: "",
+    total: 0,
   }
 }
 
@@ -88,12 +118,20 @@ const spotifySlice = createSlice({
     },
     setMyPlaylists: (state, action: PayloadAction<Playlists>) => {
       state.myPlaylists = {...action.payload}
-    }
-
+    },
+    setMyTopItems: (state, action: PayloadAction<UserTopItems>) =>{
+      state.myTopItems = {...action.payload}
+    },
+    setPlaybackState: (state, action: PayloadAction<PlaybackState>) =>{
+      state.playbackState = {...action.payload}
+    },
+    setPlaylistTracks: (state, action: PayloadAction<UserTopItems>) =>{
+      state.playlistTracks = {...action.payload}
+    },
   },
 
 })
 
 export default spotifySlice.reducer
 
-export const {setProfile, setMyPlaylists} = spotifySlice.actions
+export const {setProfile, setMyPlaylists, setMyTopItems,setPlaybackState, setPlaylistTracks} = spotifySlice.actions
