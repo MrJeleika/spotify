@@ -1,4 +1,5 @@
 import './App.css'
+import 'styles/slider.scss'
 // Components
 import { Dashboard } from './components/Dashboard/Dashboard'
 import { Login } from './components/Login/Login'

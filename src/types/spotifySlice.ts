@@ -1,3 +1,13 @@
+interface Item {
+  href: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+}
+
+
 export interface Profile{
   country: string;
   display_name: string;
@@ -25,7 +35,7 @@ export interface Profile{
     uri: string;
 }
 
-export interface Playlists{
+export interface Playlists extends Item{
   items: [
     {
       collaborative: boolean;
@@ -67,21 +77,9 @@ export interface Playlists{
       uri: string;
     }
   ];
-  href: string;
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
-  total: number;
 }
-export interface UserTopItems{
-  href: string;
+export interface UserTopItems extends Item{
   items: Array<{}>
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
-  total: number;
 }
 export interface PlaybackState {
   device: any;
@@ -89,7 +87,7 @@ export interface PlaybackState {
   shuffleState: string;
   context: any
   timestamp: number;
-  progress: number;
+  progress_ms: number;
   is_playing: boolean;
   item: any
   current_playing_type: string;
@@ -148,6 +146,13 @@ export interface Tracks{
   uri: string;
   is_local: boolean
 }
+export interface SavedTracks extends Item{
+  items: [{
+    added_at: string
+    track: any
+  }]
+}
+
 
 
 export interface SpotifyState{
@@ -156,4 +161,5 @@ export interface SpotifyState{
   myTopItems: UserTopItems
   playbackState: PlaybackState
   playlistTracks: UserTopItems
+  savedTracks: SavedTracks | any
 }

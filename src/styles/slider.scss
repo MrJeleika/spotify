@@ -1,0 +1,23 @@
+
+.rc-slider{
+  &:hover  &-track{
+    background-color: #1DB954 !important;
+  }
+  &:hover &-handle{
+    visibility: visible;
+  }
+  &-rail{
+    background-color: #5F5F5F !important;
+  }
+  &-track{
+    background-color: white!important;
+
+  }
+  &-handle{
+    visibility: hidden;
+    border: none !important;
+    height: 12px !important;
+    width: 12px !important;
+    margin-top: -4px !important;
+  }
+}

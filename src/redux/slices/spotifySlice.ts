@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PlaybackState, Playlists, Profile, SpotifyState, UserTopItems } from "../../types/spotifySlice";
+import { PlaybackState, Playlists, Profile, SavedTracks, SpotifyState, UserTopItems } from "../../types/spotifySlice";
 
 const initialState: SpotifyState = {
   profile: {
@@ -87,16 +87,16 @@ const initialState: SpotifyState = {
     total: 0,
   },
   playbackState:{
-  device: {},
-  repeatState: '',
-  shuffleState: '',
-  context: {},
-  timestamp: 0,
-  progress: 0,
-  is_playing: true,
-  item: {},
-  current_playing_type: '',
-  actions: {},
+    device: {},
+    repeatState: '',
+    shuffleState: '',
+    context: {},
+    timestamp: 0,
+    progress_ms: 0,
+    is_playing: true,
+    item: {},
+    current_playing_type: '',
+    actions: {},
   },
   playlistTracks:{
     href: '',
@@ -106,7 +106,20 @@ const initialState: SpotifyState = {
     offset: 0,
     previous: "",
     total: 0,
+  },
+  savedTracks:{
+    href: '',
+    items: [{
+      added_at: '',
+      track: {}
+    }],
+    limit: 20,
+    next: "",
+    offset: 0,
+    previous: "",
+    total: 0,
   }
+  
 }
 
 const spotifySlice = createSlice({
@@ -128,10 +141,18 @@ const spotifySlice = createSlice({
     setPlaylistTracks: (state, action: PayloadAction<UserTopItems>) =>{
       state.playlistTracks = {...action.payload}
     },
+    setSavedTracks: (state, action: PayloadAction<SavedTracks>) =>{
+      state.savedTracks.items = [...state.savedTracks.items, ...action.payload.items]
+      state.savedTracks.limit = action.payload.limit
+      state.savedTracks.next = action.payload.next
+      state.savedTracks.offset = action.payload.offset
+      state.savedTracks.previous = action.payload.previous
+      state.savedTracks.total = action.payload.total
+    },
   },
 
 })
 
 export default spotifySlice.reducer
 
-export const {setProfile, setMyPlaylists, setMyTopItems,setPlaybackState, setPlaylistTracks} = spotifySlice.actions
+export const {setProfile, setMyPlaylists, setMyTopItems,setPlaybackState, setPlaylistTracks, setSavedTracks} = spotifySlice.actions

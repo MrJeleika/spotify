@@ -5,9 +5,6 @@ interface Props {}
 
 export const Playlists = ({}: Props) => {
   const playlists = useAppSelector((state) => state.spotify.myPlaylists)
-
-  console.log(playlists)
-
   return (
     <div>
       <h1 className="title ml-2 lg:ml-4">Public playlists</h1>

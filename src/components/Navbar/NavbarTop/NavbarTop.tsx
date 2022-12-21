@@ -6,22 +6,23 @@ import { useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
-import { useFetchPlaybackStateQuery } from 'redux/api/spotifyAPI'
-import { setPlaybackState } from 'redux/slices/spotifySlice'
+import { useFetchProfileQuery } from 'redux/api/spotifyAPI'
+import { setProfile } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const NavbarTop = ({}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const profileRef = useRef<HTMLDivElement>(null)
-  const { profile, playbackState } = useAppSelector((state) => state.spotify)
+  const { profile } = useAppSelector((state) => state.spotify)
+  const { data, isSuccess } = useFetchProfileQuery()
   const dispatch = useAppDispatch()
-  const { data, isFetching } = useFetchPlaybackStateQuery()
+
   useEffect(() => {
-    if (data && !isFetching) {
-      dispatch(setPlaybackState(data))
+    if (isSuccess) {
+      dispatch(setProfile(data))
     }
-  }, [isFetching])
+  }, [isSuccess])
 
   return (
     <div className="w-full relative">
@@ -39,7 +40,9 @@ export const NavbarTop = ({}: Props) => {
             {profile.display_name}
           </div>
           <div className="mr-2">
-            <ProfileList color="white" />
+            <div className={`${isOpen ? 'rotate-180' : null} duration-300`}>
+              <ProfileList color="white" />
+            </div>
           </div>
           <ProfileDropdown
             profileRef={profileRef}

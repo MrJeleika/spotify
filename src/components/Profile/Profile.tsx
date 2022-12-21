@@ -1,11 +1,19 @@
-import { useAppSelector } from 'redux/app/hooks'
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { Playlists } from './Playlists/Playlists'
 import { MyTopTracks } from './MyTopTracks/MyTopTracks'
+import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
+import { useEffect, useState } from 'react'
+import { setSavedTracks } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const Profile = ({}: Props) => {
-  const { profile, myPlaylists } = useAppSelector((state) => state.spotify)
+  const { profile, myPlaylists, savedTracks } = useAppSelector(
+    (state) => state.spotify
+  )
+  const [offset, setOffset] = useState<number>(0)
+  const dispatch = useAppDispatch()
+  const { data, isSuccess, refetch } = useFetchMySavedTracksQuery(offset)
 
   const publicPlaylistsCount = myPlaylists.items.reduce(
     (total, item) => (item.public ? total + 1 : total),

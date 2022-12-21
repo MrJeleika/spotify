@@ -26,6 +26,11 @@ export const apiSlice = createApi({
           return `/me/playlists`
         }
       }),
+      fetchMySavedTracks: builder.query<any, number | void | undefined>({
+        query: (offset:number = 0) =>{
+          return `/me/tracks?limit=50&offset=${offset}`
+        }
+      }),
       fetchUserPlaylists: builder.query<Playlists, string>({
         query: (userId) => {
           return `users/${userId}/playlists`
@@ -36,7 +41,7 @@ export const apiSlice = createApi({
           return `/me/top/tracks?limit=${limit}&time_range=short_term`
         }
       }),
-      fetchPlaybackState: builder.query<PlaybackState, void>({
+      fetchPlaybackState: builder.query<PlaybackState, void | null>({
         query: () => {
             return `/me/player`
           }
@@ -50,4 +55,4 @@ export const apiSlice = createApi({
 })
 
 export const {useFetchProfileQuery, useFetchMyPlaylistQuery, useFetchUserPlaylistsQuery,
-useFetchMyTopItemsQuery, useFetchPlaybackStateQuery, useFetchPlaylistTracksQuery} = apiSlice
+useFetchMyTopItemsQuery, useFetchPlaybackStateQuery, useFetchPlaylistTracksQuery, useFetchMySavedTracksQuery} = apiSlice
