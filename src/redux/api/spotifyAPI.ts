@@ -50,9 +50,15 @@ export const apiSlice = createApi({
         query: (id) => {
             return `/playlists/${id}/tracks`
         }
+      }),
+      setPlaybackPause: builder.mutation<any, any>({
+        query: () => ({
+          url: `me/player/play`,
+          method: "PUT",
+        })
       })
   })
 })
 
 export const {useFetchProfileQuery, useFetchMyPlaylistQuery, useFetchUserPlaylistsQuery,
-useFetchMyTopItemsQuery, useFetchPlaybackStateQuery, useFetchPlaylistTracksQuery, useFetchMySavedTracksQuery} = apiSlice
+useFetchMyTopItemsQuery, useFetchPlaybackStateQuery, useFetchPlaylistTracksQuery, useFetchMySavedTracksQuery, useSetPlaybackPauseMutation} = apiSlice
