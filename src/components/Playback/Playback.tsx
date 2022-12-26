@@ -9,14 +9,22 @@ import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { setPlaybackState } from 'redux/slices/spotifySlice'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
-import { Pause } from 'components/svg/Pause'
+import { PauseSVG } from 'components/svg/PauseSVG'
+import { PrevSongSVG } from 'components/svg/PrevSongSVG'
+import { NextSongSVG } from 'components/svg/NextSongSVG'
+import { RandomSongSVG } from 'components/svg/RandomSongSVG'
+import { RepeatSongSVG } from 'components/svg/RepeatSongSVG'
+import { LyricsSVG } from 'components/svg/LyricsSVG'
+import { QueueSVG } from 'components/svg/QueueSVG'
+import { Tooltip } from 'components/common/Preloader/Tooltip'
+import { motion } from 'framer-motion'
+import { PlaySVG } from 'components/svg/PlaySVG'
 
 interface Props {}
 
 export const Playback = ({}: Props) => {
   const [value, setValue] = useState<any>(5)
   const [pausePlayback, error] = useSetPlaybackPauseMutation()
-  console.log(error)
 
   const { playbackState } = useAppSelector((state) => state.spotify)
   const { data, isFetching, isSuccess } = useFetchPlaybackStateQuery(null, {
@@ -29,12 +37,12 @@ export const Playback = ({}: Props) => {
       setValue(playbackState.progress_ms)
     }
   }, [data])
-  console.log(data)
+
   return (
     <>
       {playbackState.item.album && (
-        <div className="w-full h-[9vh] flex items-center justify-between fixed bottom-0 p-3 bg-[#181818] z-50 border-t-2 border-[#282828]">
-          <div className="flex items-center">
+        <div className="w-full h-[100px] flex items-center justify-between fixed bottom-0 p-3 bg-[#181818] z-50 border-t-2 border-[#282828]">
+          <div className="flex w-1/3 items-center">
             <div className="w-[60px] mr-3">
               <img src={playbackState.item.album.images[0].url} alt="" />
             </div>
@@ -55,13 +63,52 @@ export const Playback = ({}: Props) => {
               </div>
             </div>
           </div>
+
           <div className="w-1/3">
-            <div className="flex justify-center mb-2">
-              <div
-                onClick={async () => await pausePlayback(null)}
-                className="bg-white p-2 rounded-full active:scale-[110%] duration-75"
+            <div className="flex justify-center items-center mb-2">
+              <motion.div
+                whileHover="hover"
+                className="group relative p-2 mx-1"
               >
-                <Pause color="#181818" />
+                <Tooltip text="Enable shuffle" />
+                <RandomSongSVG color="#5f5f5f" />
+              </motion.div>
+              <motion.div
+                whileHover="hover"
+                className="group relative p-2  mx-1"
+              >
+                <Tooltip text="Previous" />
+                <PrevSongSVG color="#5f5f5f" />
+              </motion.div>
+              {playbackState.actions.disallows.pausing ? (
+                <motion.div
+                  whileHover="hover"
+                  onClick={async () => await pausePlayback(null)}
+                  className="bg-white p-2 relative mx-1 rounded-full active:scale-[110%] duration-75"
+                >
+                  <Tooltip text="Pause" />
+                  <PlaySVG color="#181818" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  whileHover="hover"
+                  onClick={async () => await pausePlayback(null)}
+                  className="bg-white p-2 relative mx-1 rounded-full active:scale-[110%] duration-75"
+                >
+                  <Tooltip text="Resume" />
+                  <PauseSVG color="#181818" />
+                </motion.div>
+              )}
+
+              <motion.div
+                whileHover="hover"
+                className="group relative p-2 mx-1"
+              >
+                <Tooltip text="Next" />
+                <NextSongSVG color="#5f5f5f" />
+              </motion.div>
+              <div className="group p-2  mx-1">
+                <RepeatSongSVG color="#5f5f5f" />
               </div>
             </div>
             <div className="flex w-full">
@@ -93,7 +140,32 @@ export const Playback = ({}: Props) => {
               </p>
             </div>
           </div>
-          <div></div>
+
+          <div className="flex w-1/3 justify-end">
+            <div className="flex w-1/2 items-center">
+              <motion.div
+                whileHover="hover"
+                className="group relative p-2 mx-1"
+              >
+                <Tooltip text="Lyrics" />
+                <LyricsSVG color="#5f5f5f" />
+              </motion.div>
+              <motion.div
+                whileHover="hover"
+                className="group relative p-2 mx-1"
+              >
+                <Tooltip text="Queue" />
+                <QueueSVG color="#5f5f5f" />
+              </motion.div>
+              <Slider
+                min={0}
+                max={playbackState.item.duration_ms}
+                value={value}
+                onChange={(value) => setValue(value)}
+                className=" "
+              />
+            </div>
+          </div>
         </div>
       )}
     </>

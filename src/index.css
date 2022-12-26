@@ -2,41 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-#root{
+#root {
   height: 100vh;
   width: 100%;
 }
 
 @layer components {
-  .big-card-item{
+  .big-card-item {
     width: calc(16.666666% - 2rem);
   }
-  @media (max-width:1536px){
-    .big-card-item{
+  @media (max-width: 1536px) {
+    .big-card-item {
       width: calc(20% - 2rem);
     }
   }
-  @media (max-width:1280px){
-    .big-card-item{
+  @media (max-width: 1280px) {
+    .big-card-item {
       width: calc(25% - 2rem);
     }
   }
-  @media (max-width:1024px){
-    .big-card-item{
+  @media (max-width: 1024px) {
+    .big-card-item {
       width: calc(25% - 1rem);
     }
   }
-  .title{
+  .title {
     color: white;
     margin-bottom: 4px;
     font-weight: bold;
     font-size: 1.5rem;
     line-height: 2;
   }
-  .subtitle{
-    color: #5F5F5F;
+  .subtitle {
+    color: #5f5f5f;
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 12px;
+  }
+  .secondary-gradient {
+    background-size: 20px;
+    background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(#18181b4d),
+      to(#18181b),
+      color-stop(0.3, #18181bef)
+    );
   }
 }

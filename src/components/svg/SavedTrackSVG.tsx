@@ -3,7 +3,7 @@ interface Props {
   key?: number
 }
 
-export const SavedTrack = ({ color }: Props) => {
+export const SavedTrackSVG = ({ color }: Props) => {
   return (
     <svg
       role="img"

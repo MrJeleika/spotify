@@ -2,7 +2,7 @@ interface Props {
   color?: string
 }
 
-export const Pause = ({ color }: Props) => {
+export const PauseSVG = ({ color }: Props) => {
   return (
     <svg
       role="img"

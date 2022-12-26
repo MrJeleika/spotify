@@ -2,7 +2,7 @@ interface Props {
   color?: string
 }
 
-export const ProfileList = ({ color }: Props) => {
+export const ProfileListSVG = ({ color }: Props) => {
   return (
     <svg
       role="img"

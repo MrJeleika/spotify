@@ -1,4 +1,4 @@
-import { SavedTrack } from 'components/svg/SavedTrack'
+import { SavedTrackSVG } from 'components/svg/SavedTrackSVG'
 import React from 'react'
 import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
 import { useAppSelector } from 'redux/app/hooks'
@@ -45,7 +45,7 @@ export const Track = ({ track, i }: Props) => {
           <div>
             {savedTracks.items.map((savedTrack: any, i: number) =>
               savedTrack.track.id === track.id ? (
-                <SavedTrack color="#1EDC62" key={i} />
+                <SavedTrackSVG color="#1EDC62" key={i} />
               ) : null
             )}
           </div>

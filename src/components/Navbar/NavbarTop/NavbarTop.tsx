@@ -1,5 +1,5 @@
 // Components
-import { ProfileList } from 'components/svg/ProfileList'
+import { ProfileListSVG } from 'components/svg/ProfileListSVG'
 import { ProfileDropdown } from './ProfileDropdown'
 // Hooks
 import { useEffect, useRef, useState } from 'react'
@@ -13,22 +13,23 @@ interface Props {}
 
 export const NavbarTop = ({}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+  const [scrollPos, setScrollPos] = useState<number>(2)
   const profileRef = useRef<HTMLDivElement>(null)
   const { profile } = useAppSelector((state) => state.spotify)
   const { data, isSuccess } = useFetchProfileQuery()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (isSuccess) {
+    if (data) {
       dispatch(setProfile(data))
     }
-  }, [isSuccess])
-
+  }, [data])
   return (
-    <div className="w-full relative">
-      <div className="bg-inherit w-[80%] fixed top-0 px-7 py-4 flex justify-between">
+    <motion.div className="w-full relative">
+      <div className="bg-inherit w-[80%] z-[100] fixed top-0 px-7 py-4 flex justify-between">
         <div></div>
-        <motion.div
+        <div
           ref={profileRef}
           onClick={() => setIsOpen(!isOpen)}
           className="flex cursor-pointer relative bg-black/90 rounded-full p-[2px] items-center"
@@ -41,7 +42,7 @@ export const NavbarTop = ({}: Props) => {
           </div>
           <div className="mr-2">
             <div className={`${isOpen ? 'rotate-180' : null} duration-300`}>
-              <ProfileList color="white" />
+              <ProfileListSVG color="white" />
             </div>
           </div>
           <ProfileDropdown
@@ -49,8 +50,8 @@ export const NavbarTop = ({}: Props) => {
             setIsOpen={setIsOpen}
             isOpen={isOpen}
           />
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

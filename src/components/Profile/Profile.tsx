@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { Playlists } from './Playlists/Playlists'
 import { MyTopTracks } from './MyTopTracks/MyTopTracks'
-import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
-import { useEffect, useState } from 'react'
-import { setSavedTracks } from 'redux/slices/spotifySlice'
+
+import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
+import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 
 interface Props {}
 
@@ -11,17 +11,14 @@ export const Profile = ({}: Props) => {
   const { profile, myPlaylists, savedTracks } = useAppSelector(
     (state) => state.spotify
   )
-  const [offset, setOffset] = useState<number>(0)
-  const dispatch = useAppDispatch()
-  const { data, isSuccess, refetch } = useFetchMySavedTracksQuery(offset)
 
   const publicPlaylistsCount = myPlaylists.items.reduce(
     (total, item) => (item.public ? total + 1 : total),
     0
   )
   return (
-    <div>
-      <div className="bg-gradient-to-b pt-[80px] from-[#555555] to-[#2b2b2b] w-full">
+    <MainGradientBackground>
+      <div className="">
         <div className="flex p-7 text-white">
           <div className="rounded-full mr-7 flex lg:h-[250px] lg:w-[250px] h-[120px] w-[120px] overflow-hidden shadow-xl">
             <img
@@ -43,12 +40,14 @@ export const Profile = ({}: Props) => {
           </div>
         </div>
       </div>
-      <div className="bg-zinc-900 w-full p-5 lg:p-10">
-        <Playlists />
-      </div>
-      <div className="bg-zinc-900 w-full p-5 lg:p-10">
-        <MyTopTracks />
-      </div>
-    </div>
+      <SecondaryGradientBackground>
+        <div className="mb-10">
+          <Playlists />
+        </div>
+        <div>
+          <MyTopTracks />
+        </div>
+      </SecondaryGradientBackground>
+    </MainGradientBackground>
   )
 }

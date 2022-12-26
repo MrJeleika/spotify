@@ -1,4 +1,4 @@
-import { NoPlaylistImage } from 'components/svg/NoPlaylistImage'
+import { NoPlaylistImageSVG } from 'components/svg/NoPlaylistImageSVG'
 import { useAppSelector } from 'redux/app/hooks'
 
 interface Props {}
@@ -13,7 +13,7 @@ export const Playlists = ({}: Props) => {
           playlist.public ? (
             <div
               key={i}
-              className="big-card-item cursor-pointer bg-[#121212] flex-shrink-0 mx-2 lg:mx-4 rounded-lg p-4 pb-20 hover:bg-[#282828] duration-300"
+              className="big-card-item cursor-pointer bg-[#181818] flex-shrink-0 mx-2 lg:mx-4 rounded-lg p-4 pb-20 hover:bg-[#282828] duration-300"
             >
               <div className="w-full h-full  pb-3">
                 {playlist.images[0] ? (
@@ -24,7 +24,7 @@ export const Playlists = ({}: Props) => {
                   />
                 ) : (
                   <div className="w-full h-full flex bg-[#333333] items-center justify-center ">
-                    <NoPlaylistImage color="#b3b3b3" width="50px" />
+                    <NoPlaylistImageSVG color="#b3b3b3" width="50px" />
                   </div>
                 )}
               </div>

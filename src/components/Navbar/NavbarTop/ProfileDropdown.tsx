@@ -39,7 +39,7 @@ export const ProfileDropdown = ({ isOpen, setIsOpen, profileRef }: Props) => {
   }
 
   const variants = {
-    open: { opacity: 1, y: 0, hidden: false, display: 'block' },
+    open: { opacity: 1, y: 0, display: 'block' },
     closed: { opacity: 0, y: '-10%', transitionEnd: { display: 'none' } },
   }
 

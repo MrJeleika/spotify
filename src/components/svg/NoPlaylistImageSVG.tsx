@@ -3,7 +3,7 @@ interface Props {
   width?: string
 }
 
-export const NoPlaylistImage = ({ color, width }: Props) => {
+export const NoPlaylistImageSVG = ({ color, width }: Props) => {
   return (
     <svg
       role="img"

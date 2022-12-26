@@ -12,7 +12,7 @@ interface Props {}
 export const Dashboard = (props: Props) => {
   const profile = useAppSelector((state) => state.spotify.profile)
   return (
-    <div className="flex relative mb-[9vh]">
+    <div className="flex relative ">
       <div className="">
         <Playback />
       </div>
@@ -26,7 +26,6 @@ export const Dashboard = (props: Props) => {
           <Route path="/" element={<Profile />} />
           <Route path="user/:userId" element={<Profile />} />
         </Routes>
-        <NavLink to={`user/${profile.id}`}>adsasd</NavLink>
       </div>
     </div>
   )

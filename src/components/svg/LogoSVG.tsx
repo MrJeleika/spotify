@@ -2,7 +2,7 @@ interface Props {
   color?: string
 }
 
-export const Logo = ({ color }: Props) => {
+export const LogoSVG = ({ color }: Props) => {
   return (
     <svg className="max-w-[150px]" viewBox="0 0 1134 340">
       <title>Spotify</title>
