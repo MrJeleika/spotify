@@ -1,10 +1,12 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useEffect } from 'react'
+import { useAppDispatch } from 'redux/app/hooks'
+import { setRandomColorNum } from 'redux/slices/spotifySlice'
 
 interface Props {
   children: React.ReactNode
 }
 
-const colors: any = {
+export const gradientColors: any = {
   1: 'from-[#90444466] to-[#904444]',
   2: 'from-[#0B3B9D66] to-[#0B3B9D]',
   3: 'from-[#5F6C6866] to-[#5F6C68]',
@@ -21,10 +23,35 @@ const colors: any = {
   14: 'from-[#03717166] to-[#037171]',
   15: 'from-[#9A275A66] to-[#9A275A]',
 }
-const random = Math.floor(Math.random() * Object.keys(colors).length + 1)
+export const bgColors: any = {
+  1: '#904444',
+  2: '#0B3B9D',
+  3: '#5F6C68',
+  4: '#E6AF2E',
+  5: '#334E58',
+  6: '#005C69',
+  7: '#F5853F',
+  8: '#772014',
+  9: '#2E2E3A',
+  10: '#B0A3D4',
+  11: '#D2A1B8',
+  12: '#709255',
+  13: '#EA9E8D',
+  14: '#037171',
+  15: '#9A275A',
+}
+
+let random: number
 
 export const MainGradientBackground = ({ children }: Props) => {
-  const mainRandomColor = colors[random]
+  const dispatch = useAppDispatch()
+
+  // Set random color on every render
+  useEffect(() => {
+    random = Math.floor(Math.random() * Object.keys(gradientColors).length + 1)
+    dispatch(setRandomColorNum(random))
+  }, [])
+  const mainRandomColor = gradientColors[random]
   return (
     <div className={`bg-gradient-to-b pt-[80px] ${mainRandomColor} w-full`}>
       {children}

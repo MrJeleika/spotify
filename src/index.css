@@ -34,7 +34,7 @@
     line-height: 2;
   }
   .subtitle {
-    color: #5f5f5f;
+    color: theme('colors.gray');
     font-size: 0.875rem;
     font-weight: 600;
     margin-bottom: 12px;

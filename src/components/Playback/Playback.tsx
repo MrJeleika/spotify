@@ -24,24 +24,30 @@ interface Props {}
 
 export const Playback = ({}: Props) => {
   const [value, setValue] = useState<any>(5)
-  const [pausePlayback, error] = useSetPlaybackPauseMutation()
+  const [pausePlayback] = useSetPlaybackPauseMutation()
 
   const { playbackState } = useAppSelector((state) => state.spotify)
-  const { data, isFetching, isSuccess } = useFetchPlaybackStateQuery(null, {
-    pollingInterval: 1000,
-  })
+  const { data, isFetching, isError, isSuccess } = useFetchPlaybackStateQuery(
+    null,
+    {
+      pollingInterval: 1000,
+    }
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (data) {
       dispatch(setPlaybackState(data))
       setValue(playbackState.progress_ms)
     }
+    if (isError) {
+      console.log(isError)
+    }
   }, [data])
 
   return (
     <>
       {playbackState.item.album && (
-        <div className="w-full h-[100px] flex items-center justify-between fixed bottom-0 p-3 bg-[#181818] z-50 border-t-2 border-[#282828]">
+        <div className="w-full h-[100px] flex items-center justify-between fixed bottom-0 p-3 bg-[#181818] z-[999] border-t-2 border-[#282828]">
           <div className="flex w-1/3 items-center">
             <div className="w-[60px] mr-3">
               <img src={playbackState.item.album.images[0].url} alt="" />

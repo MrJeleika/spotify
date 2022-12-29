@@ -5,17 +5,17 @@ import { useAppSelector } from 'redux/app/hooks'
 import { Tracks } from 'types/spotifySlice'
 
 interface Props {
-  track: any
+  track: Tracks
   i: number
 }
 
-export const Track = ({ track, i }: Props) => {
+export const ProfileTrack = ({ track, i }: Props) => {
   const { savedTracks } = useAppSelector((state) => state.spotify)
   return (
-    <div className="group track-item flex rounded hover:bg-[#282828] duration- pr-5 py-2 w-full">
-      <div className="flex w-1/2">
+    <div className="group track-item flex rounded hover:bg-[#282828] pr-5 py-2 w-full">
+      <div className="flex lg:w-1/2 md:w-[60%] w-[87.5%] mx-1">
         <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
-          <p>{i}</p>
+          <p>{i + 1}</p>
         </div>
         <div className="h-[40px] w-[40px] mr-4 ">
           <img src={track.album.images[0].url} alt="" />
@@ -37,11 +37,11 @@ export const Track = ({ track, i }: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex w-1/2 items-center justify-between cursor-default">
-        <p className="text-gray group-hover:text-[white] text-sm leading-none">
+      <div className="flex lg:w-1/2 md:w-[40%] w-[12.5%] mx-1 items-center justify-between cursor-default">
+        <p className="text-gray lg:w-1/2 md:w-3/4 md:block hidden group-hover:text-[white] text-sm leading-none">
           {track.album.name}
         </p>
-        <div className="flex">
+        <div className="flex lg:w-[12.5%] md:w-1/4 w-full justify-between">
           <div>
             {savedTracks.items.map((savedTrack: any, i: number) =>
               savedTrack.track.id === track.id ? (

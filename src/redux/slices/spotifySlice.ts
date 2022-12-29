@@ -1,12 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PlaybackState, Playlists, Profile, SavedTracks, SpotifyState, UserTopItems } from "../../types/spotifySlice";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  PlaybackState,
+  Playlist,
+  Playlists,
+  Profile,
+  SavedTracks,
+  SpotifyState,
+  UserTopItems,
+} from '../../types/spotifySlice'
 
 const initialState: SpotifyState = {
+  isLoading: false,
+  randomColorNum: 0,
   profile: {
     country: '',
     display_name: '',
     email: '',
-    explicit_content:{
+    explicit_content: {
       filter_enabled: false,
       filter_locked: false,
     },
@@ -19,11 +29,13 @@ const initialState: SpotifyState = {
     },
     href: '',
     id: '',
-    images: [{
-      url: '',
-      height: null,
-      width: null,
-    }],
+    images: [
+      {
+        url: '',
+        height: null,
+        width: null,
+      },
+    ],
     product: '',
     type: '',
     uri: '',
@@ -32,61 +44,61 @@ const initialState: SpotifyState = {
     items: [
       {
         collaborative: false,
-        description: "",
+        description: '',
         external_urls: {
-          spotify: ""
+          spotify: '',
         },
-        href: "",
-        id: "",
+        href: '',
+        id: '',
         images: [
           {
-            url: "",
+            url: '',
             height: null,
-            width: null
-          }
+            width: null,
+          },
         ],
-        name: "",
+        name: '',
         owner: {
           external_urls: {
-            spotify: ""
+            spotify: '',
           },
           followers: {
-            href: "",
-            total: 0
+            href: '',
+            total: 0,
           },
-          href: "",
-          id: "",
-          type: "",
-          uri: "",
-          display_name: ""
+          href: '',
+          id: '',
+          type: '',
+          uri: '',
+          display_name: '',
         },
         public: true,
-        snapshot_id: "",
+        snapshot_id: '',
         tracks: {
-          href: "",
-          total: 0
+          href: '',
+          total: 0,
         },
-        type: "",
-        uri: ""
-      }
+        type: '',
+        uri: '',
+      },
     ],
-    href: "",
+    href: '',
     limit: 20,
-    next: "",
+    next: '',
     offset: 0,
-    previous: "",
-    total: 0
+    previous: '',
+    total: 0,
   },
   myTopItems: {
     href: '',
     items: [],
     limit: 20,
-    next: "",
+    next: '',
     offset: 0,
-    previous: "",
+    previous: '',
     total: 0,
   },
-  playbackState:{
+  playbackState: {
     device: {},
     repeatState: '',
     shuffleState: '',
@@ -98,61 +110,137 @@ const initialState: SpotifyState = {
     current_playing_type: '',
     actions: {},
   },
-  playlistTracks:{
+  playlistTracks: {
     href: '',
     items: [],
     limit: 20,
-    next: "",
+    next: '',
     offset: 0,
-    previous: "",
+    previous: '',
     total: 0,
   },
-  savedTracks:{
+  savedTracks: {
     href: '',
-    items: [{
-      added_at: '',
-      track: {}
-    }],
+    items: [
+      {
+        added_at: '',
+        track: {},
+      },
+    ],
     limit: 20,
-    next: "",
+    next: '',
     offset: 0,
-    previous: "",
+    previous: '',
     total: 0,
-  }
-  
+  },
+  playlist: {
+    collaborative: false,
+    description: '',
+    external_urls: {
+      spotify: '',
+    },
+    followers: {
+      href: '',
+      total: 0,
+    },
+    href: '',
+    id: '',
+    images: [
+      {
+        url: '',
+        height: null,
+        width: null,
+      },
+    ],
+    name: '',
+    owner: {},
+    public: true,
+    snapshot_id: '',
+    tracks: {
+      href: '',
+      items: [
+        {
+          added_at: '',
+          track: {},
+          added_by: {
+            external_urls: {
+              spotify: '',
+            },
+            href: '',
+            id: '',
+            type: '',
+            uri: '',
+          },
+          is_local: false,
+          primary_color: null,
+          video_thumbnail: {
+            url: '',
+          },
+        },
+      ],
+      limit: 20,
+      next: '',
+      offset: 0,
+      previous: '',
+      total: 0,
+    },
+    type: '',
+    uri: '',
+  },
 }
 
 const spotifySlice = createSlice({
   name: 'spotify',
   initialState,
-  reducers:{
+  reducers: {
     setProfile: (state, action: PayloadAction<Profile>) => {
-      state.profile = {...action.payload}
+      state.profile = { ...action.payload }
     },
     setMyPlaylists: (state, action: PayloadAction<Playlists>) => {
-      state.myPlaylists = {...action.payload}
+      state.myPlaylists = { ...action.payload }
     },
-    setMyTopItems: (state, action: PayloadAction<UserTopItems>) =>{
-      state.myTopItems = {...action.payload}
+    setMyTopItems: (state, action: PayloadAction<UserTopItems>) => {
+      state.myTopItems = { ...action.payload }
     },
-    setPlaybackState: (state, action: PayloadAction<PlaybackState>) =>{
-      state.playbackState = {...action.payload}
+    setPlaybackState: (state, action: PayloadAction<PlaybackState>) => {
+      state.playbackState = { ...action.payload }
     },
-    setPlaylistTracks: (state, action: PayloadAction<UserTopItems>) =>{
-      state.playlistTracks = {...action.payload}
+    setPlaylistTracks: (state, action: PayloadAction<UserTopItems>) => {
+      state.playlistTracks = { ...action.payload }
     },
-    setSavedTracks: (state, action: PayloadAction<SavedTracks>) =>{
-      state.savedTracks.items = [...state.savedTracks.items, ...action.payload.items]
+    setSavedTracks: (state, action: PayloadAction<SavedTracks>) => {
+      state.savedTracks.items = [
+        ...state.savedTracks.items,
+        ...action.payload.items,
+      ]
       state.savedTracks.limit = action.payload.limit
       state.savedTracks.next = action.payload.next
       state.savedTracks.offset = action.payload.offset
       state.savedTracks.previous = action.payload.previous
       state.savedTracks.total = action.payload.total
     },
+    setPlaylist: (state, action: PayloadAction<Playlist>) => {
+      state.playlist = { ...action.payload }
+    },
+    setIsloading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
+    setRandomColorNum: (state, action: PayloadAction<number>) => {
+      state.randomColorNum = action.payload
+    },
   },
-
 })
 
 export default spotifySlice.reducer
 
-export const {setProfile, setMyPlaylists, setMyTopItems,setPlaybackState, setPlaylistTracks, setSavedTracks} = spotifySlice.actions
+export const {
+  setProfile,
+  setMyPlaylists,
+  setMyTopItems,
+  setPlaybackState,
+  setPlaylistTracks,
+  setSavedTracks,
+  setPlaylist,
+  setIsloading,
+  setRandomColorNum,
+} = spotifySlice.actions

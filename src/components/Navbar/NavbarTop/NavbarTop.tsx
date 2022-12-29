@@ -2,32 +2,64 @@
 import { ProfileListSVG } from 'components/svg/ProfileListSVG'
 import { ProfileDropdown } from './ProfileDropdown'
 // Hooks
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
 import { useFetchProfileQuery } from 'redux/api/spotifyAPI'
 import { setProfile } from 'redux/slices/spotifySlice'
+import { bgColors } from 'components/common/MainGradientBackground/MainGradientBackground'
 
 interface Props {}
 
 export const NavbarTop = ({}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [isScrolled, setIsScrolled] = useState<boolean>(false)
-  const [scrollPos, setScrollPos] = useState<number>(2)
   const profileRef = useRef<HTMLDivElement>(null)
-  const { profile } = useAppSelector((state) => state.spotify)
+  const { profile, randomColorNum } = useAppSelector((state) => state.spotify)
   const { data, isSuccess } = useFetchProfileQuery()
   const dispatch = useAppDispatch()
+
+  const navbarRef = useRef<HTMLDivElement>(null)
+  const [opacity, setOpacity] = useState<string>('00')
 
   useEffect(() => {
     if (data) {
       dispatch(setProfile(data))
     }
   }, [data])
+
+  useEffect(() => {
+    const scroll = () => {
+      const temp = window.scrollY / 400
+      if (temp < 1) {
+        setOpacity(numberToHexOpacity(temp))
+      } else {
+        setOpacity(numberToHexOpacity(1))
+      }
+    }
+
+    window.addEventListener('scroll', scroll)
+    return () => {
+      window.removeEventListener('scroll', scroll)
+    }
+  }, [])
+
+  const numberToHexOpacity = (opacity: number): string => {
+    // First, multiply the opacity value by 255 to get the 8-bit value
+    const opacity8bit = Math.round(opacity * 255)
+    // Convert the 8-bit value to a hexadecimal string
+    const opacityHex = opacity8bit.toString(16).padStart(2, '0')
+    return `${opacityHex}`
+  }
+  const backgroundColor = bgColors[randomColorNum]
+
   return (
     <motion.div className="w-full relative">
-      <div className="bg-inherit w-[80%] z-[100] fixed top-0 px-7 py-4 flex justify-between">
+      <div
+        style={{ background: `${backgroundColor}${opacity}` }}
+        ref={navbarRef}
+        className={` w-[80%] z-[999] fixed top-0 px-7 py-4 flex justify-between`}
+      >
         <div></div>
         <div
           ref={profileRef}

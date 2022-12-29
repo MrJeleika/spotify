@@ -7,10 +7,12 @@ import './index.css'
 import App from './App'
 // Store
 import { store } from './redux/app/store'
+import { ScrollToTop } from 'components/common/ScrollToTop/ScrollToTop'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <BrowserRouter>
     <Provider store={store}>
+      <ScrollToTop />
       <App />
     </Provider>
   </BrowserRouter>

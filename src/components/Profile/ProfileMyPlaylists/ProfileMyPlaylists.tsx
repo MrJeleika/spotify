@@ -1,9 +1,11 @@
+import { Card } from 'components/common/Card/Card'
 import { NoPlaylistImageSVG } from 'components/svg/NoPlaylistImageSVG'
+import { NavLink } from 'react-router-dom'
 import { useAppSelector } from 'redux/app/hooks'
 
 interface Props {}
 
-export const Playlists = ({}: Props) => {
+export const ProfileMyPlaylists = ({}: Props) => {
   const playlists = useAppSelector((state) => state.spotify.myPlaylists)
   return (
     <div>
@@ -11,11 +13,8 @@ export const Playlists = ({}: Props) => {
       <div className="flex w-full overflow-hidden">
         {playlists.items.map((playlist, i) =>
           playlist.public ? (
-            <div
-              key={i}
-              className="big-card-item cursor-pointer bg-[#181818] flex-shrink-0 mx-2 lg:mx-4 rounded-lg p-4 pb-20 hover:bg-[#282828] duration-300"
-            >
-              <div className="w-full h-full  pb-3">
+            <Card i={i} key={i} type={'playlist'} item={playlist}>
+              <div className="w-full h-full pb-3">
                 {playlist.images[0] ? (
                   <img
                     src={playlist.images[0].url}
@@ -28,9 +27,8 @@ export const Playlists = ({}: Props) => {
                   </div>
                 )}
               </div>
-
               <h1 className="text-white font-bold">{playlist.name}</h1>
-            </div>
+            </Card>
           ) : null
         )}
       </div>

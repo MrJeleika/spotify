@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { Playlists } from './Playlists/Playlists'
-import { MyTopTracks } from './MyTopTracks/MyTopTracks'
+import { ProfileMyPlaylists } from './ProfileMyPlaylists/ProfileMyPlaylists'
+import { ProfileTopTracks } from './ProfileTopTracks/ProfileTopTracks'
 
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
+import { useEffect, useState } from 'react'
 
 interface Props {}
 
@@ -42,10 +43,10 @@ export const Profile = ({}: Props) => {
       </div>
       <SecondaryGradientBackground>
         <div className="mb-10">
-          <Playlists />
+          <ProfileMyPlaylists />
         </div>
         <div>
-          <MyTopTracks />
+          <ProfileTopTracks />
         </div>
       </SecondaryGradientBackground>
     </MainGradientBackground>
