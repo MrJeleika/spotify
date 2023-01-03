@@ -211,6 +211,19 @@ export interface Playlist {
   uri: string
 }
 
+export interface AvailableDevices {
+  devices: Device[]
+}
+export interface Device {
+  id: string
+  is_active: boolean
+  is_private_session: boolean
+  is_restricted: boolean
+  name: string
+  type: string
+  volume_percent: number
+}
+
 export interface SpotifyState {
   profile: Profile
   myPlaylists: Playlists
@@ -221,4 +234,6 @@ export interface SpotifyState {
   playlist: Playlist
   isLoading: boolean
   randomColorNum: number
+  availableDevices: AvailableDevices
+  noDeviceError: boolean
 }

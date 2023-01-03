@@ -1,7 +1,11 @@
 import { SavedTrackSVG } from 'components/svg/SavedTrackSVG'
-import React from 'react'
-import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
+import React, { useEffect } from 'react'
+import {
+  useFetchMySavedTracksQuery,
+  usePlayTrackMutation,
+} from 'redux/api/spotifyAPI'
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { setDeviceError } from 'redux/slices/spotifySlice'
 import { Tracks } from 'types/spotifySlice'
 
 interface Props {
@@ -10,9 +14,18 @@ interface Props {
 }
 
 export const ProfileTrack = ({ track, i }: Props) => {
+  const dispatch = useAppDispatch()
+  const [playTrack, { error }] = usePlayTrackMutation()
+  useEffect(() => {
+    if (error) dispatch(setDeviceError(true))
+  }, [error])
+
   const { savedTracks } = useAppSelector((state) => state.spotify)
   return (
-    <div className="group track-item flex rounded hover:bg-[#282828] pr-5 py-2 w-full">
+    <div
+      onClick={() => playTrack({ uris: [`${track.uri}`] })}
+      className="group track-item flex rounded hover:bg-[#282828] pr-5 py-2 w-full"
+    >
       <div className="flex lg:w-1/2 md:w-[60%] w-[87.5%] mx-1">
         <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
           <p>{i + 1}</p>

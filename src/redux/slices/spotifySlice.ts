@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
+  AvailableDevices,
   PlaybackState,
   Playlist,
   Playlists,
@@ -12,6 +13,7 @@ import {
 const initialState: SpotifyState = {
   isLoading: false,
   randomColorNum: 0,
+  noDeviceError: false,
   profile: {
     country: '',
     display_name: '',
@@ -187,6 +189,19 @@ const initialState: SpotifyState = {
     type: '',
     uri: '',
   },
+  availableDevices: {
+    devices: [
+      {
+        id: '',
+        name: '',
+        is_active: false,
+        is_private_session: false,
+        is_restricted: false,
+        type: '',
+        volume_percent: 50,
+      },
+    ],
+  },
 }
 
 const spotifySlice = createSlice({
@@ -228,6 +243,12 @@ const spotifySlice = createSlice({
     setRandomColorNum: (state, action: PayloadAction<number>) => {
       state.randomColorNum = action.payload
     },
+    setAvailableDevices: (state, action: PayloadAction<AvailableDevices>) => {
+      state.availableDevices = { ...action.payload }
+    },
+    setDeviceError: (state, action: PayloadAction<boolean>) => {
+      state.noDeviceError = action.payload
+    },
   },
 })
 
@@ -243,4 +264,6 @@ export const {
   setPlaylist,
   setIsloading,
   setRandomColorNum,
+  setDeviceError,
+  setAvailableDevices,
 } = spotifySlice.actions

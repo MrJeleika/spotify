@@ -58,7 +58,7 @@ export const NavbarTop = ({}: Props) => {
       <div
         style={{ background: `${backgroundColor}${opacity}` }}
         ref={navbarRef}
-        className={` w-[80%] z-[999] fixed top-0 px-7 py-4 flex justify-between`}
+        className={` w-[80%] z-[550] fixed top-0 px-7 py-4 flex justify-between`}
       >
         <div></div>
         <div

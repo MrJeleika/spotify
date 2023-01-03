@@ -24,7 +24,7 @@ export const gradientColors: any = {
   15: 'from-[#9A275A66] to-[#9A275A]',
 }
 export const bgColors: any = {
-  1: '#904444',
+  1: '#000000',
   2: '#0B3B9D',
   3: '#5F6C68',
   4: '#E6AF2E',
@@ -39,6 +39,7 @@ export const bgColors: any = {
   13: '#EA9E8D',
   14: '#037171',
   15: '#9A275A',
+  16: '#904444',
 }
 
 let random: number
@@ -50,6 +51,9 @@ export const MainGradientBackground = ({ children }: Props) => {
   useEffect(() => {
     random = Math.floor(Math.random() * Object.keys(gradientColors).length + 1)
     dispatch(setRandomColorNum(random))
+    return () => {
+      dispatch(setRandomColorNum(1))
+    }
   }, [])
   const mainRandomColor = gradientColors[random]
   return (

@@ -27,9 +27,14 @@ export const Login = () => {
   return (
     <div className="w-full h-full bg-background flex flex-col items-center justify-center">
       <h1 className="text-5xl mb-5 text-white text-center">Login to Spotify</h1>
+      <h1 className="text-3xl mb-5 text-white text-center">
+        To connect player: open <span className="text-green">Spotify app</span>,
+        click available devices and choose{' '}
+        <span className="text-green">My React app</span>
+      </h1>
       <a
-        className="bg-green-500 px-10 py-5 text-white text-xl rounded-3xl"
-        href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=user-read-currently-playing%20user-modify-playback-state%20user-read-playback-state%20ugc-image-upload%20app-remote-control%20playlist-read-private%20playlist-read-collaborative%20playlist-modify-private%20playlist-modify-public%20user-follow-modify%20user-follow-read%20user-top-read%20user-read-recently-played%20user-library-modify%20user-library-read`}
+        className="bg-green px-10 py-5 text-white text-xl rounded-3xl"
+        href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=user-read-currently-playing%20user-modify-playback-state%20user-read-playback-state%20ugc-image-upload%20app-remote-control%20playlist-read-private%20playlist-read-collaborative%20playlist-modify-private%20playlist-modify-public%20user-follow-modify%20user-follow-read%20user-top-read%20user-read-recently-played%20user-library-modify%20user-library-read%20streaming%20user-read-private%20user-read-email`}
       >
         LOGIN
       </a>
