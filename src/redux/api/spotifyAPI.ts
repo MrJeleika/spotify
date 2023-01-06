@@ -17,6 +17,7 @@ export const apiSlice = createApi({
       return headers
     },
   }),
+  tagTypes: ['Queue'],
   endpoints: (builder) => ({
     fetchProfile: builder.query<Profile, void | null>({
       query: () => {
@@ -38,9 +39,14 @@ export const apiSlice = createApi({
         return `users/${userId}/playlists`
       },
     }),
-    fetchMyTopItems: builder.query<UserTopItems, number>({
+    fetchMyTopTracks: builder.query<UserTopItems, number>({
       query: (limit = 4) => {
         return `/me/top/tracks?limit=${limit}&time_range=short_term`
+      },
+    }),
+    fetchMyTopArtist: builder.query<UserTopItems, number>({
+      query: (limit = 10) => {
+        return `/me/top/artists?limit=${limit}&time_range=short_term`
       },
     }),
     fetchPlaybackState: builder.query<PlaybackState, void | null>({
@@ -93,10 +99,16 @@ export const apiSlice = createApi({
         return `/me/player/devices`
       },
     }),
+    fetchMyFollowedArtists: builder.query<any, void | undefined>({
+      query: () => {
+        return `/me/following?type=artist&limit=50`
+      },
+    }),
     transferPlayback: builder.mutation<any, string[]>({
       query: (id) => ({
-        url: `me/player?device_ids=${id}`,
+        url: `me/player`,
         method: 'PUT',
+        body: { device_ids: id, play: true },
       }),
     }),
     setVolume: builder.mutation<any, number>({
@@ -112,6 +124,17 @@ export const apiSlice = createApi({
         body: body,
       }),
     }),
+    fetchMyPlaybackQueue: builder.query<any, void | undefined>({
+      query: () => `/me/player/queue`,
+      providesTags: ['Queue'],
+    }),
+    addTrackToQueue: builder.mutation<any, string>({
+      query: (uri) => ({
+        url: `me/player/queue?uri=${uri}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Queue'],
+    }),
   }),
 })
 
@@ -119,7 +142,7 @@ export const {
   useFetchProfileQuery,
   useFetchMyPlaylistQuery,
   useFetchUserPlaylistsQuery,
-  useFetchMyTopItemsQuery,
+  useFetchMyTopTracksQuery,
   useFetchPlaybackStateQuery,
   useFetchPlaylistTracksQuery,
   useFetchMySavedTracksQuery,
@@ -133,4 +156,8 @@ export const {
   useTransferPlaybackMutation,
   useSetVolumeMutation,
   usePlayTrackMutation,
+  useFetchMyTopArtistQuery,
+  useFetchMyFollowedArtistsQuery,
+  useFetchMyPlaybackQueueQuery,
+  useAddTrackToQueueMutation,
 } = apiSlice

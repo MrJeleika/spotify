@@ -6,8 +6,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
-import { useFetchProfileQuery } from 'redux/api/spotifyAPI'
-import { setProfile } from 'redux/slices/spotifySlice'
+import {
+  useFetchMyFollowedArtistsQuery,
+  useFetchProfileQuery,
+} from 'redux/api/spotifyAPI'
+import { setMyFollowedArtists, setProfile } from 'redux/slices/spotifySlice'
 import { bgColors } from 'components/common/MainGradientBackground/MainGradientBackground'
 
 interface Props {}
@@ -17,6 +20,8 @@ export const NavbarTop = ({}: Props) => {
   const profileRef = useRef<HTMLDivElement>(null)
   const { profile, randomColorNum } = useAppSelector((state) => state.spotify)
   const { data, isSuccess } = useFetchProfileQuery()
+  const { data: myFollowedData } = useFetchMyFollowedArtistsQuery()
+
   const dispatch = useAppDispatch()
 
   const navbarRef = useRef<HTMLDivElement>(null)
@@ -27,6 +32,12 @@ export const NavbarTop = ({}: Props) => {
       dispatch(setProfile(data))
     }
   }, [data])
+
+  useEffect(() => {
+    if (myFollowedData) {
+      dispatch(setMyFollowedArtists(myFollowedData))
+    }
+  }, [myFollowedData])
 
   useEffect(() => {
     const scroll = () => {

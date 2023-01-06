@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { PlaylistTrack } from 'components/Tracks/PlaylistTrack'
 import { ClockSVG } from 'components/svg/ClockSVG'
+import { DotsSVG } from 'components/svg/DotsSVG'
 
 interface Props {}
 
@@ -46,7 +47,7 @@ export const Playlist = ({}: Props) => {
       </div>
       <SecondaryGradientBackground>
         <div className="pb-10"></div>
-        <div className=" track-item flex border-b-[1px] border-gray duration- pr-5 mb-1 py-2 w-full">
+        <div className=" track-item flex border-b-[1px] border-gray pr-3 lg:pr-5  mb-1 py-2 w-full">
           <div className="flex lg:w-1/2 md:w-[60%] w-[80%] mx-1">
             <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
               <p>#</p>
@@ -66,6 +67,9 @@ export const Playlist = ({}: Props) => {
             </p>
             <div className="flex justify-end w-[12.5%]">
               <ClockSVG color="gray" />
+            </div>
+            <div className="opacity-0">
+              <DotsSVG />
             </div>
           </div>
         </div>

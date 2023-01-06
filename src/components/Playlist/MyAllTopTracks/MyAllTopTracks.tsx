@@ -2,19 +2,19 @@ import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import { BlackBackground } from 'components/common/BlackBackground/BlackBackground'
 import { ClockSVG } from 'components/svg/ClockSVG'
 import React, { useEffect } from 'react'
-import { useFetchMyTopItemsQuery } from 'redux/api/spotifyAPI'
+import { useFetchMyTopTracksQuery } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setIsloading, setMyTopItems } from 'redux/slices/spotifySlice'
+import { setIsloading, setMyTopTracks } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const MyAllTopTracks = ({}: Props) => {
   const dispatch = useAppDispatch()
-  const { myTopItems } = useAppSelector((state) => state.spotify)
-  const { data, isFetching } = useFetchMyTopItemsQuery(50)
+  const { myTopTracks } = useAppSelector((state) => state.spotify)
+  const { data, isFetching } = useFetchMyTopTracksQuery(50)
   useEffect(() => {
     if (data) {
-      dispatch(setMyTopItems(data))
+      dispatch(setMyTopTracks(data))
     }
   }, [data])
   useEffect(() => {
@@ -45,7 +45,7 @@ export const MyAllTopTracks = ({}: Props) => {
           </div>
         </div>
       </div>
-      {myTopItems.items.map((myTopTrack: any, i) => (
+      {myTopTracks.items.map((myTopTrack: any, i) => (
         <ProfileTrack track={myTopTrack} key={i} i={i} />
       ))}
     </BlackBackground>

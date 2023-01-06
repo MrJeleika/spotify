@@ -43,6 +43,7 @@ export const DevicesModal = ({
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   })
+
   useEffect(() => {
     if (data) {
       dispatch(setAvailableDevices(data))
@@ -63,22 +64,41 @@ export const DevicesModal = ({
       <div>
         {availableDevices.devices.map((device: Device, i: number) =>
           device.is_active ? (
-            <div
-              className="flex"
-              onClick={() =>
-                transferPlayback(playbackState.device.id.split(' '))
-              }
-            >
-              <div className="w-[40px] mr-2">
-                <img
-                  src="https://open.spotifycdn.com/cdn/images/device-picker-equaliser-animation.946e7243.webp"
-                  alt="img"
-                  className="max-w-full"
-                />
+            <div key={i} className="mb-3">
+              <div
+                className="flex mb-3"
+                onClick={() =>
+                  transferPlayback([playbackState.device.id.split(' ')])
+                }
+              >
+                <div className="w-[40px] mr-2">
+                  <img
+                    src="https://open.spotifycdn.com/cdn/images/device-picker-equaliser-animation.946e7243.webp"
+                    alt="img"
+                    className="max-w-full"
+                  />
+                </div>
+                <div>
+                  <h1 className="title text-lg break-keep">Current device</h1>
+                  <p className="text-green text-xs">{device.name}</p>
+                </div>
               </div>
-              <div>
-                <h1 className="title text-lg break-keep">Current device</h1>
-                <p className="text-green text-xs">{device.name}</p>
+              <h1 className="title text-base">Select device</h1>{' '}
+            </div>
+          ) : null
+        )}
+        {availableDevices.devices.map((device: Device, i: number) =>
+          !device.is_active ? (
+            <div key={i} className="mb-5 last:mb-0 cursor-pointer">
+              <div
+                className="flex mb-3 items-center"
+                onClick={() => transferPlayback([playbackState.device.id])}
+              >
+                <div className=" mr-4">
+                  <DevicesSVG color="white" size={30} />
+                </div>
+
+                <p className="text-white text-sm">{device.name}</p>
               </div>
             </div>
           ) : null

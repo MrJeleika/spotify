@@ -9,7 +9,7 @@ import {
   useSetVolumeMutation,
 } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setPlaybackState } from 'redux/slices/spotifySlice'
+import { setPlaybackState, setPlayerError } from 'redux/slices/spotifySlice'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 import { PauseSVG } from 'components/svg/PauseSVG'
@@ -50,10 +50,10 @@ export const Playback = ({}: Props) => {
   const [resumePlayback] = usePlayPlaybackMutation()
   const [skipToNextSong] = useSkipToNextSongMutation()
   const [skipToPrevSong] = useSkipToPrevSongMutation()
-  const [seekPosition, { error }] = useSeekPlaybackMutation()
+  const [seekPosition] = useSeekPlaybackMutation()
 
   const { playbackState } = useAppSelector((state) => state.spotify)
-  const { data, isError } = useFetchPlaybackStateQuery(null, {
+  const { data, error } = useFetchPlaybackStateQuery(null, {
     pollingInterval: 1000,
   })
 
@@ -63,10 +63,38 @@ export const Playback = ({}: Props) => {
       dispatch(setPlaybackState(data))
       setValue(playbackState.progress_ms)
     }
-    if (isError) {
-      console.log(isError)
-    }
+    if (
+      error &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data &&
+      'error' in error.data &&
+      typeof error.data.error === 'object' &&
+      error.data.error &&
+      'reason' in error.data.error &&
+      typeof error.data.error.reason === 'string'
+    )
+      dispatch(
+        setPlayerError({ isError: true, message: error.data.error.reason })
+      )
   }, [data])
+
+  useEffect(() => {
+    if (
+      error &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data &&
+      'error' in error.data &&
+      typeof error.data.error === 'object' &&
+      error.data.error &&
+      'reason' in error.data.error &&
+      typeof error.data.error.reason === 'string'
+    )
+      dispatch(
+        setPlayerError({ isError: true, message: error.data.error.reason })
+      )
+  }, [error])
 
   useEffect(() => {
     if (playback) setVolume(Math.floor(+stateVolume * 100))
@@ -185,14 +213,7 @@ export const Playback = ({}: Props) => {
           </div>
 
           <div className="flex w-1/3 justify-end">
-            <div className="flex w-1/2 items-center">
-              <motion.div whileHover="hover" className=" relative p-1 mx-1">
-                <Tooltip text="Lyrics" />
-                <div className="group">
-                  <LyricsSVG color="#5f5f5f" />
-                </div>
-              </motion.div>
-
+            <div className="flex w-[80%] lg:w-1/2 items-center">
               <motion.div whileHover="hover" className=" relative p-1 mx-1">
                 <Tooltip text="Queue" />
                 <div className="group">
@@ -217,7 +238,7 @@ export const Playback = ({}: Props) => {
               <Slider
                 min={0}
                 max={1}
-                step={0.05}
+                step={0.02}
                 value={stateVolume}
                 onChange={(value) => setStateVolume(value)}
                 className=" "

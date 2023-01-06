@@ -5,6 +5,8 @@ import { ProfileTopTracks } from './ProfileTopTracks/ProfileTopTracks'
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { useEffect, useState } from 'react'
+import { ProfileFollowedArtists } from './ProfileFollowedArtists/ProfileFollowedArtists'
+import { ProfileTopArtists } from './ProfileTopArtists/ProfileTopArtists'
 
 interface Props {}
 
@@ -43,10 +45,16 @@ export const Profile = ({}: Props) => {
       </div>
       <SecondaryGradientBackground>
         <div className="mb-10">
+          <ProfileTopArtists />
+        </div>
+        <div className="mb-10">
           <ProfileMyPlaylists />
         </div>
-        <div>
+        <div className="mb-10">
           <ProfileTopTracks />
+        </div>
+        <div className="">
+          <ProfileFollowedArtists />
         </div>
       </SecondaryGradientBackground>
     </MainGradientBackground>

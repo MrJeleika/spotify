@@ -224,10 +224,23 @@ export interface Device {
   volume_percent: number
 }
 
+export interface MyFollowedArtists {
+  artists: {
+    href: string
+    items: any
+    limit: number
+    next: string | null
+    cursors: {
+      after: string | null
+    }
+    total: number
+  }
+}
+
 export interface SpotifyState {
   profile: Profile
   myPlaylists: Playlists
-  myTopItems: UserTopItems
+  myTopTracks: UserTopItems
   playbackState: PlaybackState
   playlistTracks: UserTopItems
   savedTracks: SavedTracks | any
@@ -235,5 +248,11 @@ export interface SpotifyState {
   isLoading: boolean
   randomColorNum: number
   availableDevices: AvailableDevices
-  noDeviceError: boolean
+  playerError: {
+    isError: boolean
+    message: string
+  }
+
+  myFollowedArtists: MyFollowedArtists
+  myTopArtists: UserTopItems
 }

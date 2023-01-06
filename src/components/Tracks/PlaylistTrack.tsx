@@ -1,12 +1,14 @@
+import { DotsSVG } from 'components/svg/DotsSVG'
+import { PlaySVG } from 'components/svg/PlaySVG'
 import { SavedTrackSVG } from 'components/svg/SavedTrackSVG'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   useFetchMySavedTracksQuery,
   usePlayTrackMutation,
 } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setDeviceError } from 'redux/slices/spotifySlice'
-import { Tracks } from 'types/spotifySlice'
+import { setPlayerError } from 'redux/slices/spotifySlice'
+import { TrackOptions } from './TrackOptions/TrackOptions'
 
 interface Props {
   track: any
@@ -16,22 +18,44 @@ interface Props {
 export const PlaylistTrack = ({ track, i }: Props) => {
   const { playlist, savedTracks } = useAppSelector((state) => state.spotify)
   const dispatch = useAppDispatch()
-
+  const optionsRef = useRef<HTMLDivElement>(null)
   const [playTrack, { error }] = usePlayTrackMutation()
   const date = new Date(track.added_at)
   useEffect(() => {
-    if (error) dispatch(setDeviceError(true))
+    if (
+      error &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data &&
+      'error' in error.data &&
+      typeof error.data.error === 'object' &&
+      error.data.error &&
+      'reason' in error.data.error &&
+      typeof error.data.error.reason === 'string'
+    )
+      dispatch(
+        setPlayerError({ isError: true, message: error.data.error.reason })
+      )
   }, [error])
+
+  const handlePlayTrack = (e: any) => {
+    if (!optionsRef.current?.contains(e.target)) {
+      playTrack({ uris: [`${track.uri}`] })
+    }
+  }
   return (
     <div key={i}>
       {track.added_at && !track.is_local && (
         <div
-          onClick={() => playTrack({ uris: [`${track.track.uri}`] })}
-          className="group track-item flex rounded hover:bg-[#282828] pr-5 py-2 w-full"
+          onClick={(e) => handlePlayTrack(e)}
+          className="group track-item flex rounded hover:bg-[#282828] pr-3 lg:pr-5  py-2 w-full"
         >
-          <div className="flex lg:w-1/2 md:w-[60%] w-[87.5%] mx-1">
+          <div className="flex lg:w-1/2 md:w-[60%] w-[80%] mx-1">
             <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
-              <p>{i + 1}</p>
+              <p className="group-hover:hidden">{i + 1}</p>
+              <div className="group-hover:block hidden">
+                <PlaySVG color="white" size={12} />
+              </div>
             </div>
 
             <div className="h-[40px] w-[40px] mr-4 ">
@@ -55,7 +79,7 @@ export const PlaylistTrack = ({ track, i }: Props) => {
               </div>
             </div>
           </div>
-          <div className="flex lg:w-1/2 md:w-[40%] w-[12.5%] mx-1 items-center justify-between cursor-default">
+          <div className="flex lg:w-1/2 md:w-[40%] w-[20%] mx-1 items-center justify-between cursor-default">
             <p className="text-gray lg:w-1/2 md:w-3/4 md:block hidden group-hover:text-[white] text-sm leading-none">
               {track.track.album.name}
             </p>
@@ -66,7 +90,7 @@ export const PlaylistTrack = ({ track, i }: Props) => {
                 })
                 .toLowerCase()}. ${date.getFullYear()}`}
             </p>
-            <div className="flex lg:w-[12.5%] md:w-1/4 w-full justify-between">
+            <div className="flex lg:w-[12.5%] md:w-1/4 w-full mr-1 justify-between">
               <div>
                 {savedTracks.items.map((savedTrack: any, i: number) =>
                   savedTrack.track.id === track.track.id ? (
@@ -81,6 +105,9 @@ export const PlaylistTrack = ({ track, i }: Props) => {
                     : ''
                 }${Math.floor((track.track.duration_ms % 60000) / 1000)}`}
               </p>
+            </div>
+            <div ref={optionsRef} className="relative">
+              <TrackOptions optionsRef={optionsRef} track={track.track} />
             </div>
           </div>
         </div>

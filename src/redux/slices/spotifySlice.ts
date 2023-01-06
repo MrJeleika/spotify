@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   AvailableDevices,
+  MyFollowedArtists,
   PlaybackState,
   Playlist,
   Playlists,
@@ -13,7 +14,10 @@ import {
 const initialState: SpotifyState = {
   isLoading: false,
   randomColorNum: 0,
-  noDeviceError: false,
+  playerError: {
+    isError: false,
+    message: '',
+  },
   profile: {
     country: '',
     display_name: '',
@@ -91,7 +95,16 @@ const initialState: SpotifyState = {
     previous: '',
     total: 0,
   },
-  myTopItems: {
+  myTopArtists: {
+    href: '',
+    items: [],
+    limit: 20,
+    next: '',
+    offset: 0,
+    previous: '',
+    total: 0,
+  },
+  myTopTracks: {
     href: '',
     items: [],
     limit: 20,
@@ -202,6 +215,18 @@ const initialState: SpotifyState = {
       },
     ],
   },
+  myFollowedArtists: {
+    artists: {
+      href: '',
+      items: [],
+      limit: 50,
+      next: '',
+      cursors: {
+        after: '',
+      },
+      total: 0,
+    },
+  },
 }
 
 const spotifySlice = createSlice({
@@ -214,8 +239,11 @@ const spotifySlice = createSlice({
     setMyPlaylists: (state, action: PayloadAction<Playlists>) => {
       state.myPlaylists = { ...action.payload }
     },
-    setMyTopItems: (state, action: PayloadAction<UserTopItems>) => {
-      state.myTopItems = { ...action.payload }
+    setMyTopTracks: (state, action: PayloadAction<UserTopItems>) => {
+      state.myTopTracks = { ...action.payload }
+    },
+    setMyTopArtists: (state, action: PayloadAction<UserTopItems>) => {
+      state.myTopArtists = { ...action.payload }
     },
     setPlaybackState: (state, action: PayloadAction<PlaybackState>) => {
       state.playbackState = { ...action.payload }
@@ -246,8 +274,14 @@ const spotifySlice = createSlice({
     setAvailableDevices: (state, action: PayloadAction<AvailableDevices>) => {
       state.availableDevices = { ...action.payload }
     },
-    setDeviceError: (state, action: PayloadAction<boolean>) => {
-      state.noDeviceError = action.payload
+    setPlayerError: (
+      state,
+      action: PayloadAction<{ isError: boolean; message: string }>
+    ) => {
+      state.playerError = { ...action.payload }
+    },
+    setMyFollowedArtists: (state, action: PayloadAction<MyFollowedArtists>) => {
+      state.myFollowedArtists = { ...action.payload }
     },
   },
 })
@@ -257,13 +291,15 @@ export default spotifySlice.reducer
 export const {
   setProfile,
   setMyPlaylists,
-  setMyTopItems,
+  setMyTopTracks,
   setPlaybackState,
   setPlaylistTracks,
   setSavedTracks,
   setPlaylist,
   setIsloading,
   setRandomColorNum,
-  setDeviceError,
+  setPlayerError,
+  setMyFollowedArtists,
   setAvailableDevices,
+  setMyTopArtists,
 } = spotifySlice.actions

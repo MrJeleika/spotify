@@ -49,7 +49,7 @@ export const ProfileDropdown = ({ isOpen, setIsOpen, profileRef }: Props) => {
       variants={variants}
       transition={{ duration: 0.3 }}
       ref={dropdownRef}
-      className={`absolute shadow-xl hidden rounded top-10 right-0 w-[200px] text-zinc-50/80 p-1 bg-zinc-800`}
+      className={`absolute shadow-xl hidden rounded top-10 right-0 w-[200px] text-white p-1 bg-zinc-800`}
     >
       <ul>
         <NavLink to={`user/${profile.id}`}>

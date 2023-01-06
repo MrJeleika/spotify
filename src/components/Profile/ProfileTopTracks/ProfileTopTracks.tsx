@@ -1,19 +1,22 @@
 import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useFetchMyTopItemsQuery } from 'redux/api/spotifyAPI'
+import { useFetchMyTopTracksQuery } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setMyTopItems } from 'redux/slices/spotifySlice'
+import { setIsloading, setMyTopTracks } from 'redux/slices/spotifySlice'
 
 export const ProfileTopTracks = () => {
-  const { myTopItems } = useAppSelector((state) => state.spotify)
+  const { myTopTracks } = useAppSelector((state) => state.spotify)
   const dispatch = useAppDispatch()
-  const { data, error, isFetching, isSuccess } = useFetchMyTopItemsQuery(4)
+  const { data, error, isFetching, isSuccess } = useFetchMyTopTracksQuery(4)
   useEffect(() => {
     if (data) {
-      dispatch(setMyTopItems(data))
+      dispatch(setMyTopTracks(data))
     }
   }, [data])
+  useEffect(() => {
+    dispatch(setIsloading(isFetching))
+  }, [isFetching])
 
   return (
     <div>
@@ -29,7 +32,7 @@ export const ProfileTopTracks = () => {
 
       <h1 className="subtitle ml-2 lg:ml-4">Only visible to you</h1>
       <div className="w-full overflow-hidden">
-        {myTopItems.items.map((myTopTrack: any, i) => (
+        {myTopTracks.items.map((myTopTrack: any, i) => (
           <ProfileTrack track={myTopTrack} key={i} i={i} />
         ))}
       </div>

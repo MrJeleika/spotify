@@ -16,12 +16,15 @@ import {
   useFetchMySavedTracksQuery,
 } from 'redux/api/spotifyAPI'
 import { setIsloading, setSavedTracks } from 'redux/slices/spotifySlice'
-import { NoDeviceError } from 'components/common/NoDeviceError/NoDeviceError'
+import { Error } from 'components/common/Error/Error'
+import { MyFollowedArtists } from 'components/Artists/MyFollowedArtists/MyFollowedArtists'
+import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
+import { Errors } from 'types/Errors'
 
 interface Props {}
 
 export const Dashboard = (props: Props) => {
-  const { profile, savedTracks, isLoading, noDeviceError } = useAppSelector(
+  const { profile, savedTracks, isLoading, playerError } = useAppSelector(
     (state) => state.spotify
   )
   //Fetch offset
@@ -40,15 +43,23 @@ export const Dashboard = (props: Props) => {
     }
   }, [savedTracksData])
   // Show Device error
-  const [showError, setShowError] = useState<boolean>(noDeviceError)
+  const [showError, setShowError] = useState<boolean>(playerError.isError)
   useEffect(() => {
-    setShowError(noDeviceError)
-    console.log(showError)
-  }, [noDeviceError])
+    setShowError(playerError.isError)
+  }, [playerError.isError])
 
   return (
     <div className="flex relative ">
-      <NoDeviceError setShow={setShowError} show={showError} />
+      {/* Error if device not connected */}
+      <Error setShow={setShowError} show={showError}>
+        {playerError.message === Errors.NO_ACTIVE_DEVICE ? (
+          <h1 className="text-white text-center text-xl">
+            To connect player: open{' '}
+            <span className="text-green">Spotify app</span>, click available
+            devices and choose <span className="text-green">My React app</span>
+          </h1>
+        ) : null}
+      </Error>
 
       <div>
         <Playback />
@@ -66,6 +77,11 @@ export const Dashboard = (props: Props) => {
           <Route path="/" element={<Profile />} />
           <Route path="user/:userId" element={<Profile />} />
           <Route path="user/:userId/top/tracks" element={<MyAllTopTracks />} />
+          <Route path="user/:userId/top/artists" element={<MyTopArtists />} />
+          <Route
+            path="user/:userId/following"
+            element={<MyFollowedArtists />}
+          />
         </Routes>
       </div>
     </div>
