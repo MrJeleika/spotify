@@ -37,6 +37,8 @@ export const TrackOptionsModal = ({
   }
 
   const [addToQueue, { error, status }] = useAddTrackToQueueMutation()
+  console.log(error)
+
   useEffect(() => {
     setIsOpen(false)
   }, [status])

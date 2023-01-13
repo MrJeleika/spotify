@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { setPlayerError } from 'redux/slices/spotifySlice'
 import { Tracks } from 'types/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
+import { HandleError } from 'components/common/Error/ErrorHandler'
 
 interface Props {
   track: Tracks
@@ -31,20 +32,7 @@ export const ProfileTrack = ({ track, i }: Props) => {
   const [playTrack, { error }] = usePlayTrackMutation()
 
   useEffect(() => {
-    if (
-      error &&
-      'data' in error &&
-      typeof error.data === 'object' &&
-      error.data &&
-      'error' in error.data &&
-      typeof error.data.error === 'object' &&
-      error.data.error &&
-      'reason' in error.data.error &&
-      typeof error.data.error.reason === 'string'
-    )
-      dispatch(
-        setPlayerError({ isError: true, message: error.data.error.reason })
-      )
+    return <HandleError error={error} />
   }, [error])
 
   const optionsRef = useRef<HTMLDivElement>(null)
