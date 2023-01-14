@@ -8,6 +8,8 @@ import { SecondaryGradientBackground } from 'components/common/SecondaryGradient
 import { PlaylistTrack } from 'components/Tracks/PlaylistTrack'
 import { ClockSVG } from 'components/svg/ClockSVG'
 import { DotsSVG } from 'components/svg/DotsSVG'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+import { PlayButton } from 'components/common/PlayButton/PlayButton'
 
 interface Props {}
 
@@ -17,11 +19,11 @@ export const Playlist = ({}: Props) => {
   const dispatch = useAppDispatch()
   const { data, isFetching } = useFetchPlaylistQuery(playlistId)
   const { playlist } = useAppSelector((state) => state.spotify)
-  useEffect(() => {
-    if (data) {
-      dispatch(setPlaylist(data))
-    }
-  }, [data])
+
+  console.log(data)
+
+  useSetFetchedData(data, setPlaylist)
+
   useEffect(() => {
     dispatch(setIsloading(isFetching))
   }, [isFetching])
@@ -46,7 +48,9 @@ export const Playlist = ({}: Props) => {
         </div>
       </div>
       <SecondaryGradientBackground>
-        <div className="pb-10"></div>
+        <div className="pb-5">
+          <PlayButton playlist={playlist} />
+        </div>
         <div className=" track-item flex border-b-[1px] border-gray pr-3 lg:pr-5  mb-1 py-2 w-full">
           <div className="flex lg:w-1/2 md:w-[60%] w-[80%] mx-1">
             <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
@@ -74,7 +78,13 @@ export const Playlist = ({}: Props) => {
           </div>
         </div>
         {playlist.tracks.items.map((track: any, i: number) => (
-          <PlaylistTrack track={track} key={i} i={i} />
+          <PlaylistTrack
+            track={track.track}
+            is_local={track.is_local}
+            added_at={track.added_at}
+            key={i}
+            i={i}
+          />
         ))}
       </SecondaryGradientBackground>
     </MainGradientBackground>

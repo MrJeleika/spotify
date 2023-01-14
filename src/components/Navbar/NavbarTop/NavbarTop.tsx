@@ -12,33 +12,23 @@ import {
 } from 'redux/api/spotifyAPI'
 import { setMyFollowedArtists, setProfile } from 'redux/slices/spotifySlice'
 import { bgColors } from 'components/common/MainGradientBackground/MainGradientBackground'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
-interface Props {}
-
-export const NavbarTop = ({}: Props) => {
+export const NavbarTop = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const { profile, randomColorNum } = useAppSelector((state) => state.spotify)
-  const { data, isSuccess } = useFetchProfileQuery()
+  const { data: profileData } = useFetchProfileQuery()
   const { data: myFollowedData } = useFetchMyFollowedArtistsQuery()
 
-  const dispatch = useAppDispatch()
-
   const navbarRef = useRef<HTMLDivElement>(null)
+  // Set profile
+  useSetFetchedData(profileData, setProfile)
+  // Set followed artists
+  useSetFetchedData(myFollowedData, setMyFollowedArtists)
+
+  // Change opacity in scroll
   const [opacity, setOpacity] = useState<string>('00')
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setProfile(data))
-    }
-  }, [data])
-
-  useEffect(() => {
-    if (myFollowedData) {
-      dispatch(setMyFollowedArtists(myFollowedData))
-    }
-  }, [myFollowedData])
-
   useEffect(() => {
     const scroll = () => {
       const temp = window.scrollY / 400
@@ -65,6 +55,7 @@ export const NavbarTop = ({}: Props) => {
   const backgroundColor = bgColors[randomColorNum]
 
   return (
+    // Change the background color based on scroll
     <motion.div className="w-full relative">
       <div
         style={{ background: `${backgroundColor}${opacity}` }}

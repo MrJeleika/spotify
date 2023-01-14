@@ -2,19 +2,15 @@
 import { useFetchMyPlaylistQuery } from 'redux/api/spotifyAPI'
 import { setMyPlaylists } from 'redux/slices/spotifySlice'
 //Hooks
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { useEffect } from 'react'
-interface Props {}
+import { useAppSelector } from 'redux/app/hooks'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
-export const Playlists = ({}: Props) => {
-  const dispatch = useAppDispatch()
-  const { data, isFetching } = useFetchMyPlaylistQuery()
+export const Playlists = () => {
+  const { data } = useFetchMyPlaylistQuery()
   const playlists = useAppSelector((state) => state.spotify.myPlaylists)
-  useEffect(() => {
-    if (data && !isFetching) {
-      dispatch(setMyPlaylists(data))
-    }
-  }, [isFetching])
+
+  useSetFetchedData(data, setMyPlaylists)
+
   return (
     <div>
       {playlists &&

@@ -36,6 +36,8 @@ export interface Profile {
   uri: string
 }
 
+
+
 export interface Playlists extends Item {
   items: [
     {
@@ -255,4 +257,5 @@ export interface SpotifyState {
 
   myFollowedArtists: MyFollowedArtists
   myTopArtists: UserTopItems
+  playbackQueue: any
 }

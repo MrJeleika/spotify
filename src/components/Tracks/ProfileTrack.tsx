@@ -28,12 +28,8 @@ interface Error {
 }
 
 export const ProfileTrack = ({ track, i }: Props) => {
-  const dispatch = useAppDispatch()
+  const { playbackState } = useAppSelector((state) => state.spotify)
   const [playTrack, { error }] = usePlayTrackMutation()
-
-  useEffect(() => {
-    return <HandleError error={error} />
-  }, [error])
 
   const optionsRef = useRef<HTMLDivElement>(null)
 
@@ -41,6 +37,12 @@ export const ProfileTrack = ({ track, i }: Props) => {
     if (!optionsRef.current?.contains(e.target)) {
       playTrack({ uris: [`${track.uri}`] })
     }
+  }
+  let isPlayingTrack = false
+  let isPaused = true
+  if (playbackState.item) {
+    isPlayingTrack = playbackState.item.id === track.id
+    isPaused = playbackState.is_playing
   }
 
   const { savedTracks } = useAppSelector((state) => state.spotify)
@@ -51,16 +53,30 @@ export const ProfileTrack = ({ track, i }: Props) => {
     >
       <div className="flex lg:w-1/2 md:w-[60%] w-[80%] mx-1">
         <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
-          <p className="group-hover:hidden">{i + 1}</p>
-          <div className="group-hover:block hidden">
-            <PlaySVG color="white" size={12} />
-          </div>
+          {isPlayingTrack && isPaused ? (
+            <img
+              src="https://open.spotifycdn.com/cdn/images/device-picker-equaliser-animation.946e7243.webp"
+              alt="img"
+              className="w-[20px] "
+            />
+          ) : (
+            <>
+              <p className="group-hover:hidden">{i + 1}</p>
+              <div className="group-hover:block hidden">
+                <PlaySVG color="white" size={12} />
+              </div>
+            </>
+          )}
         </div>
         <div className="h-[40px] w-[40px] mr-4 ">
           <img src={track.album.images[0].url} alt="" />
         </div>
         <div>
-          <p className="text-[white] my-1 leading-none cursor-default">
+          <p
+            className={`${
+              playbackState.item.id === track.id ? 'text-green' : 'text-white'
+            }  break-normal overflow-hidden my-1 leading-none cursor-default`}
+          >
             {track.name}
           </p>
           <div className="flex">
@@ -85,7 +101,9 @@ export const ProfileTrack = ({ track, i }: Props) => {
             {savedTracks.items.map((savedTrack: any, i: number) =>
               savedTrack.track.id === track.id ? (
                 <SavedTrackSVG color="#1EDC62" key={i} />
-              ) : null
+              ) : (
+                <div className="w-[16px]"></div>
+              )
             )}
           </div>
           <p className="text-gray text-sm leading-none">

@@ -11,11 +11,11 @@ interface Error {
   }
   status: number
 }
-interface Props {
+interface IProps {
   error: Error
 }
 
-export const HandleError = ({ error }) => {
+export const HandleError = ({ error }: IProps) => {
   const dispatch = useAppDispatch()
 
   if (

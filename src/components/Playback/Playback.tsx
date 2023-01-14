@@ -28,25 +28,15 @@ import {
 } from 'react-spotify-web-playback-sdk'
 import { DevicesSVG } from 'components/svg/DevicesSVG'
 import { DevicesModal } from './DevicesModal/DevicesModal'
+import { PlaybackTrackInfo } from './Elements/PlaybackTrackInfo'
+import { PlaybackDeviceControl } from './Elements/PlaybackDeviceControl'
 
 interface Props {}
 
 export const Playback = ({}: Props) => {
-  const player = useSpotifyPlayer()
-  const playback = usePlaybackState()
-
-  const initialVolume = player?.getVolume() ? player?.getVolume() : 0.5
-
-  const [stateVolume, setStateVolume] = useState<number | number[]>(
-    +initialVolume
-  )
-
-  const devicesRef = useRef<HTMLDivElement>(null)
-  const [devicesIsOpen, setDevicesIsOpen] = useState<boolean>(false)
-
   const [value, setValue] = useState<any>(0)
   const [pausePlayback] = usePausePlaybackMutation()
-  const [setVolume, { error: volumeError }] = useSetVolumeMutation()
+
   const [resumePlayback] = usePlayPlaybackMutation()
   const [skipToNextSong] = useSkipToNextSongMutation()
   const [skipToPrevSong] = useSkipToPrevSongMutation()
@@ -96,35 +86,11 @@ export const Playback = ({}: Props) => {
       )
   }, [error])
 
-  useEffect(() => {
-    if (playback) setVolume(Math.floor(+stateVolume * 100))
-  }, [stateVolume])
-
   return (
     <>
       {playbackState.timestamp > 0 && (
         <div className="w-full h-[100px] flex items-center justify-between fixed bottom-0 p-3 bg-[#181818] z-[999] border-t-2 border-[#282828]">
-          <div className="flex w-1/3 items-center">
-            <div className="w-[60px] mr-3">
-              <img src={playbackState.item.album.images[0].url} alt="" />
-            </div>
-            <div>
-              <p className="text-[white] my-1 leading-none cursor-default">
-                {playbackState.item.name}
-              </p>
-              <div className="flex">
-                {playbackState.item.artists.map((artist: any, i: number) => (
-                  <p
-                    key={i}
-                    className="text-gray text-[11px] font-bold leading-none"
-                  >
-                    {artist.name}
-                    {playbackState.item.artists.length > 1 ? ',' : null}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
+          <PlaybackTrackInfo playbackState={playbackState} />
 
           <div className="w-1/3">
             <div className="flex justify-center items-center mb-2">
@@ -212,39 +178,7 @@ export const Playback = ({}: Props) => {
             </div>
           </div>
 
-          <div className="flex w-1/3 justify-end">
-            <div className="flex w-[80%] lg:w-1/2 items-center">
-              <motion.div whileHover="hover" className=" relative p-1 mx-1">
-                <Tooltip text="Queue" />
-                <div className="group">
-                  <QueueSVG color="#5f5f5f" />
-                </div>
-              </motion.div>
-              <motion.div
-                ref={devicesRef}
-                whileHover="hover"
-                className="relative p-1 mx-1"
-                onClick={() => setDevicesIsOpen(!devicesIsOpen)}
-              >
-                <DevicesModal
-                  devicesRef={devicesRef}
-                  devicesIsOpen={devicesIsOpen}
-                  setDevicesIsOpen={setDevicesIsOpen}
-                />
-                <div className="group">
-                  <DevicesSVG color="#5f5f5f" />
-                </div>
-              </motion.div>
-              <Slider
-                min={0}
-                max={1}
-                step={0.02}
-                value={stateVolume}
-                onChange={(value) => setStateVolume(value)}
-                className=" "
-              />
-            </div>
-          </div>
+          <PlaybackDeviceControl />
         </div>
       )}
     </>

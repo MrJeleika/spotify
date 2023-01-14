@@ -1,5 +1,5 @@
 import React, { RefObject, useEffect, useRef } from 'react'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { useAppSelector } from 'redux/app/hooks'
 import { motion } from 'framer-motion'
 import {
   useFetchAvailableDevicesQuery,
@@ -8,6 +8,7 @@ import {
 import { setAvailableDevices } from 'redux/slices/spotifySlice'
 import { DevicesSVG } from 'components/svg/DevicesSVG'
 import { Device } from 'types/spotifySlice'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
 interface Props {
   devicesRef: RefObject<HTMLDivElement>
@@ -21,12 +22,12 @@ export const DevicesModal = ({
   setDevicesIsOpen,
 }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null)
-  const dispatch = useAppDispatch()
   const { availableDevices, playbackState } = useAppSelector(
     (state) => state.spotify
   )
 
   const { data } = useFetchAvailableDevicesQuery(null)
+  useSetFetchedData(data, setAvailableDevices)
 
   const [transferPlayback, { error }] = useTransferPlaybackMutation()
 
@@ -44,15 +45,11 @@ export const DevicesModal = ({
     return () => document.removeEventListener('mousedown', handler)
   })
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setAvailableDevices(data))
-    }
-  }, [data])
   const variants = {
     open: { opacity: 1, display: 'block' },
     closed: { opacity: 0, transitionEnd: { display: 'none' } },
   }
+
   return (
     <motion.div
       animate={devicesIsOpen ? 'open' : 'closed'}
@@ -83,7 +80,7 @@ export const DevicesModal = ({
                   <p className="text-green text-xs">{device.name}</p>
                 </div>
               </div>
-              <h1 className="title text-base">Select device</h1>{' '}
+              <h1 className="title text-base">Select device</h1>
             </div>
           ) : null
         )}

@@ -125,7 +125,7 @@ export const apiSlice = createApi({
       }),
     }),
     fetchMyPlaybackQueue: builder.query<any, void | undefined>({
-      query: () => `/me/player/queue`,
+      query: () => `me/player/queue`,
       providesTags: ['Queue'],
     }),
     addTrackToQueue: builder.mutation<any, string>({

@@ -227,6 +227,9 @@ const initialState: SpotifyState = {
       total: 0,
     },
   },
+  playbackQueue:{
+
+  }
 }
 
 const spotifySlice = createSlice({
@@ -283,6 +286,9 @@ const spotifySlice = createSlice({
     setMyFollowedArtists: (state, action: PayloadAction<MyFollowedArtists>) => {
       state.myFollowedArtists = { ...action.payload }
     },
+    setPlaybackQueue: (state, action: PayloadAction<any>) => {
+      state.playbackQueue = { ...action.payload }
+    },
   },
 })
 
@@ -302,4 +308,5 @@ export const {
   setMyFollowedArtists,
   setAvailableDevices,
   setMyTopArtists,
+  setPlaybackQueue,
 } = spotifySlice.actions

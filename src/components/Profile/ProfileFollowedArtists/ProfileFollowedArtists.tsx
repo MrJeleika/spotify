@@ -1,14 +1,23 @@
 import { Card } from 'components/common/Card/Card'
 import { NoPlaylistImageSVG } from 'components/svg/NoPlaylistImageSVG'
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useAppSelector } from 'redux/app/hooks'
+import { useFetchMyFollowedArtistsQuery } from 'redux/api/spotifyAPI'
+import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { setMyFollowedArtists } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const ProfileFollowedArtists = ({}: Props) => {
   const { myFollowedArtists } = useAppSelector((state) => state.spotify)
-  console.log(myFollowedArtists)
-
+  const { data, error } = useFetchMyFollowedArtistsQuery()
+  console.log(error)
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (data) {
+      dispatch(setMyFollowedArtists(data))
+    }
+  }, [])
   return (
     <div>
       <div className="w-full flex justify-between items-center">

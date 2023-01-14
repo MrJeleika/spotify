@@ -20,6 +20,7 @@ import { Error } from 'components/common/Error/Error'
 import { MyFollowedArtists } from 'components/Artists/MyFollowedArtists/MyFollowedArtists'
 import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
 import { Errors } from 'types/Errors'
+import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
 
 interface Props {}
 
@@ -47,6 +48,7 @@ export const Dashboard = (props: Props) => {
   useEffect(() => {
     setShowError(playerError.isError)
   }, [playerError.isError])
+  console.log(playerError)
 
   return (
     <div className="flex relative ">
@@ -82,6 +84,7 @@ export const Dashboard = (props: Props) => {
             path="user/:userId/following"
             element={<MyFollowedArtists />}
           />
+          <Route path="/queue" element={<PlaybackQueue />} />
         </Routes>
       </div>
     </div>
