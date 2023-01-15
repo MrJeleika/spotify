@@ -258,4 +258,5 @@ export interface SpotifyState {
   myFollowedArtists: MyFollowedArtists
   myTopArtists: UserTopItems
   playbackQueue: any
+  artistProfile: any
 }

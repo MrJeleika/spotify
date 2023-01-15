@@ -20,8 +20,6 @@ export const Playlist = ({}: Props) => {
   const { data, isFetching } = useFetchPlaylistQuery(playlistId)
   const { playlist } = useAppSelector((state) => state.spotify)
 
-  console.log(data)
-
   useSetFetchedData(data, setPlaylist)
 
   useEffect(() => {

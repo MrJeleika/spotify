@@ -27,6 +27,7 @@ export const PlaybackQueue = () => {
         <ProfileTrack track={playbackState.item} i={0} />
       </div>
       <h1 className="subtitle">Next in queue</h1>
+
       {playbackQueue.queue &&
         playbackQueue.queue.map((track: Tracks, i: number) =>
           i < 10 ? <ProfileTrack track={track} i={i} /> : null

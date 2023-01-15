@@ -8,8 +8,9 @@ interface Props {
 
 export const PlayButton = ({ playlist }: Props) => {
   const [playTrack, error] = usePlayTrackMutation()
+  console.log(playlist)
+
   const uris = playlist.tracks.items.map((track) => track.track.uri)
-  console.log(error)
 
   const handlePlayTrack = (e: any) => {
     playTrack({ uris: uris })

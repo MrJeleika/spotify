@@ -11,6 +11,7 @@ import {
   UserTopItems,
 } from '../../types/spotifySlice'
 
+
 const initialState: SpotifyState = {
   isLoading: false,
   randomColorNum: 0,
@@ -229,6 +230,9 @@ const initialState: SpotifyState = {
   },
   playbackQueue:{
 
+  },
+  artistProfile:{
+
   }
 }
 
@@ -289,6 +293,9 @@ const spotifySlice = createSlice({
     setPlaybackQueue: (state, action: PayloadAction<any>) => {
       state.playbackQueue = { ...action.payload }
     },
+    setArtistProfile: (state, action: PayloadAction<any>) => {
+      state.artistProfile = { ...action.payload }
+    },
   },
 })
 
@@ -309,4 +316,5 @@ export const {
   setAvailableDevices,
   setMyTopArtists,
   setPlaybackQueue,
+  setArtistProfile,
 } = spotifySlice.actions

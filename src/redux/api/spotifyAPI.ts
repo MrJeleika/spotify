@@ -122,7 +122,9 @@ export const apiSlice = createApi({
         url: `me/player/play`,
         method: 'PUT',
         body: body,
+        providesTags: ['Queue'],
       }),
+
     }),
     fetchMyPlaybackQueue: builder.query<any, void | undefined>({
       query: () => `me/player/queue`,
@@ -134,6 +136,9 @@ export const apiSlice = createApi({
         method: 'POST',
       }),
       invalidatesTags: ['Queue'],
+    }),
+    fetchArtistProfile: builder.query<any, string | undefined>({
+      query: (id) => `artists/${id}`,
     }),
   }),
 })
@@ -160,4 +165,5 @@ export const {
   useFetchMyFollowedArtistsQuery,
   useFetchMyPlaybackQueueQuery,
   useAddTrackToQueueMutation,
+  useFetchArtistProfileQuery,
 } = apiSlice

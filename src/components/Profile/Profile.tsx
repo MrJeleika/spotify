@@ -4,7 +4,6 @@ import { ProfileTopTracks } from './ProfileTopTracks/ProfileTopTracks'
 
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
-import { useEffect, useState } from 'react'
 import { ProfileFollowedArtists } from './ProfileFollowedArtists/ProfileFollowedArtists'
 import { ProfileTopArtists } from './ProfileTopArtists/ProfileTopArtists'
 

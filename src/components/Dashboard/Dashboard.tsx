@@ -21,6 +21,7 @@ import { MyFollowedArtists } from 'components/Artists/MyFollowedArtists/MyFollow
 import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
 import { Errors } from 'types/Errors'
 import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
+import { ArtistProfile } from 'components/Artists/ArtistProfile/ArtistProfile'
 
 interface Props {}
 
@@ -85,6 +86,7 @@ export const Dashboard = (props: Props) => {
             element={<MyFollowedArtists />}
           />
           <Route path="/queue" element={<PlaybackQueue />} />
+          <Route path="artist/:artistId" element={<ArtistProfile />} />
         </Routes>
       </div>
     </div>

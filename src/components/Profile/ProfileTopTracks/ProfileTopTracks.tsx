@@ -24,7 +24,7 @@ export const ProfileTopTracks = () => {
         <h1 className="title ml-2 lg:ml-4">Top tracks this month</h1>
         <NavLink
           to={'top/tracks'}
-          className="text-gray text-md font-bold uppercase hover:border-b-[1px] hover:border-[#5f5f5] cursor-pointer"
+          className="text-gray text-md font-bold uppercase border-b-[1px] border-[#00000000] hover:border-gray cursor-pointer"
         >
           SHOW ALL
         </NavLink>
