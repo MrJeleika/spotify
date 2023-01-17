@@ -1,5 +1,6 @@
 import { Card } from 'components/common/Card/Card'
-import { useEffect } from 'react'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+
 import { NavLink } from 'react-router-dom'
 import { useFetchMyTopArtistQuery } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
@@ -8,15 +9,10 @@ import { setMyTopArtists } from 'redux/slices/spotifySlice'
 interface Props {}
 
 export const ProfileTopArtists = (props: Props) => {
-  const dispatch = useAppDispatch()
-  const { data } = useFetchMyTopArtistQuery(10)
+  const { data, isFetching } = useFetchMyTopArtistQuery(10)
   const { myTopArtists } = useAppSelector((state) => state.spotify)
 
-  useEffect(() => {
-    if (data) {
-      dispatch(setMyTopArtists(data))
-    }
-  }, [data])
+  useSetFetchedData(data, setMyTopArtists, isFetching)
 
   return (
     <div>
@@ -31,7 +27,7 @@ export const ProfileTopArtists = (props: Props) => {
       </div>
       <h1 className="subtitle ml-2 lg:ml-4">Only visible to you</h1>
       <div className="flex w-full overflow-hidden">
-        {myTopArtists.items.map((artist: any, i: number) => (
+        {myTopArtists.items.map((artist, i: number) => (
           <Card
             i={i}
             key={i}

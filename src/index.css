@@ -26,6 +26,11 @@
       width: calc(25% - 1rem);
     }
   }
+  @media (max-width: 768px) {
+    .big-card-item {
+      width: calc(50% - 1rem);
+    }
+  }
   .title {
     color: white;
     margin-bottom: 4px;

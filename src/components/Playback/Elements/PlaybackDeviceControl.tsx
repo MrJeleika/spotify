@@ -1,4 +1,3 @@
-import { PlaybackState } from 'types/spotifySlice'
 import { motion } from 'framer-motion'
 import { QueueSVG } from 'components/svg/QueueSVG'
 import { Tooltip } from 'components/common/Tooltip/Tooltip'

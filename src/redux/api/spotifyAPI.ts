@@ -1,11 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
-  PlaybackState,
-  Playlists,
-  Profile,
-  UserTopItems,
+  IAlbums,
+  IArtist,
+  IPlaybackState,
+  IPlaylist,
+  IPlaylists,
+  IProfile,
+  ITrack,
+  IUserTopItems,
 } from '../../types/spotifySlice'
 import { RootState } from '../app/store'
+
+interface IArtistAlbums{
+  id: string
+  type: string
+  offset: number
+}
 
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
@@ -19,12 +29,12 @@ export const apiSlice = createApi({
   }),
   tagTypes: ['Queue'],
   endpoints: (builder) => ({
-    fetchProfile: builder.query<Profile, void | null>({
+    fetchProfile: builder.query<IProfile, void | null>({
       query: () => {
         return `/me`
       },
     }),
-    fetchMyPlaylist: builder.query<Playlists, void>({
+    fetchMyPlaylist: builder.query<IPlaylists, void>({
       query: () => {
         return `/me/playlists`
       },
@@ -34,22 +44,22 @@ export const apiSlice = createApi({
         return `/me/tracks?limit=50&offset=${offset}`
       },
     }),
-    fetchUserPlaylists: builder.query<Playlists, string>({
+    fetchUserPlaylists: builder.query<IPlaylists, string>({
       query: (userId) => {
         return `users/${userId}/playlists`
       },
     }),
-    fetchMyTopTracks: builder.query<UserTopItems, number>({
+    fetchMyTopTracks: builder.query<IUserTopItems, number>({
       query: (limit = 4) => {
         return `/me/top/tracks?limit=${limit}&time_range=short_term`
       },
     }),
-    fetchMyTopArtist: builder.query<UserTopItems, number>({
+    fetchMyTopArtist: builder.query<IUserTopItems, number>({
       query: (limit = 10) => {
         return `/me/top/artists?limit=${limit}&time_range=short_term`
       },
     }),
-    fetchPlaybackState: builder.query<PlaybackState, void | null>({
+    fetchPlaybackState: builder.query<IPlaybackState, void | null>({
       query: () => {
         return `/me/player`
       },
@@ -137,8 +147,14 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Queue'],
     }),
-    fetchArtistProfile: builder.query<any, string | undefined>({
+    fetchArtistProfile: builder.query<IArtist, string | undefined>({
       query: (id) => `artists/${id}`,
+    }),
+    fetchArtistTopTracks: builder.query<ITrack[], string | undefined>({
+      query: (id) => `artists/${id}/top-tracks?country=UA`,
+    }),
+    fetchArtistAlbums: builder.query<IAlbums, Object | undefined>({
+      query: ({id, type, offset}: IArtistAlbums) => `artists/${id}/albums?market=UA&limit=50&include_groups=${type}&offset=${offset}`,
     }),
   }),
 })
@@ -166,4 +182,6 @@ export const {
   useFetchMyPlaybackQueueQuery,
   useAddTrackToQueueMutation,
   useFetchArtistProfileQuery,
+  useFetchArtistTopTracksQuery,
+  useFetchArtistAlbumsQuery,
 } = apiSlice

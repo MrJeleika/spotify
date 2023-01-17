@@ -18,14 +18,16 @@ export const NavbarTop = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const { profile, randomColorNum } = useAppSelector((state) => state.spotify)
-  const { data: profileData } = useFetchProfileQuery()
-  const { data: myFollowedData } = useFetchMyFollowedArtistsQuery()
+  const { data: profileData, isFetching: profileIsFetching } =
+    useFetchProfileQuery()
+  const { data: myFollowedData, isFetching: followedIsFetching } =
+    useFetchMyFollowedArtistsQuery()
 
   const navbarRef = useRef<HTMLDivElement>(null)
   // Set profile
-  useSetFetchedData(profileData, setProfile)
+  useSetFetchedData(profileData, setProfile, profileIsFetching)
   // Set followed artists
-  useSetFetchedData(myFollowedData, setMyFollowedArtists)
+  useSetFetchedData(myFollowedData, setMyFollowedArtists, followedIsFetching)
 
   // Change opacity in scroll
   const [opacity, setOpacity] = useState<string>('00')

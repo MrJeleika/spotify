@@ -14,11 +14,7 @@ export const MyAllTopTracks = ({}: Props) => {
   const { myTopTracks } = useAppSelector((state) => state.spotify)
   const { data, isFetching } = useFetchMyTopTracksQuery(50)
 
-  useSetFetchedData(data, setMyTopTracks)
-
-  useEffect(() => {
-    dispatch(setIsloading(isFetching))
-  }, [isFetching])
+  useSetFetchedData(data, setMyTopTracks, isFetching)
 
   return (
     <BlackBackground>

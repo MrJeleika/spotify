@@ -1,19 +1,14 @@
-import { DotsSVG } from 'components/svg/DotsSVG'
 import { PlaySVG } from 'components/svg/PlaySVG'
 import { SavedTrackSVG } from 'components/svg/SavedTrackSVG'
 import React, { useEffect, useRef } from 'react'
-import {
-  useFetchMySavedTracksQuery,
-  usePlayTrackMutation,
-} from 'redux/api/spotifyAPI'
+import { usePlayTrackMutation } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setPlayerError } from 'redux/slices/spotifySlice'
-import { Tracks } from 'types/spotifySlice'
+import { ITrack } from 'types/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
-import { HandleError } from 'components/common/Error/ErrorHandler'
+import { NavLink } from 'react-router-dom'
 
 interface Props {
-  track: Tracks
+  track: ITrack
   i: number
 }
 interface Error {
@@ -32,12 +27,18 @@ export const ProfileTrack = ({ track, i }: Props) => {
   const [playTrack, { error }] = usePlayTrackMutation()
 
   const optionsRef = useRef<HTMLDivElement>(null)
+  const artistRef = useRef<HTMLAnchorElement>(null)
 
+  // Don't play if click on artist or options
   const handlePlayTrack = (e: any) => {
-    if (!optionsRef.current?.contains(e.target)) {
+    if (
+      !optionsRef.current?.contains(e.target) &&
+      !artistRef.current?.contains(e.target)
+    ) {
       playTrack({ uris: [`${track.uri}`] })
     }
   }
+
   let isPlayingTrack = false
   let isPaused = true
   if (playbackState.item) {
@@ -80,14 +81,16 @@ export const ProfileTrack = ({ track, i }: Props) => {
             {track.name}
           </p>
           <div className="flex">
-            {track.artists.map((artist: any, i: number) => (
-              <p
+            {track.artists.map((artist, i: number) => (
+              <NavLink
+                to={`/artist/${artist.id}`}
                 key={i}
-                className="text-gray group-hover:text-[white] text-sm leading-none"
+                ref={artistRef}
+                className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray text-sm leading-none"
               >
                 {artist.name}
-                {track.artists.length > 1 ? ',' : null}
-              </p>
+                {track.artists.length > 1 ? ', ' : null}
+              </NavLink>
             ))}
           </div>
         </div>

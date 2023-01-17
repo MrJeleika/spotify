@@ -5,11 +5,12 @@ import { usePlayTrackMutation } from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { setPlayerError } from 'redux/slices/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
-import { Tracks } from 'types/spotifySlice'
+import { ITrack } from 'types/spotifySlice'
+import { NavLink } from 'react-router-dom'
 
 interface Props {
   added_at: string
-  track: Tracks
+  track: ITrack
   i: number
   is_local: boolean
 }
@@ -20,6 +21,7 @@ export const PlaylistTrack = ({ track, added_at, is_local, i }: Props) => {
   )
   const dispatch = useAppDispatch()
   const optionsRef = useRef<HTMLDivElement>(null)
+  const artistRef = useRef<HTMLAnchorElement>(null)
   const [playTrack, { error }] = usePlayTrackMutation()
 
   const date = new Date(added_at)
@@ -40,8 +42,12 @@ export const PlaylistTrack = ({ track, added_at, is_local, i }: Props) => {
       )
   }, [error])
 
+  // Don't play if click on artist or options
   const handlePlayTrack = (e: any) => {
-    if (!optionsRef.current?.contains(e.target)) {
+    if (
+      !optionsRef.current?.contains(e.target) &&
+      !artistRef.current?.contains(e.target)
+    ) {
       playTrack({ uris: [`${track.uri}`] })
     }
   }
@@ -91,14 +97,16 @@ export const PlaylistTrack = ({ track, added_at, is_local, i }: Props) => {
                 {track.name}
               </p>
               <div className="flex">
-                {track.artists.map((artist: any, i: number) => (
-                  <p
+                {track.artists.map((artist, i: number) => (
+                  <NavLink
+                    to={`/artist/${artist.id}`}
+                    ref={artistRef}
                     key={i}
-                    className="text-gray group-hover:text-[white] break-keep text-sm leading-none"
+                    className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray break-keep text-sm leading-none"
                   >
                     {artist.name}
-                    {track.artists.length > 1 ? ',' : null}
-                  </p>
+                    {track.artists.length > 1 ? ', ' : null}
+                  </NavLink>
                 ))}
               </div>
             </div>

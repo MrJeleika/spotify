@@ -26,8 +26,8 @@ export const DevicesModal = ({
     (state) => state.spotify
   )
 
-  const { data } = useFetchAvailableDevicesQuery(null)
-  useSetFetchedData(data, setAvailableDevices)
+  const { data, isFetching } = useFetchAvailableDevicesQuery(null)
+  useSetFetchedData(data, setAvailableDevices, isFetching)
 
   const [transferPlayback, { error }] = useTransferPlaybackMutation()
 

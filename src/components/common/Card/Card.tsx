@@ -33,7 +33,7 @@ export const Card = ({ item, i, link, children, rounded }: Props) => {
           </div>
         )}
       </div>
-      <h1 className="text-white font-bold">{item.name}</h1>
+      <h1 className="text-white lg:text-base text-sm font-bold">{item.name}</h1>
     </NavLink>
   )
 }

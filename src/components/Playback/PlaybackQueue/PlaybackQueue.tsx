@@ -4,7 +4,7 @@ import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import { useFetchMyPlaybackQueueQuery } from 'redux/api/spotifyAPI'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
 import { setIsloading, setPlaybackQueue } from 'redux/slices/spotifySlice'
-import { Tracks } from 'types/spotifySlice'
+import { ITrack } from 'types/spotifySlice'
 import { useEffect } from 'react'
 
 export const PlaybackQueue = () => {
@@ -17,7 +17,7 @@ export const PlaybackQueue = () => {
     refetch()
   }, [playbackState.item])
 
-  useSetFetchedData(data, setPlaybackQueue)
+  useSetFetchedData(data, setPlaybackQueue, isFetching)
 
   return (
     <BlackBackground>
@@ -29,8 +29,8 @@ export const PlaybackQueue = () => {
       <h1 className="subtitle">Next in queue</h1>
 
       {playbackQueue.queue &&
-        playbackQueue.queue.map((track: Tracks, i: number) =>
-          i < 10 ? <ProfileTrack track={track} i={i} /> : null
+        playbackQueue.queue.map((track: ITrack, i: number) =>
+          i < 10 ? <ProfileTrack track={track} key={i} i={i} /> : null
         )}
     </BlackBackground>
   )

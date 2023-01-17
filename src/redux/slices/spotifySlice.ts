@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
+  IArtist,
   AvailableDevices,
+  IArtistTopTracks,
   MyFollowedArtists,
-  PlaybackState,
-  Playlist,
-  Playlists,
-  Profile,
+  IPlaybackState,
+  IPlaylist,
+  IPlaylists,
+  IProfile,
   SavedTracks,
   SpotifyState,
-  UserTopItems,
+  IUserTopItems,
+  IMyPlaylists,
+  IAlbums,
 } from '../../types/spotifySlice'
 
 
@@ -85,6 +89,7 @@ const initialState: SpotifyState = {
           href: '',
           total: 0,
         },
+        
         type: '',
         uri: '',
       },
@@ -155,10 +160,6 @@ const initialState: SpotifyState = {
     external_urls: {
       spotify: '',
     },
-    followers: {
-      href: '',
-      total: 0,
-    },
     href: '',
     id: '',
     images: [
@@ -169,7 +170,21 @@ const initialState: SpotifyState = {
       },
     ],
     name: '',
-    owner: {},
+    owner: {
+      external_urls:{
+        spotify: ''
+      },
+      followers:{
+        total: 0,
+        href: ''
+      },
+      href: '',
+      id: '',
+      type: '',
+      uri: '',
+      display_name: '',
+
+    },
     public: true,
     snapshot_id: '',
     tracks: {
@@ -177,7 +192,36 @@ const initialState: SpotifyState = {
       items: [
         {
           added_at: '',
-          track: {},
+          track: {
+            album: {},
+            artists: [],
+            available_markets: [],
+            disc_number: 0,
+            duration_ms: 0,
+            explicit: false,
+            external_ids:{
+              ean: '',
+              isrc: '',
+              upc: '',
+            },
+            external_urls: {
+              spotify: ''
+            },
+            href: '',
+            is_local: false,
+            is_playable: false,
+            id: '',
+            linked_from: {},
+            restrictions: {
+              reasons: '',
+            },
+            name: '',
+            popularity: 0,
+            preview_url: '',
+            track_number: 0,
+            type: '',
+            uri: '',
+          },
           added_by: {
             external_urls: {
               spotify: '',
@@ -228,34 +272,65 @@ const initialState: SpotifyState = {
       total: 0,
     },
   },
-  playbackQueue:{
-
-  },
+  playbackQueue:'',
   artistProfile:{
-
+    external_urls:{
+      spotify: ''
+    },
+    followers:{
+      href: '',
+      total: 0,
+    },
+    genres: [],
+    href: '',
+    id: '',
+    images: [{
+      url: '',
+      height: 0,
+      width: 0,
+    }],
+    name: '',
+    popularity: 0,
+    type: '',
+    uri: '',
+  },
+  artistTopTracks: {
+    tracks: []
+  },
+  artistAlbums:{
+    items:[],
+    href: '',
+    limit: 0,
+    next: '',
+    previous: '',
+    offset: 0,
+    total: 0,
   }
+  
+
+  
 }
 
 const spotifySlice = createSlice({
   name: 'spotify',
   initialState,
   reducers: {
-    setProfile: (state, action: PayloadAction<Profile>) => {
+    setProfile: (state, action: PayloadAction<IProfile>) => {
       state.profile = { ...action.payload }
     },
-    setMyPlaylists: (state, action: PayloadAction<Playlists>) => {
+    setMyPlaylists: (state, action: PayloadAction<IMyPlaylists>) => {
       state.myPlaylists = { ...action.payload }
     },
-    setMyTopTracks: (state, action: PayloadAction<UserTopItems>) => {
+    setMyTopTracks: (state, action: PayloadAction<IUserTopItems>) => {
       state.myTopTracks = { ...action.payload }
     },
-    setMyTopArtists: (state, action: PayloadAction<UserTopItems>) => {
+    setMyTopArtists: (state, action: PayloadAction<IUserTopItems>) => {
       state.myTopArtists = { ...action.payload }
     },
-    setPlaybackState: (state, action: PayloadAction<PlaybackState>) => {
+    setPlaybackState: (state, action: PayloadAction<IPlaybackState>) => {
       state.playbackState = { ...action.payload }
     },
-    setPlaylistTracks: (state, action: PayloadAction<UserTopItems>) => {
+    setPlaylistTracks: (state, action: PayloadAction<IUserTopItems>) => {
       state.playlistTracks = { ...action.payload }
     },
     setSavedTracks: (state, action: PayloadAction<SavedTracks>) => {
@@ -269,7 +344,7 @@ const spotifySlice = createSlice({
       state.savedTracks.previous = action.payload.previous
       state.savedTracks.total = action.payload.total
     },
-    setPlaylist: (state, action: PayloadAction<Playlist>) => {
+    setPlaylist: (state, action: PayloadAction<IPlaylist>) => {
       state.playlist = { ...action.payload }
     },
     setIsloading: (state, action: PayloadAction<boolean>) => {
@@ -293,8 +368,14 @@ const spotifySlice = createSlice({
     setPlaybackQueue: (state, action: PayloadAction<any>) => {
       state.playbackQueue = { ...action.payload }
     },
-    setArtistProfile: (state, action: PayloadAction<any>) => {
+    setArtistProfile: (state, action: PayloadAction<IArtist>) => {
       state.artistProfile = { ...action.payload }
+    },
+    setArtistTopTracks: (state, action: PayloadAction<IArtistTopTracks>) => {
+      state.artistTopTracks = { ...action.payload }
+    },
+    setArtistAlbums: (state, action: PayloadAction<IAlbums>) => {
+      state.artistAlbums = {...action.payload }
     },
   },
 })
@@ -317,4 +398,6 @@ export const {
   setMyTopArtists,
   setPlaybackQueue,
   setArtistProfile,
+  setArtistTopTracks,
+  setArtistAlbums,
 } = spotifySlice.actions

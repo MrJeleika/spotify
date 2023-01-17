@@ -16,15 +16,12 @@ interface Props {}
 export const Playlist = ({}: Props) => {
   const playlistId = useParams().playlistId
 
-  const dispatch = useAppDispatch()
   const { data, isFetching } = useFetchPlaylistQuery(playlistId)
   const { playlist } = useAppSelector((state) => state.spotify)
 
-  useSetFetchedData(data, setPlaylist)
+  console.log(data)
 
-  useEffect(() => {
-    dispatch(setIsloading(isFetching))
-  }, [isFetching])
+  useSetFetchedData(data, setPlaylist, isFetching)
 
   return (
     <MainGradientBackground>

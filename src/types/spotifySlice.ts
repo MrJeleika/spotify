@@ -7,7 +7,7 @@ interface Item {
   total: number
 }
 
-export interface Profile {
+export interface IProfile {
   country: string
   display_name: string
   email: string
@@ -38,53 +38,113 @@ export interface Profile {
 
 
 
-export interface Playlists extends Item {
-  items: [
+export interface IPlaylists extends Item {
+  items: IPlaylist[]
+}
+
+export interface IMyPlaylists extends Item{
+  items: [{
+    collaborative: boolean
+  description: string
+  external_urls: {
+    spotify: string
+  }
+  href: string
+  id: string
+  images: [
     {
-      collaborative: boolean
-      description: string
-      external_urls: {
-        spotify: string
-      }
+      width: number | null
+      height: number | null
+      url: string
+    }
+  ]
+  name: string
+  owner: {
+    external_urls: {
+      spotify: string
+    }
+    followers: {
       href: string
-      id: string
-      images: [
-        {
-          width: number | null
-          height: number | null
-          url: string
-        }
-      ]
-      name: string
-      owner: {
-        external_urls: {
+      total: number
+    }
+    href: string
+    id: string
+    type: string
+    uri: string
+    display_name: string
+  }
+  public: boolean
+  snapshot_id: string
+  tracks: {
+    href: string
+    total: number
+    }
+  type: string
+  uri: string
+  }]
+}
+
+export interface IPlaylist{
+  collaborative: boolean
+  description: string
+  external_urls: {
+    spotify: string
+  }
+  href: string
+  id: string
+  images: [
+    {
+      width: number | null
+      height: number | null
+      url: string
+    }
+  ]
+  name: string
+  owner: {
+    external_urls: {
+      spotify: string
+    }
+    followers: {
+      href: string
+      total: number
+    }
+    href: string
+    id: string
+    type: string
+    uri: string
+    display_name: string
+  }
+  public: boolean
+  snapshot_id: string
+  tracks: {
+    href: string
+    total: number
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    items: [{
+      added_at: string
+      added_by: {
+        external_urls:{
           spotify: string
-        }
-        followers: {
-          href: string
-          total: number
         }
         href: string
         id: string
         type: string
         uri: string
-        display_name: string
       }
-      public: boolean
-      snapshot_id: string
-      tracks: {
-        href: string
-        total: number
-      }
-      type: string
-      uri: string
-    }
-  ]
+      is_local: boolean
+      primary_color: null
+      track: ITrack
+      video_thumbnail: any
+    }]
+  }
+  type: string
+  uri: string
 }
-export interface UserTopItems extends Item {
-  items: Array<{}>
-}
-export interface PlaybackState {
+
+export interface IPlaybackState {
   device: any
   repeatState: string
   shuffleState: string
@@ -97,7 +157,7 @@ export interface PlaybackState {
   actions: any
 }
 
-export interface Artist {
+export interface IArtist {
   external_urls: {
     spotify: string
   }
@@ -121,9 +181,13 @@ export interface Artist {
   uri: string
 }
 
-export interface Tracks {
+export interface IUserTopItems extends Item {
+  items: ITrack[] | IArtist[]
+}
+
+export interface ITrack {
   album: any
-  artists: Artist[]
+  artists: IArtist[]
   available_markets: string[]
   disc_number: number
   duration_ms: number
@@ -155,62 +219,9 @@ export interface SavedTracks extends Item {
   items: [
     {
       added_at: string
-      track: any
+      track: ITrack[]
     }
   ]
-}
-
-export interface Playlist {
-  collaborative: boolean
-  description: string | null
-  external_urls: {
-    spotify: string
-  }
-  followers: {
-    href: string
-    total: number
-  }
-  href: string
-  id: string
-  images: [
-    {
-      url: string
-      height: number | null
-      width: number | null
-    }
-  ]
-  name: string
-  owner: {}
-  public: boolean
-  snapshot_id: string
-  tracks: {
-    href: string
-    items: Array<{
-      added_at: string
-      track: any
-      added_by: {
-        external_urls: {
-          spotify: string
-        }
-        href: string
-        id: string
-        type: string
-        uri: string
-      }
-      is_local: boolean
-      primary_color: string | null
-      video_thumbnail: {
-        url: string
-      }
-    }>
-    total: number
-    limit: number
-    next: string | null
-    offset: number
-    previous: string | null
-  }
-  type: string
-  uri: string
 }
 
 export interface AvailableDevices {
@@ -229,7 +240,7 @@ export interface Device {
 export interface MyFollowedArtists {
   artists: {
     href: string
-    items: any
+    items: IArtist[]
     limit: number
     next: string | null
     cursors: {
@@ -239,14 +250,57 @@ export interface MyFollowedArtists {
   }
 }
 
+export interface IArtistTopTracks{
+  tracks: ITrack[]
+}
+
+export interface IAlbum{
+  album_type: string
+  total_tracks: number
+  available_markets: string[]
+  external_urls:{
+    spotify: string
+  }
+  href: string
+  id: string
+  images: [
+    {
+      url: string
+      height: number | null
+      width: number | null
+    }
+  ]
+  name: string
+  release_date: string
+  release_date_precision: string
+  restrictions:{
+    reason: string
+  }
+  type: string
+  uri: string
+  artists: IArtist[]
+  tracks:{
+    href: string
+    items: ITrack[]
+    limit:  number
+    next: string
+    offset: number
+    previous: string
+    total: number
+  }
+}
+export interface IAlbums extends Item{
+  items: IAlbum[]
+}
+
 export interface SpotifyState {
-  profile: Profile
-  myPlaylists: Playlists
-  myTopTracks: UserTopItems
-  playbackState: PlaybackState
-  playlistTracks: UserTopItems
+  profile: IProfile
+  myPlaylists: IMyPlaylists
+  myTopTracks: IUserTopItems
+  playbackState: IPlaybackState
+  playlistTracks: IUserTopItems
   savedTracks: SavedTracks | any
-  playlist: Playlist
+  playlist: IPlaylist
   isLoading: boolean
   randomColorNum: number
   availableDevices: AvailableDevices
@@ -256,7 +310,9 @@ export interface SpotifyState {
   }
 
   myFollowedArtists: MyFollowedArtists
-  myTopArtists: UserTopItems
+  myTopArtists: IUserTopItems
   playbackQueue: any
-  artistProfile: any
+  artistProfile: IArtist
+  artistTopTracks: IArtistTopTracks
+  artistAlbums: IAlbums
 }

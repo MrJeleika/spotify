@@ -1,6 +1,4 @@
 import { Card } from 'components/common/Card/Card'
-import { NoPlaylistImageSVG } from 'components/svg/NoPlaylistImageSVG'
-import { NavLink } from 'react-router-dom'
 import { useAppSelector } from 'redux/app/hooks'
 
 interface Props {}

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
-import { Tracks } from 'types/spotifySlice'
+import { ITrack } from 'types/spotifySlice'
 import { motion } from 'framer-motion'
 import { useAddTrackToQueueMutation } from 'redux/api/spotifyAPI'
 
 interface Props {
-  track: Tracks
+  track: ITrack
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   optionsRef: React.RefObject<HTMLDivElement>

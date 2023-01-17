@@ -6,10 +6,10 @@ import { useAppSelector } from 'redux/app/hooks'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
 export const Playlists = () => {
-  const { data } = useFetchMyPlaylistQuery()
+  const { data, isFetching } = useFetchMyPlaylistQuery()
   const playlists = useAppSelector((state) => state.spotify.myPlaylists)
 
-  useSetFetchedData(data, setMyPlaylists)
+  useSetFetchedData(data, setMyPlaylists, isFetching)
 
   return (
     <div>

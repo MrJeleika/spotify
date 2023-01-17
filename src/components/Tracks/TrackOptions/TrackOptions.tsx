@@ -1,10 +1,10 @@
 import { DotsSVG } from 'components/svg/DotsSVG'
 import React, { useRef, useState } from 'react'
-import { Tracks } from 'types/spotifySlice'
+import { ITrack } from 'types/spotifySlice'
 import { TrackOptionsModal } from './TrackOptionsModal/TrackOptionsModal'
 
 interface Props {
-  track: Tracks
+  track: ITrack
   optionsRef: React.RefObject<HTMLDivElement>
 }
 

@@ -1,23 +1,18 @@
 import { Card } from 'components/common/Card/Card'
-import { NoPlaylistImageSVG } from 'components/svg/NoPlaylistImageSVG'
-import { useEffect } from 'react'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 import { NavLink } from 'react-router-dom'
 import { useFetchMyFollowedArtistsQuery } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { useAppSelector } from 'redux/app/hooks'
 import { setMyFollowedArtists } from 'redux/slices/spotifySlice'
 
 interface Props {}
 
 export const ProfileFollowedArtists = ({}: Props) => {
   const { myFollowedArtists } = useAppSelector((state) => state.spotify)
-  const { data, error } = useFetchMyFollowedArtistsQuery()
-  console.log(error)
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    if (data) {
-      dispatch(setMyFollowedArtists(data))
-    }
-  }, [])
+  const { data, isFetching } = useFetchMyFollowedArtistsQuery()
+
+  useSetFetchedData(data, setMyFollowedArtists, isFetching)
+
   return (
     <div>
       <div className="w-full flex justify-between items-center">
@@ -30,11 +25,11 @@ export const ProfileFollowedArtists = ({}: Props) => {
         </NavLink>
       </div>
       <div className="flex w-full overflow-hidden">
-        {myFollowedArtists.artists.items.map((artist: any, i: number) => (
+        {myFollowedArtists.artists.items.map((artist, i: number) => (
           <Card
             i={i}
             key={i}
-            link={`playlist/${artist.id}`}
+            link={`artist/${artist.id}`}
             item={artist}
             rounded={true}
           ></Card>

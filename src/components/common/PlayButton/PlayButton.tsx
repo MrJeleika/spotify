@@ -1,16 +1,22 @@
 import { PlaySVG } from 'components/svg/PlaySVG'
 import { usePlayTrackMutation } from 'redux/api/spotifyAPI'
-import { Playlist } from 'types/spotifySlice'
+import { IArtistTopTracks, IPlaylist, ITrack } from 'types/spotifySlice'
 
 interface Props {
-  playlist: Playlist
+  playlist?: IPlaylist
+  tracks?: IArtistTopTracks
 }
 
-export const PlayButton = ({ playlist }: Props) => {
+export const PlayButton = ({ playlist, tracks }: Props) => {
   const [playTrack, error] = usePlayTrackMutation()
-  console.log(playlist)
+  console.log(error)
 
-  const uris = playlist.tracks.items.map((track) => track.track.uri)
+  // Exclude local tracks
+  const uris =
+    playlist?.tracks.items
+      .filter((track) => !track.track.uri.includes('local'))
+      .map((track) => track.track.uri) ||
+    tracks?.tracks.map((track) => track.uri)
 
   const handlePlayTrack = (e: any) => {
     playTrack({ uris: uris })

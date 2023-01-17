@@ -1,7 +1,7 @@
-import { PlaybackState } from 'types/spotifySlice'
+import { IArtist, IPlaybackState } from 'types/spotifySlice'
 
 interface Props {
-  playbackState: PlaybackState
+  playbackState: IPlaybackState
 }
 
 export const PlaybackTrackInfo = (props: Props) => {
@@ -18,7 +18,7 @@ export const PlaybackTrackInfo = (props: Props) => {
             : playbackState.item.name}
         </p>
         <div className="flex">
-          {playbackState.item.artists.map((artist: any, i: number) => (
+          {playbackState.item.artists.map((artist: IArtist, i: number) => (
             <p key={i} className="text-gray text-[11px] font-bold leading-none">
               {artist.name}
               {playbackState.item.artists.length > 1 ? ',' : null}
