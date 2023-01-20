@@ -13,6 +13,7 @@ import {
   IUserTopItems,
   IMyPlaylists,
   IAlbums,
+  IAlbum,
 } from '../../types/spotifySlice'
 
 
@@ -305,8 +306,40 @@ const initialState: SpotifyState = {
     previous: '',
     offset: 0,
     total: 0,
+  },
+  album:{
+    album_type: '',
+    total_tracks: 0,
+    available_markets: [],
+    href: '',
+    id: '',
+    name: '',
+    images: [{
+      url: '',
+      height: 0,
+      width: 0,
+    }],
+    release_date: '',
+    release_date_precision: '',
+    type: '',
+    uri: '',
+    artists: [],
+    tracks: {
+      limit: 0,
+      total: 0,
+      next: '',
+      previous: '',
+      offset: 0,
+      items: [],
+      href: ''
+    },
+    restrictions: {
+      reason: ''
+    },
+    external_urls: {
+      spotify: ''
+    }
   }
-  
 
   
 }
@@ -375,7 +408,18 @@ const spotifySlice = createSlice({
       state.artistTopTracks = { ...action.payload }
     },
     setArtistAlbums: (state, action: PayloadAction<IAlbums>) => {
-      state.artistAlbums = {...action.payload }
+      state.artistAlbums.items = [
+        ...state.artistAlbums.items,
+        ...action.payload.items,
+      ]
+      state.artistAlbums.limit = action.payload.limit
+      state.artistAlbums.next = action.payload.next
+      state.artistAlbums.offset = action.payload.offset
+      state.artistAlbums.previous = action.payload.previous
+      state.artistAlbums.total = action.payload.total
+    },
+    setAlbum: (state, action: PayloadAction<IAlbum>) => {
+      state.album = {...action.payload }
     },
   },
 })
@@ -400,4 +444,5 @@ export const {
   setArtistProfile,
   setArtistTopTracks,
   setArtistAlbums,
+  setAlbum,
 } = spotifySlice.actions

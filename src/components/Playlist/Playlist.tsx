@@ -1,9 +1,8 @@
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { useParams } from 'react-router-dom'
 import { useFetchPlaylistQuery } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setIsloading, setPlaylist } from 'redux/slices/spotifySlice'
-import { useEffect } from 'react'
+import { useAppSelector } from 'redux/app/hooks'
+import { setPlaylist } from 'redux/slices/spotifySlice'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { PlaylistTrack } from 'components/Tracks/PlaylistTrack'
 import { ClockSVG } from 'components/svg/ClockSVG'
@@ -18,8 +17,6 @@ export const Playlist = ({}: Props) => {
 
   const { data, isFetching } = useFetchPlaylistQuery(playlistId)
   const { playlist } = useAppSelector((state) => state.spotify)
-
-  console.log(data)
 
   useSetFetchedData(data, setPlaylist, isFetching)
 

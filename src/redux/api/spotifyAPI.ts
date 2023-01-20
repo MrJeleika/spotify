@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
+  IAlbum,
   IAlbums,
   IArtist,
   IPlaybackState,
@@ -156,6 +157,9 @@ export const apiSlice = createApi({
     fetchArtistAlbums: builder.query<IAlbums, Object | undefined>({
       query: ({id, type, offset}: IArtistAlbums) => `artists/${id}/albums?market=UA&limit=50&include_groups=${type}&offset=${offset}`,
     }),
+    fetchAlbum: builder.query<IAlbum, string | undefined>({
+      query: (id) => `albums/${id}`,
+    }),
   }),
 })
 
@@ -184,4 +188,5 @@ export const {
   useFetchArtistProfileQuery,
   useFetchArtistTopTracksQuery,
   useFetchArtistAlbumsQuery,
+  useFetchAlbumQuery,
 } = apiSlice

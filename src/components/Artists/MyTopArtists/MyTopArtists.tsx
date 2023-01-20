@@ -11,7 +11,7 @@ export const MyTopArtists = (props: Props) => {
       <h1 className="title">Top artists this month</h1>
       <h1 className="subtitle">Only visible for you</h1>
       <div className="flex flex-wrap">
-        {myTopArtists.items.map((artist: any, i: number) => (
+        {myTopArtists.items.map((artist, i: number) => (
           <Card
             i={i}
             key={i}

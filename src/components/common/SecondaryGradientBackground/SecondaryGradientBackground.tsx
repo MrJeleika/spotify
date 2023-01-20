@@ -4,7 +4,7 @@ interface Props {
 
 export const SecondaryGradientBackground = ({ children }: Props) => {
   return (
-    <div>
+    <div className="h-full">
       <div className="bg-gradient-to-b from-[#1212124d] to-background h-[250px]"></div>
       <div className="bg-background w-full p-5 lg:p-10">
         <div className="bg-zinc-900/0 translate-y-[-250px] relative">

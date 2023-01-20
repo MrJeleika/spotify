@@ -9,7 +9,6 @@ interface Props {
 
 export const PlayButton = ({ playlist, tracks }: Props) => {
   const [playTrack, error] = usePlayTrackMutation()
-  console.log(error)
 
   // Exclude local tracks
   const uris =

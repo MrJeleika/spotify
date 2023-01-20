@@ -8,6 +8,8 @@ import { Profile } from 'components/Profile/Profile'
 import { Playlist } from 'components/Playlist/Playlist'
 import { Playback } from 'components/Playback/Playback'
 import { MyAllTopTracks } from 'components/Playlist/MyAllTopTracks/MyAllTopTracks'
+import { ArtistProfileAllPlaylists } from 'components/Artists/ArtistProfile/ArtistProfileAllPlaylists/ArtistProfileAllPlaylists'
+
 // Hooks
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Redux
@@ -22,6 +24,7 @@ import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
 import { Errors } from 'types/Errors'
 import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
 import { ArtistProfile } from 'components/Artists/ArtistProfile/ArtistProfile'
+import { Album } from 'components/Album/Album'
 
 interface Props {}
 
@@ -49,7 +52,6 @@ export const Dashboard = (props: Props) => {
   useEffect(() => {
     setShowError(playerError.isError)
   }, [playerError.isError])
-  console.log(playerError)
 
   return (
     <div className="flex relative ">
@@ -87,6 +89,11 @@ export const Dashboard = (props: Props) => {
           />
           <Route path="/queue" element={<PlaybackQueue />} />
           <Route path="artist/:artistId" element={<ArtistProfile />} />
+          <Route
+            path="/artist/:artistId/discography/all"
+            element={<ArtistProfileAllPlaylists />}
+          />
+          <Route path="/album/:albumId" element={<Album />} />
         </Routes>
       </div>
     </div>

@@ -11,7 +11,7 @@ export const MyFollowedArtists = (props: Props) => {
       <h1 className="title">Following</h1>
 
       <div className="flex flex-wrap">
-        {myFollowedArtists.artists.items.map((artist: any, i: number) => (
+        {myFollowedArtists.artists.items.map((artist, i: number) => (
           <Card
             i={i}
             key={i}

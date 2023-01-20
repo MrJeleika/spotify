@@ -315,4 +315,5 @@ export interface SpotifyState {
   artistProfile: IArtist
   artistTopTracks: IArtistTopTracks
   artistAlbums: IAlbums
+  album: IAlbum
 }

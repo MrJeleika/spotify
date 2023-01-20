@@ -2,7 +2,7 @@ import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import {
   useFetchArtistProfileQuery,
   useFetchArtistTopTracksQuery,
@@ -34,28 +34,25 @@ export const ArtistProfile = () => {
     setArtistTopTracks,
     artistTopTracksIsFetching
   )
-  console.log(artistTopTracks)
 
   return (
     <div>
       {artistProfile && artistTopTracks && (
         <MainGradientBackground>
-          <div className="">
-            <div className="flex p-7 text-white">
-              <div className="mr-7 lg:h-[250px] lg:w-[250px] h-[120px] w-[120px] overflow-hidden ">
-                <img
-                  src={artistProfile.images[0].url}
-                  alt="ProfileImage"
-                  className="object-cover   shadow-xl"
-                />
-              </div>
-              <div className="flex flex-col justify-end">
-                <p className="uppercase font-bold text-sm mb-1">Profile</p>
-                <h1 className="lg:text-8xl md:text-4xl text-4xl font-bold mb-8 tracking-tighter">
-                  {artistProfile.name}
-                </h1>
-                <div className="flex"></div>
-              </div>
+          <div className="flex p-7 text-white">
+            <div className="mr-7 lg:h-[250px] lg:w-[250px] h-[120px] w-[120px] overflow-hidden ">
+              <img
+                src={artistProfile.images[0].url}
+                alt="ProfileImage"
+                className="object-cover   shadow-xl"
+              />
+            </div>
+            <div className="flex flex-col justify-end">
+              <p className="uppercase font-bold text-sm mb-1">Profile</p>
+              <h1 className="lg:text-8xl md:text-4xl text-4xl font-bold mb-8 tracking-tighter">
+                {artistProfile.name}
+              </h1>
+              <div className="flex"></div>
             </div>
           </div>
           <SecondaryGradientBackground>
@@ -67,8 +64,16 @@ export const ArtistProfile = () => {
                   <ProfileTrack track={track} i={i} key={i} />
                 ))}
             </div>
-            <div className="">
-              <h1 className="title">Music</h1>
+            <div>
+              <div className="flex w-full items-center justify-between">
+                <h1 className="title">Music</h1>
+                <NavLink
+                  to={`/artist/${artistId}/discography/all`}
+                  className="text-gray text-md font-bold uppercase border-b-[1px] border-[#00000000] hover:border-gray cursor-pointer"
+                >
+                  SHOW ALL
+                </NavLink>
+              </div>
               <ArtistProfilePlaylists artistId={artistId} />
             </div>
           </SecondaryGradientBackground>

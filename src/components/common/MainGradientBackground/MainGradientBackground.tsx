@@ -10,7 +10,7 @@ export const gradientColors: any = {
   1: 'from-[#90444466] to-[#904444]',
   2: 'from-[#0B3B9D66] to-[#0B3B9D]',
   3: 'from-[#5F6C6866] to-[#5F6C68]',
-  4: 'from-[#E6AF2E66] to-[#E6AF2E]',
+  4: 'from-[#332B3BBF] to-[#332B3B]',
   5: 'from-[#334E5866] to-[#334E58]',
   6: 'from-[#005C6966] to-[#005C69]',
   7: 'from-[#F5853F66] to-[#F5853F]',
@@ -19,9 +19,10 @@ export const gradientColors: any = {
   10: 'from-[#B0A3D466] to-[#B0A3D4]',
   11: 'from-[#D2A1B866] to-[#D2A1B8]',
   12: 'from-[#70925566] to-[#709255]',
-  13: 'from-[#EA9E8D66] to-[#EA9E8D]',
+  13: 'from-[#160E4466] to-[#160E44]',
   14: 'from-[#03717166] to-[#037171]',
   15: 'from-[#9A275A66] to-[#9A275A]',
+  16: 'from-[#253B43BF] to-[#253B43]',
 }
 export const bgColors: any = {
   1: '#000000',
@@ -57,7 +58,7 @@ export const MainGradientBackground = ({ children }: Props) => {
   }, [])
   const mainRandomColor = gradientColors[random]
   return (
-    <div className={`bg-gradient-to-b pt-[80px] ${mainRandomColor} w-full`}>
+    <div className={`bg-gradient-to-b pt-[80px] ${mainRandomColor} w-full `}>
       {children}
     </div>
   )
