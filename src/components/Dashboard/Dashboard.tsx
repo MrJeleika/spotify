@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 // Components
 import { Navbar } from 'components/Navbar/Navbar'
@@ -25,10 +25,15 @@ import { Errors } from 'types/Errors'
 import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
 import { ArtistProfile } from 'components/Artists/ArtistProfile/ArtistProfile'
 import { Album } from 'components/Album/Album'
+import { SearchResults } from 'components/Search/SearchResults'
+import { SearchField } from 'components/Search/SearchField'
+import { Search } from 'components/Search/Search'
 
 interface Props {}
 
 export const Dashboard = (props: Props) => {
+  const location = useLocation()
+
   const { profile, savedTracks, isLoading, playerError } = useAppSelector(
     (state) => state.spotify
   )
@@ -74,7 +79,11 @@ export const Dashboard = (props: Props) => {
         <Navbar />
       </div>
       <div className="w-[80%] relative">
-        <NavbarTop />
+        <NavbarTop
+          modifier={
+            location.pathname.includes('search') ? <SearchField /> : null
+          }
+        />
         {isLoading ? <Preloader /> : null}
 
         <Routes>
@@ -94,6 +103,9 @@ export const Dashboard = (props: Props) => {
             element={<ArtistProfileAllPlaylists />}
           />
           <Route path="/album/:albumId" element={<Album />} />
+
+          <Route path="/search" element={<Search />} />
+          <Route path="/search/:query" element={<SearchResults />} />
         </Routes>
       </div>
     </div>

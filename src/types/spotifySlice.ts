@@ -36,55 +36,55 @@ export interface IProfile {
   uri: string
 }
 
-
-
 export interface IPlaylists extends Item {
   items: IPlaylist[]
 }
 
-export interface IMyPlaylists extends Item{
-  items: [{
-    collaborative: boolean
-  description: string
-  external_urls: {
-    spotify: string
-  }
-  href: string
-  id: string
-  images: [
+export interface IMyPlaylists extends Item {
+  items: [
     {
-      width: number | null
-      height: number | null
-      url: string
+      collaborative: boolean
+      description: string
+      external_urls: {
+        spotify: string
+      }
+      href: string
+      id: string
+      images: [
+        {
+          width: number | null
+          height: number | null
+          url: string
+        }
+      ]
+      name: string
+      owner: {
+        external_urls: {
+          spotify: string
+        }
+        followers: {
+          href: string
+          total: number
+        }
+        href: string
+        id: string
+        type: string
+        uri: string
+        display_name: string
+      }
+      public: boolean
+      snapshot_id: string
+      tracks: {
+        href: string
+        total: number
+      }
+      type: string
+      uri: string
     }
   ]
-  name: string
-  owner: {
-    external_urls: {
-      spotify: string
-    }
-    followers: {
-      href: string
-      total: number
-    }
-    href: string
-    id: string
-    type: string
-    uri: string
-    display_name: string
-  }
-  public: boolean
-  snapshot_id: string
-  tracks: {
-    href: string
-    total: number
-    }
-  type: string
-  uri: string
-  }]
 }
 
-export interface IPlaylist{
+export interface IPlaylist {
   collaborative: boolean
   description: string
   external_urls: {
@@ -123,22 +123,24 @@ export interface IPlaylist{
     next: string
     offset: number
     previous: string
-    items: [{
-      added_at: string
-      added_by: {
-        external_urls:{
-          spotify: string
+    items: [
+      {
+        added_at: string
+        added_by: {
+          external_urls: {
+            spotify: string
+          }
+          href: string
+          id: string
+          type: string
+          uri: string
         }
-        href: string
-        id: string
-        type: string
-        uri: string
+        is_local: boolean
+        primary_color: null
+        track: ITrack
+        video_thumbnail: any
       }
-      is_local: boolean
-      primary_color: null
-      track: ITrack
-      video_thumbnail: any
-    }]
+    ]
   }
   type: string
   uri: string
@@ -250,15 +252,15 @@ export interface MyFollowedArtists {
   }
 }
 
-export interface IArtistTopTracks{
+export interface IArtistTopTracks {
   tracks: ITrack[]
 }
 
-export interface IAlbum{
+export interface IAlbum {
   album_type: string
   total_tracks: number
   available_markets: string[]
-  external_urls:{
+  external_urls: {
     spotify: string
   }
   href: string
@@ -273,24 +275,66 @@ export interface IAlbum{
   name: string
   release_date: string
   release_date_precision: string
-  restrictions:{
+  restrictions: {
     reason: string
   }
   type: string
   uri: string
   artists: IArtist[]
-  tracks:{
+  tracks: {
     href: string
     items: ITrack[]
-    limit:  number
+    limit: number
     next: string
     offset: number
     previous: string
     total: number
   }
 }
-export interface IAlbums extends Item{
+export interface IAlbums extends Item {
   items: IAlbum[]
+}
+
+export interface ISearch {
+  tracks: {
+    href: string
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
+    items: ITrack[]
+  }
+  artists: {
+    href: string
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
+    items: IArtist[]
+  }
+  albums: {
+    href: string
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
+    items: IAlbum[]
+  }
+  playlists: {
+    href: string
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
+    items: IPlaylist[]
+  }
+  shows: any
+  episodes: any
+  audiobooks: any
 }
 
 export interface SpotifyState {
@@ -316,4 +360,5 @@ export interface SpotifyState {
   artistTopTracks: IArtistTopTracks
   artistAlbums: IAlbums
   album: IAlbum
+  search: ISearch
 }

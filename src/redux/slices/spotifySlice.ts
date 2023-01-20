@@ -14,16 +14,19 @@ import {
   IMyPlaylists,
   IAlbums,
   IAlbum,
+  ISearch,
 } from '../../types/spotifySlice'
-
 
 const initialState: SpotifyState = {
   isLoading: false,
+
   randomColorNum: 0,
+
   playerError: {
     isError: false,
     message: '',
   },
+
   profile: {
     country: '',
     display_name: '',
@@ -90,7 +93,7 @@ const initialState: SpotifyState = {
           href: '',
           total: 0,
         },
-        
+
         type: '',
         uri: '',
       },
@@ -102,6 +105,7 @@ const initialState: SpotifyState = {
     previous: '',
     total: 0,
   },
+
   myTopArtists: {
     href: '',
     items: [],
@@ -111,6 +115,7 @@ const initialState: SpotifyState = {
     previous: '',
     total: 0,
   },
+
   myTopTracks: {
     href: '',
     items: [],
@@ -120,6 +125,7 @@ const initialState: SpotifyState = {
     previous: '',
     total: 0,
   },
+
   playbackState: {
     device: {},
     repeatState: '',
@@ -132,6 +138,7 @@ const initialState: SpotifyState = {
     current_playing_type: '',
     actions: {},
   },
+
   playlistTracks: {
     href: '',
     items: [],
@@ -155,6 +162,7 @@ const initialState: SpotifyState = {
     previous: '',
     total: 0,
   },
+
   playlist: {
     collaborative: false,
     description: '',
@@ -172,19 +180,18 @@ const initialState: SpotifyState = {
     ],
     name: '',
     owner: {
-      external_urls:{
-        spotify: ''
+      external_urls: {
+        spotify: '',
       },
-      followers:{
+      followers: {
         total: 0,
-        href: ''
+        href: '',
       },
       href: '',
       id: '',
       type: '',
       uri: '',
       display_name: '',
-
     },
     public: true,
     snapshot_id: '',
@@ -200,13 +207,13 @@ const initialState: SpotifyState = {
             disc_number: 0,
             duration_ms: 0,
             explicit: false,
-            external_ids:{
+            external_ids: {
               ean: '',
               isrc: '',
               upc: '',
             },
             external_urls: {
-              spotify: ''
+              spotify: '',
             },
             href: '',
             is_local: false,
@@ -248,6 +255,7 @@ const initialState: SpotifyState = {
     type: '',
     uri: '',
   },
+
   availableDevices: {
     devices: [
       {
@@ -261,6 +269,7 @@ const initialState: SpotifyState = {
       },
     ],
   },
+
   myFollowedArtists: {
     artists: {
       href: '',
@@ -273,33 +282,39 @@ const initialState: SpotifyState = {
       total: 0,
     },
   },
-  playbackQueue:'',
-  artistProfile:{
-    external_urls:{
-      spotify: ''
+
+  playbackQueue: '',
+
+  artistProfile: {
+    external_urls: {
+      spotify: '',
     },
-    followers:{
+    followers: {
       href: '',
       total: 0,
     },
     genres: [],
     href: '',
     id: '',
-    images: [{
-      url: '',
-      height: 0,
-      width: 0,
-    }],
+    images: [
+      {
+        url: '',
+        height: 0,
+        width: 0,
+      },
+    ],
     name: '',
     popularity: 0,
     type: '',
     uri: '',
   },
+
   artistTopTracks: {
-    tracks: []
+    tracks: [],
   },
-  artistAlbums:{
-    items:[],
+
+  artistAlbums: {
+    items: [],
     href: '',
     limit: 0,
     next: '',
@@ -307,18 +322,21 @@ const initialState: SpotifyState = {
     offset: 0,
     total: 0,
   },
-  album:{
+
+  album: {
     album_type: '',
     total_tracks: 0,
     available_markets: [],
     href: '',
     id: '',
     name: '',
-    images: [{
-      url: '',
-      height: 0,
-      width: 0,
-    }],
+    images: [
+      {
+        url: '',
+        height: 0,
+        width: 0,
+      },
+    ],
     release_date: '',
     release_date_precision: '',
     type: '',
@@ -331,17 +349,57 @@ const initialState: SpotifyState = {
       previous: '',
       offset: 0,
       items: [],
-      href: ''
+      href: '',
     },
     restrictions: {
-      reason: ''
+      reason: '',
     },
     external_urls: {
-      spotify: ''
-    }
-  }
+      spotify: '',
+    },
+  },
 
-  
+  search: {
+    tracks: {
+      total: 0,
+      items: [],
+      next: '',
+      previous: '',
+      href: '',
+      limit: 0,
+      offset: 0,
+    },
+    albums: {
+      total: 0,
+      items: [],
+      next: '',
+      previous: '',
+      href: '',
+      limit: 0,
+      offset: 0,
+    },
+    artists: {
+      total: 0,
+      items: [],
+      next: '',
+      previous: '',
+      href: '',
+      limit: 0,
+      offset: 0,
+    },
+    playlists: {
+      total: 0,
+      items: [],
+      next: '',
+      previous: '',
+      href: '',
+      limit: 0,
+      offset: 0,
+    },
+    audiobooks: {},
+    episodes: {},
+    shows: {},
+  },
 }
 
 const spotifySlice = createSlice({
@@ -408,18 +466,13 @@ const spotifySlice = createSlice({
       state.artistTopTracks = { ...action.payload }
     },
     setArtistAlbums: (state, action: PayloadAction<IAlbums>) => {
-      state.artistAlbums.items = [
-        ...state.artistAlbums.items,
-        ...action.payload.items,
-      ]
-      state.artistAlbums.limit = action.payload.limit
-      state.artistAlbums.next = action.payload.next
-      state.artistAlbums.offset = action.payload.offset
-      state.artistAlbums.previous = action.payload.previous
-      state.artistAlbums.total = action.payload.total
+      state.artistAlbums = { ...action.payload }
     },
     setAlbum: (state, action: PayloadAction<IAlbum>) => {
-      state.album = {...action.payload }
+      state.album = { ...action.payload }
+    },
+    setSearchResult: (state, action: PayloadAction<ISearch>) => {
+      state.search = { ...action.payload }
     },
   },
 })
@@ -445,4 +498,5 @@ export const {
   setArtistTopTracks,
   setArtistAlbums,
   setAlbum,
+  setSearchResult,
 } = spotifySlice.actions

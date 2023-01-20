@@ -2,7 +2,7 @@
 import { ProfileListSVG } from 'components/svg/ProfileListSVG'
 import { ProfileDropdown } from './ProfileDropdown'
 // Hooks
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
@@ -14,7 +14,11 @@ import { setMyFollowedArtists, setProfile } from 'redux/slices/spotifySlice'
 import { bgColors } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
-export const NavbarTop = () => {
+interface Props {
+  modifier: any | null
+}
+
+export const NavbarTop = ({ modifier }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const { profile, randomColorNum } = useAppSelector((state) => state.spotify)
@@ -64,7 +68,7 @@ export const NavbarTop = () => {
         ref={navbarRef}
         className={` w-[80%] z-[550] fixed top-0 px-7 py-4 flex justify-between`}
       >
-        <div></div>
+        <div>{modifier}</div>
         <div
           ref={profileRef}
           onClick={() => setIsOpen(!isOpen)}

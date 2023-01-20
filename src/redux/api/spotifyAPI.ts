@@ -7,12 +7,13 @@ import {
   IPlaylist,
   IPlaylists,
   IProfile,
+  ISearch,
   ITrack,
   IUserTopItems,
 } from '../../types/spotifySlice'
 import { RootState } from '../app/store'
 
-interface IArtistAlbums{
+interface IArtistAlbums {
   id: string
   type: string
   offset: number
@@ -135,7 +136,6 @@ export const apiSlice = createApi({
         body: body,
         providesTags: ['Queue'],
       }),
-
     }),
     fetchMyPlaybackQueue: builder.query<any, void | undefined>({
       query: () => `me/player/queue`,
@@ -155,10 +155,14 @@ export const apiSlice = createApi({
       query: (id) => `artists/${id}/top-tracks?country=UA`,
     }),
     fetchArtistAlbums: builder.query<IAlbums, Object | undefined>({
-      query: ({id, type, offset}: IArtistAlbums) => `artists/${id}/albums?market=UA&limit=50&include_groups=${type}&offset=${offset}`,
+      query: ({ id, type, offset }: IArtistAlbums) =>
+        `artists/${id}/albums?market=UA&limit=50&include_groups=${type}&offset=${offset}`,
     }),
     fetchAlbum: builder.query<IAlbum, string | undefined>({
       query: (id) => `albums/${id}`,
+    }),
+    fetchSearchingResult: builder.query<ISearch, string | undefined>({
+      query: (res) => `search?q=${res}&type=track,artist,album,playlist`,
     }),
   }),
 })
@@ -189,4 +193,5 @@ export const {
   useFetchArtistTopTracksQuery,
   useFetchArtistAlbumsQuery,
   useFetchAlbumQuery,
+  useFetchSearchingResultQuery,
 } = apiSlice

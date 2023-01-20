@@ -70,7 +70,11 @@ export const ProfileTrack = ({ track, i }: Props) => {
           )}
         </div>
         <div className="h-[40px] w-[40px] mr-4 ">
-          <img src={track.album.images[0].url} alt="" />
+          {track.album.images[0] ? (
+            <img src={track.album.images[0].url} alt="" />
+          ) : (
+            <div className="w-full h-full object-cover shadow-xl"></div>
+          )}
         </div>
         <div>
           <p

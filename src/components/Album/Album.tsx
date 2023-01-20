@@ -24,11 +24,15 @@ export const Album = () => {
         <MainGradientBackground>
           <div className="flex p-7 text-white">
             <div className="mr-7 lg:h-[250px] lg:w-[250px] h-[120px] w-[120px] overflow-hidden ">
-              <img
-                src={album.images[0].url}
-                alt="ProfileImage"
-                className="object-cover   shadow-xl"
-              />
+              {album.images[0] ? (
+                <img
+                  src={album.images[0].url}
+                  alt="ProfileImage"
+                  className="object-cover   shadow-xl"
+                />
+              ) : (
+                <div className="w-full h-full object-cover shadow-xl"></div>
+              )}
             </div>
             <div className="flex flex-col justify-end">
               <p className="uppercase font-bold text-sm mb-1">Album</p>
