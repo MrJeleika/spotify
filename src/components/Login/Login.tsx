@@ -6,7 +6,7 @@ import { setToken } from 'redux/slices/authSlice'
 // Misc
 
 const CLIENT_ID = '9ee3f2540a7f4c24936f361bebf63668'
-const REDIRECT_URI = 'spotify-b6vw1hr96-mrjeleika.vercel.app'
+const REDIRECT_URI = 'https://spotify-mrjeleika.vercel.app/'
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize'
 
 let urlParams = new URLSearchParams(window.location.hash.replace('#', '?'))
