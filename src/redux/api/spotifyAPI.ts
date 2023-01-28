@@ -4,7 +4,6 @@ import {
   IAlbums,
   IArtist,
   IPlaybackState,
-  IPlaylist,
   IPlaylists,
   IProfile,
   ISearch,
@@ -164,6 +163,13 @@ export const apiSlice = createApi({
     fetchSearchingResult: builder.query<ISearch, string | undefined>({
       query: (res) => `search?q=${res}&type=track,artist,album,playlist`,
     }),
+    togglePlaybackShuffle: builder.mutation<any, boolean>({
+      query: (toggle) => ({
+        url: `me/player/shuffle?state=${toggle}`,
+        method: 'PUT',
+        invalidatesTags: ['Queue'],
+      }),
+    }),
   }),
 })
 
@@ -194,4 +200,5 @@ export const {
   useFetchArtistAlbumsQuery,
   useFetchAlbumQuery,
   useFetchSearchingResultQuery,
+  useTogglePlaybackShuffleMutation,
 } = apiSlice

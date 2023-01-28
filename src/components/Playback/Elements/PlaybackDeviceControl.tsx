@@ -28,15 +28,16 @@ export const PlaybackDeviceControl = () => {
   }, [stateVolume])
 
   return (
-    <div className="flex w-1/3 justify-end">
+    <div className="flex sm:w-1/3 w-[40%] justify-end sm:block hidden">
       <div className="flex w-[80%] lg:w-1/2 items-center">
-        <motion.div whileHover="hover" className=" relative p-1 mx-1">
-          <Tooltip text="Queue" />
+        <div id="queue" className=" relative p-1 mx-1">
+          <Tooltip text="Queue" id="queue" place="top" />
           <NavLink to={'/queue'} className="group">
             <QueueSVG color="#5f5f5f" />
           </NavLink>
-        </motion.div>
+        </div>
         <motion.div
+          id="devices"
           ref={devicesRef}
           whileHover="hover"
           className="relative p-1 mx-1"
@@ -47,6 +48,7 @@ export const PlaybackDeviceControl = () => {
             devicesIsOpen={devicesIsOpen}
             setDevicesIsOpen={setDevicesIsOpen}
           />
+          <Tooltip text="Available devices" id="devices" place="top" />
           <div className="group">
             <DevicesSVG color="#5f5f5f" />
           </div>

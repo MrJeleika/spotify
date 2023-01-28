@@ -148,8 +148,8 @@ export interface IPlaylist {
 
 export interface IPlaybackState {
   device: any
-  repeatState: string
-  shuffleState: string
+  repeat_state: string
+  shuffle_state: boolean
   context: any
   timestamp: number
   progress_ms: number

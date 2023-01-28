@@ -25,3 +25,12 @@ export const getAccessibleColor = (hex) => {
   var yiq = (r * 299 + g * 587 + b * 114) / 1000
   return yiq >= 128 ? '#000000' : '#FFFFFF'
 }
+
+/////////////////////////////////////////////////////////////////////
+// Determine the accessible color of text
+/////////////////////////////////////////////////////////////////////
+export const getTrackDuration = (duration) => {
+  return `${Math.floor(duration / 60000)}:${
+    +Math.floor((duration % 60000) / 1000) < 10 ? '0' : ''
+  }${Math.floor((duration % 60000) / 1000)}`
+}

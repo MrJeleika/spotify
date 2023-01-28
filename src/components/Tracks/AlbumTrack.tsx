@@ -7,6 +7,7 @@ import { setPlayerError } from 'redux/slices/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
 import { ITrack } from 'types/spotifySlice'
 import { NavLink } from 'react-router-dom'
+import { getTrackDuration } from 'utils'
 
 interface Props {
   track: ITrack
@@ -21,6 +22,8 @@ export const AlbumTrack = ({ track, i }: Props) => {
   const optionsRef = useRef<HTMLDivElement>(null)
   const artistRef = useRef<HTMLAnchorElement>(null)
   const [playTrack, { error }] = usePlayTrackMutation()
+
+  const trackDuration = getTrackDuration(track.duration_ms)
 
   useEffect(() => {
     if (
@@ -86,7 +89,9 @@ export const AlbumTrack = ({ track, i }: Props) => {
                   isPlayingTrack ? 'text-green' : 'text-white'
                 }  break-normal overflow-hidden my-1 leading-none cursor-default`}
               >
-                {track.name}
+                {track.name.length > 25
+                  ? track.name.substring(0, 25)
+                  : track.name}
               </p>
               <div className="flex">
                 {track.artists.map((artist, i: number) => (
@@ -113,13 +118,7 @@ export const AlbumTrack = ({ track, i }: Props) => {
                   ) : null
                 )}
               </div>
-              <p className="text-gray text-sm leading-none ">
-                {`${Math.floor(track.duration_ms / 60000)}:${
-                  +Math.floor((track.duration_ms % 60000) / 1000) < 10
-                    ? '0'
-                    : ''
-                }${Math.floor((track.duration_ms % 60000) / 1000)}`}
-              </p>
+              <p className="text-gray text-sm leading-none ">{trackDuration}</p>
             </div>
             <div ref={optionsRef} className="relative">
               <TrackOptions optionsRef={optionsRef} track={track} />

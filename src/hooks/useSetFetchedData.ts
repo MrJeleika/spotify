@@ -12,8 +12,8 @@ export const useSetFetchedData = (data: any, action: ActionCreatorWithPayload<an
     }
   },[data])
   useEffect(()=>{
-     dispatch(setIsloading(isFetching))
+     isFetching ? dispatch(setIsloading(isFetching)) : setTimeout(() => {
+      dispatch(setIsloading(isFetching))
+     }, 250);
   },[isFetching])
-  
-
 }

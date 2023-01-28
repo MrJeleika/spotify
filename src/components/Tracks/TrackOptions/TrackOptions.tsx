@@ -15,7 +15,7 @@ export const TrackOptions = ({ track, optionsRef }: Props) => {
     <div>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="opacity-0 group-hover:opacity-100 "
+        className="md:opacity-0 md:group-hover:opacity-100 "
       >
         <DotsSVG color="white" />
       </div>

@@ -16,7 +16,7 @@ export const ArtistProfileAllPlaylists = () => {
   const dispatch = useDispatch()
   const { data, isFetching } = useFetchArtistAlbumsQuery({
     id: artistProfile.id,
-    type: 'album,single,appears_on,compilation',
+    type: 'album,single',
     offset: 0,
   })
 

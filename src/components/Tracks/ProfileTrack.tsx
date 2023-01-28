@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 import { ITrack } from 'types/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
 import { NavLink } from 'react-router-dom'
+import { getTrackDuration } from 'utils'
 
 interface Props {
   track: ITrack
@@ -28,6 +29,8 @@ export const ProfileTrack = ({ track, i }: Props) => {
 
   const optionsRef = useRef<HTMLDivElement>(null)
   const artistRef = useRef<HTMLAnchorElement>(null)
+
+  const trackDuration = getTrackDuration(track.duration_ms)
 
   // Don't play if click on artist or options
   const handlePlayTrack = (e: any) => {
@@ -52,7 +55,7 @@ export const ProfileTrack = ({ track, i }: Props) => {
       onClick={(e) => handlePlayTrack(e)}
       className="group track-item flex rounded hover:bg-[#282828] pr-3 lg:pr-5 py-2 w-full"
     >
-      <div className="flex lg:w-1/2 md:w-[60%] w-[80%] mx-1">
+      <div className="flex lg:w-1/2 md:w-[60%] w-[100%] min-w-0 mx-1">
         <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
           {isPlayingTrack && isPaused ? (
             <img
@@ -76,21 +79,21 @@ export const ProfileTrack = ({ track, i }: Props) => {
             <div className="w-full h-full object-cover shadow-xl"></div>
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <p
             className={`${
               playbackState.item.id === track.id ? 'text-green' : 'text-white'
-            }  break-normal overflow-hidden my-1 leading-none cursor-default`}
+            } md:text-base  text-sm my-1 truncate cursor-default`}
           >
             {track.name}
           </p>
-          <div className="flex">
+          <div className="flex min-w-0 truncate">
             {track.artists.map((artist, i: number) => (
               <NavLink
                 to={`/artist/${artist.id}`}
                 key={i}
                 ref={artistRef}
-                className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray text-sm leading-none"
+                className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray md:text-sm text-xs leading-none"
               >
                 {artist.name}
                 {track.artists.length > 1 ? ', ' : null}
@@ -113,11 +116,8 @@ export const ProfileTrack = ({ track, i }: Props) => {
               )
             )}
           </div>
-          <p className="text-gray text-sm leading-none">
-            {`${Math.floor(track.duration_ms / 60000)}:${
-              +Math.floor((track.duration_ms % 60000) / 1000) < 10 ? '0' : ''
-            }${Math.floor((track.duration_ms % 60000) / 1000)}`}
-          </p>
+          <p className="text-gray text-sm leading-none">{trackDuration}</p>
+
           <div ref={optionsRef} className="relative">
             <TrackOptions optionsRef={optionsRef} track={track} />
           </div>

@@ -1,37 +1,22 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 // Components
 import { Navbar } from 'components/Navbar/Navbar'
 import { Preloader } from 'components/common/Preloader/Preloader'
 import { NavbarTop } from 'components/Navbar/NavbarTop/NavbarTop'
-import { Profile } from 'components/Profile/Profile'
-import { Playlist } from 'components/Playlist/Playlist'
 import { Playback } from 'components/Playback/Playback'
-import { MyAllTopTracks } from 'components/Playlist/MyAllTopTracks/MyAllTopTracks'
-import { ArtistProfileAllPlaylists } from 'components/Artists/ArtistProfile/ArtistProfileAllPlaylists/ArtistProfileAllPlaylists'
-
+import { Error } from 'components/common/Error/Error'
+import { SearchField } from 'components/Search/SearchField'
+import { DashboardRoutes } from './DashboardRoutes'
 // Hooks
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
 // Redux
-import {
-  useFetchAvailableDevicesQuery,
-  useFetchMySavedTracksQuery,
-} from 'redux/api/spotifyAPI'
-import { setIsloading, setSavedTracks } from 'redux/slices/spotifySlice'
-import { Error } from 'components/common/Error/Error'
-import { MyFollowedArtists } from 'components/Artists/MyFollowedArtists/MyFollowedArtists'
-import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
+import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
+import { setSavedTracks } from 'redux/slices/spotifySlice'
+// Misc
 import { Errors } from 'types/Errors'
-import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
-import { ArtistProfile } from 'components/Artists/ArtistProfile/ArtistProfile'
-import { Album } from 'components/Album/Album'
-import { SearchResults } from 'components/Search/SearchResults'
-import { SearchField } from 'components/Search/SearchField'
-import { Search } from 'components/Search/Search'
 
-interface Props {}
-
-export const Dashboard = (props: Props) => {
+export const Dashboard = () => {
   const location = useLocation()
 
   const { profile, savedTracks, isLoading, playerError } = useAppSelector(
@@ -75,10 +60,10 @@ export const Dashboard = (props: Props) => {
         <Playback />
       </div>
 
-      <div className="w-[20%]">
+      <div className="sm:w-[20%] w-0 w-full">
         <Navbar />
       </div>
-      <div className="w-[80%] relative">
+      <div className="sm:w-[80%] w-full relative">
         <NavbarTop
           modifier={
             location.pathname.includes('search') ? <SearchField /> : null
@@ -86,27 +71,7 @@ export const Dashboard = (props: Props) => {
         />
         {isLoading ? <Preloader /> : null}
 
-        <Routes>
-          <Route path="playlist/:playlistId" element={<Playlist />} />
-          <Route path="/" element={<Profile />} />
-          <Route path="user/:userId" element={<Profile />} />
-          <Route path="user/:userId/top/tracks" element={<MyAllTopTracks />} />
-          <Route path="user/:userId/top/artists" element={<MyTopArtists />} />
-          <Route
-            path="user/:userId/following"
-            element={<MyFollowedArtists />}
-          />
-          <Route path="/queue" element={<PlaybackQueue />} />
-          <Route path="artist/:artistId" element={<ArtistProfile />} />
-          <Route
-            path="/artist/:artistId/discography/all"
-            element={<ArtistProfileAllPlaylists />}
-          />
-          <Route path="/album/:albumId" element={<Album />} />
-
-          <Route path="/search" element={<Search />} />
-          <Route path="/search/:query" element={<SearchResults />} />
-        </Routes>
+        <DashboardRoutes />
       </div>
     </div>
   )

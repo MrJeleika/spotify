@@ -1,20 +1,12 @@
-import { motion } from 'framer-motion'
+import { PlacesType, Tooltip as ReactTooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 
 interface Props {
   text: string
+  id: string
+  place?: PlacesType | undefined
 }
 
-export const Tooltip = ({ text }: Props) => {
-  const variants = {
-    hover: { opacity: 1, display: 'inline' },
-  }
-  return (
-    <motion.div
-      variants={variants}
-      transition={{ duration: 0.15, delay: 0.15 }}
-      className="absolute top-[-40px] left-[-30%] opacity-0 cursor-default rounded  shadow-2xl py-1 px-2 bg-[#282828]"
-    >
-      <p className="text-white break-keep text-sm select-none">{text}</p>
-    </motion.div>
-  )
+export const Tooltip = ({ text, id, place }: Props) => {
+  return <ReactTooltip anchorId={id} place={place} content={text} />
 }

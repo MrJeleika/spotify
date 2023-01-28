@@ -128,8 +128,8 @@ const initialState: SpotifyState = {
 
   playbackState: {
     device: {},
-    repeatState: '',
-    shuffleState: '',
+    repeat_state: '',
+    shuffle_state: false,
     context: {},
     timestamp: 0,
     progress_ms: 0,

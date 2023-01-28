@@ -19,12 +19,12 @@ export const ArtistProfilePlaylists = ({ artistId }: Props) => {
 
   const { data, isFetching, isSuccess } = useFetchArtistAlbumsQuery({
     id: artistId,
-    type: 'album,single,appears_on,compilation',
+    type: 'album,single',
     offset: 0,
   })
-  console.log(isSuccess, data)
 
   useSetFetchedData(data, setArtistAlbums, isFetching)
+
   useEffect(() => {
     if (data) {
       dispatch(setArtistAlbums(data))

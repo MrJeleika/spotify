@@ -31,7 +31,7 @@ export const SearchField = () => {
       <input
         type="text"
         ref={inputRef}
-        className="rounded-full px-10 py-2 w-[350px] border-none focus:ring-0 text-sm font-medium focus:outline-none"
+        className="rounded-full px-10 py-2  md:w-[350px] lt:w-[150px] w-[200px] border-none focus:ring-0 text-sm font-medium focus:outline-none"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
