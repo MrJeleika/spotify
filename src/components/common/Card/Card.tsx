@@ -21,9 +21,7 @@ export const Card = ({ item, i, link, children, rounded }: Props) => {
           <img
             src={item.images[0].url}
             className={
-              rounded
-                ? `rounded-full aspect-square object-cover`
-                : 'object-cover aspect-square'
+              rounded ? `rounded-full aspect-square ` : ' aspect-square'
             }
             alt="Preview"
           />
