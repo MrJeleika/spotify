@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch } from 'redux/app/hooks'
 import { setRandomColorNum } from 'redux/slices/spotifySlice'
 

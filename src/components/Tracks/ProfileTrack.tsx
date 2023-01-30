@@ -87,7 +87,7 @@ export const ProfileTrack = ({ track, i }: Props) => {
           >
             {track.name}
           </p>
-          <div className="flex min-w-0 truncate">
+          <div className="flex  min-w-0 truncate">
             {track.artists.map((artist, i: number) => (
               <NavLink
                 to={`/artist/${artist.id}`}

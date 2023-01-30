@@ -28,7 +28,7 @@ export const PlaybackDeviceControl = () => {
   }, [stateVolume])
 
   return (
-    <div className="flex sm:w-1/3 w-[40%] justify-end sm:block hidden">
+    <div className="sm:flex sm:w-1/3 w-[40%] justify-end hidden">
       <div className="flex w-[80%] lg:w-1/2 items-center">
         <div id="queue" className=" relative p-1 mx-1">
           <Tooltip text="Queue" id="queue" place="top" />

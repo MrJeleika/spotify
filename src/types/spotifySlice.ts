@@ -154,7 +154,7 @@ export interface IPlaybackState {
   timestamp: number
   progress_ms: number
   is_playing: boolean
-  item: any
+  item: ITrack
   current_playing_type: string
   actions: any
 }

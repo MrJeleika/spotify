@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   useFetchPlaybackStateQuery,
   useSeekPlaybackMutation,
@@ -22,6 +22,7 @@ import { PlaySVG } from 'components/svg/PlaySVG'
 import { PlaybackTrackInfo } from './Elements/PlaybackTrackInfo'
 import { PlaybackDeviceControl } from './Elements/PlaybackDeviceControl'
 import { getTrackDuration } from 'utils'
+import { MobilePlayback } from './MobilePlayback/MobilePlayback'
 
 interface Props {}
 
@@ -35,11 +36,13 @@ export const Playback = ({}: Props) => {
   const [seekPosition] = useSeekPlaybackMutation()
 
   const { playbackState } = useAppSelector((state) => state.spotify)
+
   const { data, error } = useFetchPlaybackStateQuery(null, {
     pollingInterval: 1000,
   })
 
   const trackDuration = getTrackDuration(playbackState.item.duration_ms)
+  const trackProgress = getTrackDuration(playbackState.progress_ms)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -80,11 +83,23 @@ export const Playback = ({}: Props) => {
       )
   }, [error])
 
+  // mobile
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const mobileRef = useRef<HTMLDivElement>(null)
+
+  const handleOpenMobile = (e: any) => {
+    if (!mobileRef.current?.contains(e.target)) {
+      setIsOpen(!isOpen)
+    }
+  }
+
   return (
-    <>
+    <div onClick={(e) => handleOpenMobile(e)}>
       {playbackState.timestamp > 0 && (
-        <div className="w-full sm:h-[100px] h-[60px] flex items-center justify-between fixed sm:bottom-0 bottom-[60px] p-4 bg-[#181818] z-[999] border-t-2 border-[#282828]">
+        <div className="w-full sm:h-[100px] h-[60px] flex items-center justify-between fixed sm:bottom-0 bottom-[60px] p-4 bg-[#181818] z-[900] border-t-2 border-[#282828]">
           <PlaybackTrackInfo playbackState={playbackState} />
+
           <div className="w-1/3 sm:block hidden">
             <div className="flex justify-center items-center mb-2">
               {playbackState.shuffle_state ? (
@@ -150,12 +165,7 @@ export const Playback = ({}: Props) => {
             </div>
             <div className="flex w-full">
               <p className="text-gray text-[11px] font-bold leading-none">
-                {' '}
-                {`${Math.floor(playbackState.progress_ms / 60000)}:${
-                  +Math.floor((playbackState.progress_ms % 60000) / 1000) < 10
-                    ? '0'
-                    : ''
-                }${Math.floor((playbackState.progress_ms % 60000) / 1000)}`}
+                {trackProgress}
               </p>
               <Slider
                 min={0}
@@ -173,25 +183,31 @@ export const Playback = ({}: Props) => {
           <PlaybackDeviceControl />
 
           {/*mobile*/}
-          <div>
-            {playbackState.actions.disallows.pausing ? (
-              <div
-                className="active:scale-[110%]"
-                onClick={async () => await resumePlayback(null)}
-              >
-                <PlaySVG color="white" />
-              </div>
-            ) : (
-              <div
-                className="active:scale-[110%]"
-                onClick={async () => await pausePlayback(null)}
-              >
-                <PauseSVG color="white" />
-              </div>
-            )}
+          <div ref={mobileRef}>
+            <div className="sm:hidden">
+              {playbackState.actions.disallows.pausing ? (
+                <div
+                  className="active:scale-[110%]"
+                  onClick={async () => await resumePlayback(null)}
+                >
+                  <PlaySVG color="white" />
+                </div>
+              ) : (
+                <div
+                  className="active:scale-[110%]"
+                  onClick={async () => await pausePlayback(null)}
+                >
+                  <PauseSVG color="white" />
+                </div>
+              )}
+            </div>
+
+            {/* mobile playback modal */}
+            <MobilePlayback isOpen={isOpen} setIsOpen={setIsOpen} />
+            {/*--------------------- */}
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
