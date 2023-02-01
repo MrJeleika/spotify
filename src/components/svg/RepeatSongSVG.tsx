@@ -1,13 +1,14 @@
 interface Props {
   color?: string
+  size?: number
 }
 
-export const RepeatSongSVG = ({ color }: Props) => {
+export const RepeatSongSVG = ({ color, size }: Props) => {
   return (
     <svg
       role="img"
-      height="16"
-      width="16"
+      height={size ? size : '16'}
+      width={size ? size : '16'}
       aria-hidden="true"
       viewBox="0 0 16 16"
       data-encore-id="icon"

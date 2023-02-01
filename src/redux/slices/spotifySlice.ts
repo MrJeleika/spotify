@@ -182,7 +182,36 @@ const initialState: SpotifyState = {
     items: [
       {
         added_at: '',
-        track: {},
+        track: {
+          album: {},
+            artists: [],
+            available_markets: [],
+            disc_number: 0,
+            duration_ms: 0,
+            explicit: false,
+            external_ids: {
+              ean: '',
+              isrc: '',
+              upc: '',
+            },
+            external_urls: {
+              spotify: '',
+            },
+            href: '',
+            is_local: false,
+            is_playable: false,
+            id: '',
+            linked_from: {},
+            restrictions: {
+              reasons: '',
+            },
+            name: '',
+            popularity: 0,
+            preview_url: '',
+            track_number: 0,
+            type: '',
+            uri: '',
+        },
       },
     ],
     limit: 20,

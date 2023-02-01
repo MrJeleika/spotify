@@ -221,7 +221,7 @@ export interface SavedTracks extends Item {
   items: [
     {
       added_at: string
-      track: ITrack[]
+      track: ITrack 
     }
   ]
 }
@@ -343,7 +343,7 @@ export interface SpotifyState {
   myTopTracks: IUserTopItems
   playbackState: IPlaybackState
   playlistTracks: IUserTopItems
-  savedTracks: SavedTracks | any
+  savedTracks: any 
   playlist: IPlaylist
   isLoading: boolean
   randomColorNum: number

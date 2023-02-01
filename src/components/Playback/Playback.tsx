@@ -23,6 +23,7 @@ import { PlaybackTrackInfo } from './Elements/PlaybackTrackInfo'
 import { PlaybackDeviceControl } from './Elements/PlaybackDeviceControl'
 import { getTrackDuration } from 'utils'
 import { MobilePlayback } from './MobilePlayback/MobilePlayback'
+import { RemoveScroll } from 'react-remove-scroll'
 
 interface Props {}
 
@@ -89,7 +90,7 @@ export const Playback = ({}: Props) => {
   const mobileRef = useRef<HTMLDivElement>(null)
 
   const handleOpenMobile = (e: any) => {
-    if (!mobileRef.current?.contains(e.target)) {
+    if (!mobileRef.current?.contains(e.target) && window.innerWidth < 640) {
       setIsOpen(!isOpen)
     }
   }
@@ -203,7 +204,9 @@ export const Playback = ({}: Props) => {
             </div>
 
             {/* mobile playback modal */}
-            <MobilePlayback isOpen={isOpen} setIsOpen={setIsOpen} />
+            <RemoveScroll enabled={isOpen}>
+              <MobilePlayback isOpen={isOpen} setIsOpen={setIsOpen} />
+            </RemoveScroll>
             {/*--------------------- */}
           </div>
         </div>

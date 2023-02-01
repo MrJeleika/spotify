@@ -17,7 +17,10 @@ interface IArtistAlbums {
   type: string
   offset: number
 }
-
+interface IRecommendations{
+  artists: string
+  tracks: string
+}
 export const apiSlice = createApi({
   reducerPath: 'apiSlice',
   baseQuery: fetchBaseQuery({
@@ -163,6 +166,9 @@ export const apiSlice = createApi({
     fetchSearchingResult: builder.query<ISearch, string | undefined>({
       query: (res) => `search?q=${res}&type=track,artist,album,playlist`,
     }),
+    fetchRecommendations: builder.query<any, Object | undefined>({
+      query: ({artists, tracks}: IRecommendations) => `recommendations?seed_tracks=${tracks}&seed_artists=${artists}`,
+    }),
     togglePlaybackShuffle: builder.mutation<any, boolean>({
       query: (toggle) => ({
         url: `me/player/shuffle?state=${toggle}`,
@@ -201,4 +207,5 @@ export const {
   useFetchAlbumQuery,
   useFetchSearchingResultQuery,
   useTogglePlaybackShuffleMutation,
+  useFetchRecommendationsQuery,
 } = apiSlice

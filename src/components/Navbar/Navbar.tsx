@@ -4,6 +4,7 @@ import { Playlists } from './Playlists/Playlists'
 import { NavLink } from 'react-router-dom'
 import { SearchSVG } from 'components/svg/SearchSVG'
 import { motion } from 'framer-motion'
+import { HomeSVG } from 'components/svg/HomeSVG'
 
 interface Props {}
 
@@ -15,6 +16,14 @@ export const Navbar = ({}: Props) => {
           <div className="mb-10">
             <LogoSVG color="white" />
           </div>
+          <NavLink to={'/'} className="group flex items-center mb-5">
+            <div className="mr-3">
+              <HomeSVG color="gray" />
+            </div>
+            <h1 className="text-gray group-hover:text-white font-bold text-sm duration-200">
+              Home
+            </h1>
+          </NavLink>
           <NavLink to={'/search'} className="group flex items-center mb-5">
             <div className="mr-3">
               <SearchSVG color="gray" />

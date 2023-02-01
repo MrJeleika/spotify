@@ -11,7 +11,7 @@ import {
   useFetchProfileQuery,
 } from 'redux/api/spotifyAPI'
 import { setMyFollowedArtists, setProfile } from 'redux/slices/spotifySlice'
-import { bgColors } from 'components/common/MainGradientBackground/MainGradientBackground'
+import { bgColors } from 'utils/colors'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
 interface Props {
