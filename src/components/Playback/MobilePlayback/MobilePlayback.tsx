@@ -67,7 +67,7 @@ export const MobilePlayback = ({ isOpen, setIsOpen }: Props) => {
         <div
           className={`w-full h-full bg-gradient-to-t ${mainRandomColor} px-6 pt-8`}
         >
-          <div className="flex items-center justify-between text-white mb-14">
+          <div className="flex items-center justify-between text-white mb-5">
             <div
               className="w-5 h-5 flex items-center"
               onClick={() => setIsOpen(false)}
@@ -77,14 +77,14 @@ export const MobilePlayback = ({ isOpen, setIsOpen }: Props) => {
             <div></div>
           </div>
           <div className="">
-            <div className="mb-12">
+            <div className="mb-5">
               <img
                 src={playbackState.item.album.images[0].url}
                 alt="Album"
                 className="w-full"
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-5">
               <h1 className="title leading-none">{playbackState.item.name}</h1>
               <NavLink
                 to={`artist/${playbackState.item.artists[0].id}`}
@@ -94,7 +94,7 @@ export const MobilePlayback = ({ isOpen, setIsOpen }: Props) => {
                 {playbackState.item.artists[0].name}
               </NavLink>
             </div>
-            <div className="mb-6">
+            <div className="mb-5">
               <Slider
                 min={0}
                 max={playbackState.item.duration_ms}
