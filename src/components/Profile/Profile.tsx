@@ -1,18 +1,15 @@
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+// Hooks
+import { useAppSelector } from 'redux/app/hooks'
+// Components
 import { ProfileMyPlaylists } from './ProfileMyPlaylists/ProfileMyPlaylists'
 import { ProfileTopTracks } from './ProfileTopTracks/ProfileTopTracks'
-
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { ProfileFollowedArtists } from './ProfileFollowedArtists/ProfileFollowedArtists'
 import { ProfileTopArtists } from './ProfileTopArtists/ProfileTopArtists'
 
-interface Props {}
-
-export const Profile = ({}: Props) => {
-  const { profile, myPlaylists, savedTracks } = useAppSelector(
-    (state) => state.spotify
-  )
+export const Profile = () => {
+  const { profile, myPlaylists } = useAppSelector((state) => state.spotify)
 
   const publicPlaylistsCount = myPlaylists.items.reduce(
     (total, item) => (item.public ? total + 1 : total),

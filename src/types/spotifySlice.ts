@@ -336,6 +336,10 @@ export interface ISearch {
   episodes: any
   audiobooks: any
 }
+export interface IRecommendations{
+  seeds: []
+  tracks: ITrack[]
+}
 
 export interface SpotifyState {
   profile: IProfile
@@ -361,4 +365,5 @@ export interface SpotifyState {
   artistAlbums: IAlbums
   album: IAlbum
   search: ISearch
+  recommendations: IRecommendations
 }

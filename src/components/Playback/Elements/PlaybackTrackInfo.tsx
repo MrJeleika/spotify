@@ -1,3 +1,4 @@
+// Misc
 import { NavLink } from 'react-router-dom'
 import { IArtist, IPlaybackState } from 'types/spotifySlice'
 
@@ -10,7 +11,7 @@ export const PlaybackTrackInfo = (props: Props) => {
   return (
     <div className="flex sm:w-1/3 w-[60%] items-center">
       <div className="sm:w-[60px] w-[40px] mr-3">
-        <img src={playbackState.item.album.images[0].url} alt="" />
+        <img src={playbackState.item.album.images[0].url} alt="Album" />
       </div>
       <div className="truncate">
         <p className="text-[white]  lg:text-[16px] text-sm  my-1 leading-none  cursor-default">

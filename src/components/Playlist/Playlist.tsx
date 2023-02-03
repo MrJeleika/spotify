@@ -1,18 +1,19 @@
-import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
-import { useParams } from 'react-router-dom'
+// Misc
 import { useFetchPlaylistQuery } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
 import { setPlaylist } from 'redux/slices/spotifySlice'
+// Hooks
+import { useParams } from 'react-router-dom'
+import { useAppSelector } from 'redux/app/hooks'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+// Components
+import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
 import { PlaylistTrack } from 'components/Tracks/PlaylistTrack'
 import { ClockSVG } from 'components/svg/ClockSVG'
 import { DotsSVG } from 'components/svg/DotsSVG'
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
 import { PlayButton } from 'components/common/PlayButton/PlayButton'
 
-interface Props {}
-
-export const Playlist = ({}: Props) => {
+export const Playlist = () => {
   const playlistId = useParams().playlistId
 
   const { data, isFetching } = useFetchPlaylistQuery(playlistId)

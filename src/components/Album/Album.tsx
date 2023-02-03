@@ -1,16 +1,19 @@
+import { NavLink, useParams } from 'react-router-dom'
+// Components
 import { AlbumTrack } from 'components/Tracks/AlbumTrack'
 import { Card } from 'components/common/Card/Card'
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import { useEffect, useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+// Misc
 import {
   useFetchAlbumQuery,
   useFetchArtistAlbumsQuery,
 } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
 import { setAlbum, setArtistAlbums } from 'redux/slices/spotifySlice'
+// Hooks
+import { useAppSelector } from 'redux/app/hooks'
+import { useEffect, useState } from 'react'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 
 export const Album = () => {
   const albumId = useParams().albumId

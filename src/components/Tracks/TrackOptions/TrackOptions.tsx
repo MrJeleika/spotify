@@ -1,6 +1,9 @@
-import { DotsSVG } from 'components/svg/DotsSVG'
-import React, { useRef, useState } from 'react'
+// Hooks
+import React, { useState } from 'react'
+// Misc
 import { ITrack } from 'types/spotifySlice'
+// Components
+import { DotsSVG } from 'components/svg/DotsSVG'
 import { TrackOptionsModal } from './TrackOptionsModal/TrackOptionsModal'
 
 interface Props {

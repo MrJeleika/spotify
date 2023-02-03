@@ -1,8 +1,9 @@
+// Hooks
 import { useEffect } from 'react'
 import { useAppDispatch } from 'redux/app/hooks'
+// Misc
 import { setRandomColorNum } from 'redux/slices/spotifySlice'
 import { gradientColors } from 'utils/colors'
-
 interface Props {
   children: React.ReactNode
 }

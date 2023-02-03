@@ -1,17 +1,7 @@
+// Hooks
 import { useEffect, useRef, useState } from 'react'
-import {
-  useFetchPlaybackStateQuery,
-  useSeekPlaybackMutation,
-  usePlayPlaybackMutation,
-  usePausePlaybackMutation,
-  useSkipToNextSongMutation,
-  useSkipToPrevSongMutation,
-  useTogglePlaybackShuffleMutation,
-} from 'redux/api/spotifyAPI'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setPlaybackState, setPlayerError } from 'redux/slices/spotifySlice'
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
+// Components
 import { PauseSVG } from 'components/svg/PauseSVG'
 import { PrevSongSVG } from 'components/svg/PrevSongSVG'
 import { NextSongSVG } from 'components/svg/NextSongSVG'
@@ -21,13 +11,25 @@ import { Tooltip } from 'components/common/Tooltip/Tooltip'
 import { PlaySVG } from 'components/svg/PlaySVG'
 import { PlaybackTrackInfo } from './Elements/PlaybackTrackInfo'
 import { PlaybackDeviceControl } from './Elements/PlaybackDeviceControl'
-import { getTrackDuration } from 'utils'
 import { MobilePlayback } from './MobilePlayback/MobilePlayback'
+// Misc
+import { getTrackDuration } from 'utils'
 import { RemoveScroll } from 'react-remove-scroll'
+import Slider from 'rc-slider'
+import { setPlaybackState, setPlayerError } from 'redux/slices/spotifySlice'
+import {
+  useFetchPlaybackStateQuery,
+  useSeekPlaybackMutation,
+  usePlayPlaybackMutation,
+  usePausePlaybackMutation,
+  useSkipToNextSongMutation,
+  useSkipToPrevSongMutation,
+  useTogglePlaybackShuffleMutation,
+} from 'redux/api/spotifyAPI'
+// Styles
+import 'rc-slider/assets/index.css'
 
-interface Props {}
-
-export const Playback = ({}: Props) => {
+export const Playback = () => {
   const [value, setValue] = useState<any>(0)
   const [pausePlayback] = usePausePlaybackMutation()
   const [toggleShaffle] = useTogglePlaybackShuffleMutation()

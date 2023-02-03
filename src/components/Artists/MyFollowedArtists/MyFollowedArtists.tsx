@@ -1,5 +1,7 @@
+// Components
 import { BlackBackground } from 'components/common/BlackBackground/BlackBackground'
 import { Card } from 'components/common/Card/Card'
+// Hooks
 import { useAppSelector } from 'redux/app/hooks'
 
 interface Props {}

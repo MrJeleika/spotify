@@ -1,8 +1,11 @@
+// Hooks
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
 import { useState, useEffect, useRef } from 'react'
+// Misc
 import { useFetchSearchingResultQuery } from 'redux/api/spotifyAPI'
 import { setSearchResult } from 'redux/slices/spotifySlice'
 import { useNavigate } from 'react-router-dom'
+// Components
 import { SearchSVG } from 'components/svg/SearchSVG'
 import { CrossSVG } from 'components/svg/CrossSVG'
 
@@ -18,7 +21,6 @@ export const SearchField = () => {
     navigate(`/search/${value}`, { replace: true })
   }, [value])
   useSetFetchedData(data, setSearchResult, isFetching)
-  console.log(data)
 
   return (
     <div className="relative">

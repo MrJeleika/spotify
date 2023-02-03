@@ -1,10 +1,12 @@
+// Components
 import { ProfileTrack } from 'components/Tracks/ProfileTrack'
+// Hooks
+import { useAppSelector } from 'redux/app/hooks'
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
+// Misc
 import { NavLink } from 'react-router-dom'
 import { useFetchMyTopTracksQuery } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setIsloading, setMyTopTracks } from 'redux/slices/spotifySlice'
-import { ITrack } from 'types/spotifySlice'
+import { setMyTopTracks } from 'redux/slices/spotifySlice'
 
 export const ProfileTopTracks = () => {
   const { myTopTracks } = useAppSelector((state) => state.spotify)

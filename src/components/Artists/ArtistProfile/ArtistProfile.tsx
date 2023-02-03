@@ -1,16 +1,19 @@
+import { NavLink, useParams } from 'react-router-dom'
+// Components
 import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import { MainGradientBackground } from 'components/common/MainGradientBackground/MainGradientBackground'
 import { SecondaryGradientBackground } from 'components/common/SecondaryGradientBackground/SecondaryGradientBackground'
+import { ArtistProfilePlaylists } from './ArtistProfilePlaylists/ArtistProfilePlaylists'
+import { PlayButton } from 'components/common/PlayButton/PlayButton'
+// Hooks
 import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import { NavLink, useParams } from 'react-router-dom'
+import { useAppSelector } from 'redux/app/hooks'
+// Misc
+import { setArtistProfile, setArtistTopTracks } from 'redux/slices/spotifySlice'
 import {
   useFetchArtistProfileQuery,
   useFetchArtistTopTracksQuery,
 } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
-import { setArtistProfile, setArtistTopTracks } from 'redux/slices/spotifySlice'
-import { ArtistProfilePlaylists } from './ArtistProfilePlaylists/ArtistProfilePlaylists'
-import { PlayButton } from 'components/common/PlayButton/PlayButton'
 
 export const ArtistProfile = () => {
   const artistId = useParams().artistId

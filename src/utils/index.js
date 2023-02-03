@@ -34,3 +34,8 @@ export const getTrackDuration = (duration) => {
     +Math.floor((duration % 60000) / 1000) < 10 ? '0' : ''
   }${Math.floor((duration % 60000) / 1000)}`
 }
+
+export const shortName = (name, num = 20) => {
+  if (window.innerWidth > 640) return name
+  return name.length > num ? name.slice(0, num) : name
+}

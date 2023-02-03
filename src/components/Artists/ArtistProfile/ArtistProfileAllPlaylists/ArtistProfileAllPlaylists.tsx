@@ -1,11 +1,14 @@
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import { useFetchArtistAlbumsQuery } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
+// Components
 import { setArtistAlbums } from 'redux/slices/spotifySlice'
 import { Card } from 'components/common/Card/Card'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { BlackBackground } from 'components/common/BlackBackground/BlackBackground'
+// Hooks
+import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useAppSelector } from 'redux/app/hooks'
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+// Misc
+import { useFetchArtistAlbumsQuery } from 'redux/api/spotifyAPI'
 
 export const ArtistProfileAllPlaylists = () => {
   const { artistAlbums, artistProfile } = useAppSelector(

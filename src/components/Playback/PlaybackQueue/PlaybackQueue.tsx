@@ -1,10 +1,13 @@
+// Components
 import { BlackBackground } from 'components/common/BlackBackground/BlackBackground'
-import { useAppSelector } from 'redux/app/hooks'
 import { ProfileTrack } from 'components/Tracks/ProfileTrack'
+// Misc
 import { useFetchMyPlaybackQueueQuery } from 'redux/api/spotifyAPI'
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import { setIsloading, setPlaybackQueue } from 'redux/slices/spotifySlice'
+import { setPlaybackQueue } from 'redux/slices/spotifySlice'
 import { ITrack } from 'types/spotifySlice'
+// Hooks
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+import { useAppSelector } from 'redux/app/hooks'
 import { useEffect } from 'react'
 
 export const PlaybackQueue = () => {

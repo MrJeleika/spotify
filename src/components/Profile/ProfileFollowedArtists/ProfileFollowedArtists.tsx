@@ -1,13 +1,14 @@
+// Components
 import { Card } from 'components/common/Card/Card'
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
+// Misc
 import { NavLink } from 'react-router-dom'
-import { useFetchMyFollowedArtistsQuery } from 'redux/api/spotifyAPI'
-import { useAppSelector } from 'redux/app/hooks'
 import { setMyFollowedArtists } from 'redux/slices/spotifySlice'
+import { useFetchMyFollowedArtistsQuery } from 'redux/api/spotifyAPI'
+// Hooks
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
+import { useAppSelector } from 'redux/app/hooks'
 
-interface Props {}
-
-export const ProfileFollowedArtists = ({}: Props) => {
+export const ProfileFollowedArtists = () => {
   const { myFollowedArtists } = useAppSelector((state) => state.spotify)
   const { data, isFetching } = useFetchMyFollowedArtistsQuery()
 

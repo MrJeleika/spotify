@@ -1,9 +1,9 @@
+// Components
 import { Card } from 'components/common/Card/Card'
+// Hooks
 import { useAppSelector } from 'redux/app/hooks'
 
-interface Props {}
-
-export const ProfileMyPlaylists = ({}: Props) => {
+export const ProfileMyPlaylists = () => {
   const playlists = useAppSelector((state) => state.spotify.myPlaylists)
   return (
     <div>

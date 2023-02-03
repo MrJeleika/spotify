@@ -1,12 +1,16 @@
+// Components
 import { PlaySVG } from 'components/svg/PlaySVG'
 import { SavedTrackSVG } from 'components/svg/SavedTrackSVG'
-import React, { useEffect, useRef } from 'react'
-import { usePlayTrackMutation } from 'redux/api/spotifyAPI'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { ITrack } from 'types/spotifySlice'
 import { TrackOptions } from './TrackOptions/TrackOptions'
+// Hooks
+import { useRef } from 'react'
+import { useAppSelector } from 'redux/app/hooks'
+// Misc
+import { usePlayTrackMutation } from 'redux/api/spotifyAPI'
+import { ITrack } from 'types/spotifySlice'
 import { NavLink } from 'react-router-dom'
 import { getTrackDuration } from 'utils'
+import { shortName } from 'utils'
 
 interface Props {
   track: ITrack
@@ -53,7 +57,7 @@ export const ProfileTrack = ({ track, i }: Props) => {
   return (
     <div
       onClick={(e) => handlePlayTrack(e)}
-      className="group track-item flex rounded hover:bg-[#282828] pr-3 lg:pr-5 py-2 w-full"
+      className="group track-item flex rounded hover:bg-[#282828] pr-0 sm:pr-3 lg:pr-5 py-2 w-full"
     >
       <div className="flex lg:w-1/2 md:w-[60%] w-[100%] min-w-0 mx-1">
         <div className="text-gray w-[40px] font-bold text-sm flex items-center justify-center">
@@ -83,19 +87,19 @@ export const ProfileTrack = ({ track, i }: Props) => {
           <p
             className={`${
               playbackState.item.id === track.id ? 'text-green' : 'text-white'
-            } md:text-base  text-sm my-1 truncate cursor-default`}
+            } md:text-base  text-sm my-1 break-all cursor-default`}
           >
-            {track.name}
+            {shortName(track.name, 20)}
           </p>
-          <div className="flex  min-w-0 truncate">
+          <div className="flex  min-w-0 ">
             {track.artists.map((artist, i: number) => (
               <NavLink
                 to={`/artist/${artist.id}`}
                 key={i}
                 ref={artistRef}
-                className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray md:text-sm text-xs leading-none"
+                className="text-gray group-hover:text-[white] border-b-[1px] border-[#00000000] hover:border-gray md:text-sm text-xs leading-none break-all"
               >
-                {artist.name}
+                {shortName(artist.name, 9)}
                 {track.artists.length > 1 ? ', ' : null}
               </NavLink>
             ))}

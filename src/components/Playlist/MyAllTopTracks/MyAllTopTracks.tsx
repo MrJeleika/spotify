@@ -1,15 +1,15 @@
+// Components
 import { ProfileTrack } from 'components/Tracks/ProfileTrack'
 import { BlackBackground } from 'components/common/BlackBackground/BlackBackground'
 import { ClockSVG } from 'components/svg/ClockSVG'
-import { useSetFetchedData } from 'hooks/useSetFetchedData'
-import React, { useEffect } from 'react'
+// Misc
 import { useFetchMyTopTracksQuery } from 'redux/api/spotifyAPI'
+import { setMyTopTracks } from 'redux/slices/spotifySlice'
+// Hooks
+import { useSetFetchedData } from 'hooks/useSetFetchedData'
 import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
-import { setIsloading, setMyTopTracks } from 'redux/slices/spotifySlice'
 
-interface Props {}
-
-export const MyAllTopTracks = ({}: Props) => {
+export const MyAllTopTracks = () => {
   const dispatch = useAppDispatch()
   const { myTopTracks } = useAppSelector((state) => state.spotify)
   const { data, isFetching } = useFetchMyTopTracksQuery(50)

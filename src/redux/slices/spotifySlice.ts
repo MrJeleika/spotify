@@ -15,6 +15,7 @@ import {
   IAlbums,
   IAlbum,
   ISearch,
+  IRecommendations,
 } from '../../types/spotifySlice'
 
 const initialState: SpotifyState = {
@@ -458,6 +459,10 @@ const initialState: SpotifyState = {
     episodes: {},
     shows: {},
   },
+  recommendations:{
+    seeds: [],
+    tracks: [],
+  }
 }
 
 const spotifySlice = createSlice({
@@ -532,6 +537,9 @@ const spotifySlice = createSlice({
     setSearchResult: (state, action: PayloadAction<ISearch>) => {
       state.search = { ...action.payload }
     },
+    setRecommendations: (state, action: PayloadAction<IRecommendations>) => {
+      state.recommendations = {...action.payload
+    }}
   },
 })
 
@@ -557,4 +565,5 @@ export const {
   setArtistAlbums,
   setAlbum,
   setSearchResult,
+  setRecommendations,
 } = spotifySlice.actions

@@ -1,4 +1,6 @@
+// Hooks
 import { useEffect, useRef } from 'react'
+// Misc
 import { ITrack } from 'types/spotifySlice'
 import { motion } from 'framer-motion'
 import { useAddTrackToQueueMutation } from 'redux/api/spotifyAPI'

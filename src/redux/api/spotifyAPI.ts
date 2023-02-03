@@ -6,6 +6,7 @@ import {
   IPlaybackState,
   IPlaylists,
   IProfile,
+  IRecommendations,
   ISearch,
   ITrack,
   IUserTopItems,
@@ -17,7 +18,7 @@ interface IArtistAlbums {
   type: string
   offset: number
 }
-interface IRecommendations{
+interface IRecommendationsQuery{
   artists: string
   tracks: string
 }
@@ -166,8 +167,8 @@ export const apiSlice = createApi({
     fetchSearchingResult: builder.query<ISearch, string | undefined>({
       query: (res) => `search?q=${res}&type=track,artist,album,playlist`,
     }),
-    fetchRecommendations: builder.query<any, Object | undefined>({
-      query: ({artists, tracks}: IRecommendations) => `recommendations?seed_tracks=${tracks}&seed_artists=${artists}`,
+    fetchRecommendations: builder.query<IRecommendations, IRecommendationsQuery | undefined>({
+      query: ({artists, tracks}: IRecommendationsQuery) => `recommendations?seed_tracks=${tracks}&seed_artists=${artists}&limit=50`,
     }),
     togglePlaybackShuffle: builder.mutation<any, boolean>({
       query: (toggle) => ({

@@ -1,5 +1,5 @@
+// Misc
 import { motion } from 'framer-motion'
-import { useAppSelector } from 'redux/app/hooks'
 import { gradientColors } from 'utils/colors'
 import { getTrackDuration } from 'utils'
 import Slider from 'rc-slider'
@@ -11,7 +11,10 @@ import {
   useSkipToPrevSongMutation,
   useTogglePlaybackShuffleMutation,
 } from 'redux/api/spotifyAPI'
+// Hooks
+import { useAppSelector } from 'redux/app/hooks'
 import { useEffect, useRef, useState } from 'react'
+// Components
 import { PlaySVG } from 'components/svg/PlaySVG'
 import { PauseSVG } from 'components/svg/PauseSVG'
 import { NextSongSVG } from 'components/svg/NextSongSVG'

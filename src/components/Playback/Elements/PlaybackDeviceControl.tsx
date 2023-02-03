@@ -1,10 +1,13 @@
-import { motion } from 'framer-motion'
+// Components
 import { QueueSVG } from 'components/svg/QueueSVG'
 import { Tooltip } from 'components/common/Tooltip/Tooltip'
 import { DevicesModal } from '../DevicesModal/DevicesModal'
 import { DevicesSVG } from 'components/svg/DevicesSVG'
-import Slider from 'rc-slider'
+// Hooks
 import { useEffect, useRef, useState } from 'react'
+// Misc
+import { motion } from 'framer-motion'
+import Slider from 'rc-slider'
 import {
   usePlaybackState,
   useSpotifyPlayer,

@@ -4,6 +4,7 @@ import { ArtistProfile } from 'components/Artists/ArtistProfile/ArtistProfile'
 import { ArtistProfileAllPlaylists } from 'components/Artists/ArtistProfile/ArtistProfileAllPlaylists/ArtistProfileAllPlaylists'
 import { MyFollowedArtists } from 'components/Artists/MyFollowedArtists/MyFollowedArtists'
 import { MyTopArtists } from 'components/Artists/MyTopArtists/MyTopArtists'
+import { Home } from 'components/Home/Home'
 import { PlaybackQueue } from 'components/Playback/PlaybackQueue/PlaybackQueue'
 import { MyAllTopTracks } from 'components/Playlist/MyAllTopTracks/MyAllTopTracks'
 import { Playlist } from 'components/Playlist/Playlist'
@@ -16,8 +17,8 @@ import { Route, Routes } from 'react-router-dom'
 export const DashboardRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="playlist/:playlistId" element={<Playlist />} />
-      <Route path="/" element={<Profile />} />
       <Route path="user/:userId" element={<Profile />} />
       <Route path="user/:userId/top/tracks" element={<MyAllTopTracks />} />
       <Route path="user/:userId/top/artists" element={<MyTopArtists />} />

@@ -2,8 +2,8 @@
 import { ProfileListSVG } from 'components/svg/ProfileListSVG'
 import { ProfileDropdown } from './ProfileDropdown'
 // Hooks
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { useAppDispatch, useAppSelector } from 'redux/app/hooks'
+import { useEffect, useRef, useState } from 'react'
+import { useAppSelector } from 'redux/app/hooks'
 // Misc
 import { motion } from 'framer-motion'
 import {
