@@ -19,7 +19,7 @@ export const Card = ({ item, i, link, children, rounded }: Props) => {
       className="big-card-item cursor-pointer bg-[#181818] flex-shrink-0 mx-2 lg:mx-4 rounded-lg p-4 pb-20 mb-4 hover:bg-[#282828] duration-300"
     >
       <div className="mb-3 ">
-        {item.images[0] ? (
+        {item.images[0] && item.images[0].url ? (
           <img
             src={item.images[0].url}
             className={
