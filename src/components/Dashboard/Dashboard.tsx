@@ -15,7 +15,6 @@ import { useFetchMySavedTracksQuery } from 'redux/api/spotifyAPI'
 import { setSavedTracks } from 'redux/slices/spotifySlice'
 // Misc
 import { Errors } from 'types/Errors'
-import { Home } from 'components/Home/Home'
 
 export const Dashboard = () => {
   const location = useLocation()

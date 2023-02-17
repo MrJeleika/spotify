@@ -19,7 +19,6 @@ interface IArtistAlbums {
   offset: number
 }
 interface IRecommendationsQuery{
-  artists: string
   tracks: string
 }
 export const apiSlice = createApi({
@@ -168,7 +167,7 @@ export const apiSlice = createApi({
       query: (res) => `search?q=${res}&type=track,artist,album,playlist`,
     }),
     fetchRecommendations: builder.query<IRecommendations, IRecommendationsQuery | undefined>({
-      query: ({artists, tracks}: IRecommendationsQuery) => `recommendations?seed_tracks=${tracks}&seed_artists=${artists}&limit=50`,
+      query: ({ tracks}: IRecommendationsQuery) => `recommendations?seed_tracks=${tracks}&limit=50`,
     }),
     togglePlaybackShuffle: builder.mutation<any, boolean>({
       query: (toggle) => ({

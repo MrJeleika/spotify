@@ -17,9 +17,9 @@ export const Home = () => {
   const [recommendationTracksUris, setRecommendationTracksUris] = useState<
     string[]
   >([])
-  const [recommendationArtistsUris, setRecommendationArtistsUris] = useState<
-    string[]
-  >([])
+
+  console.log(recommendationTracksUris)
+
   const [skip, setSkip] = useState<boolean>(true)
   useEffect(() => {
     if (savedTracks.total) {
@@ -27,38 +27,26 @@ export const Home = () => {
         const rand: number = Math.floor(
           Math.random() * savedTracks.items.length + 1
         )
-        const artistOrTrack: number = Math.round(Math.random()) // 0 - artist, 1 - track
-
         // check if track exists
         if (savedTracks.items[rand].track) {
-          artistOrTrack // check artist or track
-            ? setRecommendationArtistsUris([
-                ...recommendationArtistsUris,
-                savedTracks.items[rand].track.artists[0].id,
-              ])
-            : setRecommendationTracksUris([
-                ...recommendationTracksUris,
-                savedTracks.items[rand].track.id,
-              ])
+          setRecommendationTracksUris([
+            ...recommendationTracksUris,
+            savedTracks.items[rand].track.id,
+          ])
         }
       }
     }
   }, [savedTracks])
 
   useEffect(() => {
-    if (
-      recommendationArtistsUris.length === 2 &&
-      recommendationTracksUris.length === 2 &&
-      !recommendations.tracks[0]
-    ) {
+    if (!recommendations.tracks[0]) {
       setSkip(false)
     }
     return () => setSkip(true)
-  }, [recommendationArtistsUris, recommendationTracksUris])
+  }, [recommendationTracksUris])
 
-  const { data, isFetching } = useFetchRecommendationsQuery(
+  const { data, isFetching, error } = useFetchRecommendationsQuery(
     {
-      artists: recommendationArtistsUris.join(','),
       tracks: recommendationTracksUris.join(','),
     },
     { skip: skip }
