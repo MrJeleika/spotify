@@ -30,7 +30,7 @@ export const Login = () => {
       <h1 className="text-3xl mb-5 text-white text-center">
         To connect player: open <span className="text-green">Spotify app</span>,
         click available devices and choose{' '}
-        <span className="text-green">My React app</span>
+        <span className="text-green">MrJeleika's Spotify</span>
       </h1>
       <a
         className="bg-green px-10 py-5 text-white text-xl rounded-3xl"
