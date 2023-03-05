@@ -9,7 +9,7 @@ export const MySpotifyPlayer = () => {
 
   return (
     <WebPlaybackSDK
-      initialDeviceName="My React App"
+      initialDeviceName="MrJeleika's Spotify"
       getOAuthToken={getOAuthToken}
       connectOnInitialized={true}
       children={<Dashboard />}
