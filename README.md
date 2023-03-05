@@ -9,7 +9,12 @@
 
 ## Description
 Clone of popular music streaming service - Spotify. You can search, listen your songs directly through this application.
-PREMIUM REQUIRED.
+`PREMIUM REQUIRED`.
+
+## Connecting
+1. Login by your Spotify account
+2. Go to your Spotify app, click on devices and choose `MrJeleika's Spotify`
+3. Enjoy your music!
 
 ## Project setup
 ```
