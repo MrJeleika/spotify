@@ -9,7 +9,7 @@
 
 ## Description
 Clone of popular music streaming service - Spotify. You can search, listen your songs directly through this application.
-PREMIUM REQUIRED.
+`PREMIUM REQUIRED`.
 
 ## Connecting
 1. Login by your Spotify account
