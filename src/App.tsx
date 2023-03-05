@@ -3,11 +3,10 @@ import 'styles/slider.scss'
 // Components
 import { Login } from './components/Login/Login'
 // Hooks
-import { useAppSelector } from './redux/app/hooks'
 import { MySpotifyPlayer } from 'components/Dashboard/SpotifyPlayer'
 
 export const App = () => {
-  const token = useAppSelector((state) => state.auth.token)
+  const token = localStorage.getItem('token')
   return <div className="App">{token ? <MySpotifyPlayer /> : <Login />}</div>
 }
 
