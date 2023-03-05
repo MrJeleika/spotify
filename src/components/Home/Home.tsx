@@ -18,8 +18,6 @@ export const Home = () => {
     string[]
   >([])
 
-  console.log(recommendationTracksUris)
-
   const [skip, setSkip] = useState<boolean>(true)
   useEffect(() => {
     if (savedTracks.total) {
